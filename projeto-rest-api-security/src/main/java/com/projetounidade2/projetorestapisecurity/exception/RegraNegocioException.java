@@ -1,0 +1,8 @@
+package com.projetounidade2.projetorestapisecurity.exception;
+
+public class RegraNegocioException extends RuntimeException {
+
+    public RegraNegocioException(String message) {
+        super(message);
+    }
+}
