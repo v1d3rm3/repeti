@@ -13,7 +13,7 @@ import { SessaoUsuarioService } from './autenticacao/sessao-usuario.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'Estuda Concursos';
+  title = 'Repeti';
   UsuarioPapel = UsuarioPapel;
 
   constructor(

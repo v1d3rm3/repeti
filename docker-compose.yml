@@ -12,9 +12,9 @@ services:
       - ./docker/mysql:/docker-entrypoint-initdb.d
 
   api-dev:
-    image: api-estuda-concursos
+    image: repeti-api
     build:
-      context: projeto-rest-api-security/
+      context: api/
       dockerfile: Dockerfile
     environment:
       APP_ENV: ${APP_ENV}
@@ -28,9 +28,9 @@ services:
       - db
   
   api-prod:
-    image: api-estuda-concursos
+    image: repeti-api
     build:
-      context: projeto-rest-api-security/
+      context: api/
       dockerfile: Dockerfile
     environment:
       APP_ENV: prod
@@ -43,10 +43,10 @@ services:
     depends_on:
       - db
 
-  web:
-    image: web-estuda-concursos
+  app:
+    image: repeti-app
     build:
-      context: crud-angular/
+      context: app/
       dockerfile: Dockerfile
     ports:
       - "4000:80"
