@@ -1,7 +1,7 @@
 [
   {
     "_id": "446679f3-08cc-4b88-976c-58c149dc40c0",
-    "colName": "rest-api-vscode",
+    "colName": "rest-api-dev",
     "created": "2022-10-29T17:51:45.828Z",
     "sortNum": 10000,
     "folders": [
@@ -79,9 +79,8 @@
         "type": "bearer",
         "bearer": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmdWxhbm9hZG1pbkBlbWFpbC5jb20iLCJleHAiOjE2NjczODcwODF9.jZ752l08s_Ju3cK1x7csJa6ayUuqrNOlrtyNBlNvOXAGyePkbxYegwcERzzNrHWkKnIgw61RM6uQMKRcXXXTeA"
       },
-      "tests": [],
       "options": {
-        "baseUrl": "http://localhost:8080/api"
+        "baseUrl": "http://localhost:8000/api"
       }
     }
   },
