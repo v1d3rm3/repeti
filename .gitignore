@@ -5,6 +5,9 @@ target/
 !**/src/test/**/target/
 .env
 
+node_modules
+.angular
+
 ### STS ###
 .apt_generated
 .classpath
