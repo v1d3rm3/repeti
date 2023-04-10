@@ -80,7 +80,7 @@
         "bearer": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmdWxhbm9hZG1pbkBlbWFpbC5jb20iLCJleHAiOjE2NjczODcwODF9.jZ752l08s_Ju3cK1x7csJa6ayUuqrNOlrtyNBlNvOXAGyePkbxYegwcERzzNrHWkKnIgw61RM6uQMKRcXXXTeA"
       },
       "options": {
-        "baseUrl": "http://localhost:8000/api"
+        "baseUrl": "localhost:8000/api"
       }
     }
   },

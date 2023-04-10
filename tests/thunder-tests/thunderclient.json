@@ -90,9 +90,13 @@
     "method": "GET",
     "sortNum": 50000,
     "created": "2022-11-02T02:05:11.737Z",
-    "modified": "2022-11-02T02:10:17.437Z",
+    "modified": "2023-04-08T14:12:55.754Z",
     "headers": [],
     "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2aWN0b3JzY2hpbmFpZGVyQG91dGxvb2suY29tIiwiZXhwIjoxNjgwOTgxMDQ1fQ.9sImPjvL9BcsVzAx_DyZKl2znnVzCgWbAvdnPSV14-9CPLcqhRMzH5EcEqkMwUW2L9ZzdQVvBZYyZiuNk-KnzQ"
+    },
     "tests": []
   },
   {
@@ -104,12 +108,12 @@
     "method": "POST",
     "sortNum": 70000,
     "created": "2022-11-02T02:06:42.364Z",
-    "modified": "2023-04-08T01:14:09.690Z",
+    "modified": "2023-04-08T13:59:25.123Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"nome\": \"Fulano\",\n    \"email\": \"fulano@email.com\",\n    \"senha\": \"123\"\n}",
+      "raw": "{\n    \"nome\": \"Fulano Admin\",\n    \"email\": \"2fulanoadmin@email.com\",\n    \"senha\": \"123\"\n}",
       "form": []
     },
     "tests": []
@@ -152,16 +156,16 @@
     "colId": "446679f3-08cc-4b88-976c-58c149dc40c0",
     "containerId": "03f8be16-2b66-4768-9ff5-9067191ef14e",
     "name": "auth",
-    "url": "/usuarios/auth",
+    "url": "{{host}}/usuarios/auth",
     "method": "POST",
     "sortNum": 100000,
     "created": "2022-11-02T02:17:40.915Z",
-    "modified": "2023-04-08T01:14:33.023Z",
+    "modified": "2023-04-08T14:08:58.036Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"email\": \"fulano@email.com\",\n    \"senha\": \"123\"\n}",
+      "raw": "{\n    \"email\": \"2fulanoadmin@email.com\",\n    \"senha\": \"123\"\n}",
       "form": []
     },
     "tests": []
@@ -301,11 +305,11 @@
     "colId": "446679f3-08cc-4b88-976c-58c149dc40c0",
     "containerId": "03f8be16-2b66-4768-9ff5-9067191ef14e",
     "name": "info",
-    "url": "/usuarios/info",
+    "url": "{{host}}/usuarios/info",
     "method": "GET",
     "sortNum": 180000,
     "created": "2022-11-02T06:06:49.510Z",
-    "modified": "2022-11-29T22:52:06.085Z",
+    "modified": "2023-04-06T21:00:55.212Z",
     "headers": [],
     "params": [],
     "auth": {
