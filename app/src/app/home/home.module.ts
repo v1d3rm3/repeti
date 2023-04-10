@@ -12,9 +12,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { CadastroComponent } from './cadastro/cadastro.component';
 import { QuestaoComponent } from './questao/questao.component';
 import { MatRadioModule } from '@angular/material/radio';
+import { EstudosComponent } from './estudos/estudos.component';
 
 @NgModule({
-  declarations: [HomeComponent, LoginComponent, CadastroComponent, QuestaoComponent],
+  declarations: [HomeComponent, LoginComponent, CadastroComponent, QuestaoComponent, EstudosComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,
