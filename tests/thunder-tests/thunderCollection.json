@@ -1,0 +1,173 @@
+[
+  {
+    "_id": "446679f3-08cc-4b88-976c-58c149dc40c0",
+    "colName": "rest-api-dev",
+    "created": "2022-10-29T17:51:45.828Z",
+    "sortNum": 10000,
+    "folders": [
+      {
+        "_id": "446679f3-08cc-4b88-976c-58c149dc40c0",
+        "colName": "alternativa",
+        "created": "2022-10-29T17:51:45.828Z",
+        "sortNum": 10000
+      },
+      {
+        "_id": "54e389fa-9ffb-4034-89e4-19f60258922a",
+        "name": "alternativa",
+        "containerId": "",
+        "created": "2022-11-02T01:59:25.468Z",
+        "sortNum": 10000
+      },
+      {
+        "_id": "03f8be16-2b66-4768-9ff5-9067191ef14e",
+        "name": "usuario",
+        "containerId": "",
+        "created": "2022-11-02T02:03:32.795Z",
+        "sortNum": 20000
+      },
+      {
+        "_id": "53a08ddc-1e84-4c02-a1fa-2ef123ea29b2",
+        "name": "permissoes",
+        "containerId": "",
+        "created": "2022-11-02T02:03:38.259Z",
+        "sortNum": 30000
+      },
+      {
+        "_id": "8639da33-a9b1-4abb-b61d-62f40a533af0",
+        "name": "categoria",
+        "containerId": "",
+        "created": "2022-11-02T02:21:31.455Z",
+        "sortNum": 40000
+      },
+      {
+        "_id": "0ace2c0c-64f2-4f2b-85aa-39333178e791",
+        "name": "permissoes",
+        "containerId": "03f8be16-2b66-4768-9ff5-9067191ef14e",
+        "created": "2022-11-02T02:32:14.136Z",
+        "sortNum": 50000
+      },
+      {
+        "_id": "e73a222f-0b99-4bef-9f0d-02371602202f",
+        "name": "questao",
+        "containerId": "",
+        "created": "2022-11-02T17:28:28.442Z",
+        "sortNum": 60000
+      },
+      {
+        "_id": "a9f3e50c-2800-42df-85c6-3cb08b643747",
+        "name": "lista-de-estudos",
+        "containerId": "",
+        "created": "2022-11-04T19:17:06.843Z",
+        "sortNum": 70000
+      },
+      {
+        "_id": "45b66261-06b7-471e-8b96-2df1b8d909cb",
+        "name": "prova",
+        "containerId": "",
+        "created": "2022-11-06T17:47:56.640Z",
+        "sortNum": 80000
+      }
+    ],
+    "settings": {
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmdWxhbm9hZG1pbkBlbWFpbC5jb20iLCJleHAiOjE2NjczODcwODF9.jZ752l08s_Ju3cK1x7csJa6ayUuqrNOlrtyNBlNvOXAGyePkbxYegwcERzzNrHWkKnIgw61RM6uQMKRcXXXTeA"
+      },
+      "options": {
+        "baseUrl": "localhost:8000/api"
+      }
+    }
+  },
+  {
+    "_id": "508416b1-22ad-4b66-888f-ca00b5b68268",
+    "colName": "rest-api-docker",
+    "created": "2022-11-28T14:46:17.255Z",
+    "sortNum": 20000,
+    "folders": [
+      {
+        "_id": "dd737241-fb1b-4ff6-8110-0ee7c512c9e3",
+        "colName": "alternativa",
+        "created": "2022-11-28T14:46:17.351Z",
+        "sortNum": 10000
+      },
+      {
+        "_id": "aefed71b-c5d4-4a7d-ab3c-bb4f76d4188d",
+        "name": "alternativa",
+        "containerId": "",
+        "created": "2022-11-28T14:46:17.355Z",
+        "sortNum": 10000
+      },
+      {
+        "_id": "dbbe2efa-bf48-4b80-8c5a-7a6f54ad6621",
+        "name": "usuario",
+        "containerId": "",
+        "created": "2022-11-28T14:46:17.356Z",
+        "sortNum": 20000
+      },
+      {
+        "_id": "bb70cda9-4f67-4f2e-85d9-8cc5e87a5e3a",
+        "name": "permissoes",
+        "containerId": "",
+        "created": "2022-11-28T14:46:17.357Z",
+        "sortNum": 30000
+      },
+      {
+        "_id": "43682719-896f-4e06-88d6-03a59c7b96ab",
+        "name": "categoria",
+        "containerId": "",
+        "created": "2022-11-28T14:46:17.358Z",
+        "sortNum": 40000
+      },
+      {
+        "_id": "1ad8fde0-a40c-4005-9b95-6a3396387495",
+        "name": "permissoes",
+        "containerId": "dbbe2efa-bf48-4b80-8c5a-7a6f54ad6621",
+        "created": "2022-11-28T14:46:17.359Z",
+        "sortNum": 50000
+      },
+      {
+        "_id": "32a058b1-fbaf-42f0-a353-7181c9de8818",
+        "name": "questao",
+        "containerId": "",
+        "created": "2022-11-28T14:46:17.360Z",
+        "sortNum": 60000
+      },
+      {
+        "_id": "32708e3e-b9a3-4808-8c29-53dcc7c79884",
+        "name": "lista-de-estudos",
+        "containerId": "",
+        "created": "2022-11-28T14:46:17.361Z",
+        "sortNum": 70000
+      },
+      {
+        "_id": "08a7a11b-047c-4635-afa1-c6b951ea5911",
+        "name": "prova",
+        "containerId": "",
+        "created": "2022-11-28T14:46:17.362Z",
+        "sortNum": 80000
+      }
+    ],
+    "settings": {
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZUBnbWFpbC5jb20iLCJleHAiOjE2NzA0NjI1MTF9.x_wRjMk7bf4EIVenQIT1T85BGiMwOY6WU4lXj4TBfZzLot8keQWMWSCA5EexWlV5DzvZCMK64tg6EiU-BTnbRA"
+      },
+      "tests": [],
+      "options": {
+        "baseUrl": "http://localhost:8000/api"
+      }
+    }
+  }
+]

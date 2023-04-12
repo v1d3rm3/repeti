@@ -1,0 +1,27 @@
+@baseUrl = http://localhost:8080/api/usuarios
+@contentType = application/json
+@token = Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmdWxhbm9AZW1haWwuY29tIiwiZXhwIjoxNjY3MDk3NzAwfQ.e5pZfRHuSfWgixAUliqu_P2rCqDkswdmqfDCSlsM7Y7GUEC6ILNKm_1t7lLktOwo1SKnD2-8MWBWLiWanLss0Q
+
+POST {{baseUrl}}
+Content-Type: {{contentType}}
+
+{
+    "nome": "Fulano",
+    "email": "fulano@email.com",
+    "senha": "123"
+}
+
+###
+
+POST {{baseUrl}}/auth
+Content-Type: {{contentType}}
+
+{
+    "email": "fulano@email.com",
+    "senha": "123"
+}
+
+###
+
+GET {{baseUrl}}
+Authorization: {{token}}

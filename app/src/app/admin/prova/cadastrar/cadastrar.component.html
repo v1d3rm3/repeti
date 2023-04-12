@@ -1,0 +1,40 @@
+<div class="row mat-typography">
+  <div class="col">
+    <h1>Cadastrar Prova</h1>
+  </div>
+</div>
+
+<div class="row mb-4">
+  <div class="col">
+    <a mat-button color="primary" class="me-2" routerLink="/admin/prova">VOLTAR</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <form [formGroup]="form" (ngSubmit)="cadastrar()">
+      <div class="row">
+        <div class="col">
+          <mat-form-field style="width: 400px">
+            <mat-label>Nome da Prova</mat-label>
+            <input matInput type="text" formControlName="nome" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <button
+            type="submit"
+            mat-raised-button
+            color="primary"
+            [disabled]="!form.valid"
+          >
+            Cadastrar
+          </button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>

@@ -1,0 +1,34 @@
+@baseUrl = http://localhost:8080/api/categorias
+@contentType = application/json
+@token = Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmdWxhbm9AZW1haWwuY29tIiwiZXhwIjoxNjY3MDY5NjM2fQ.emQ8RL5kIO_XpRNm79Vhq02Mql-fU9MqOH5ZObhTcjTyYZI5YPvgzXuQJ5sISGIvDMaL6xA4qL57B7cTGs5uDg
+
+
+
+
+GET {{baseUrl}}
+Authorization: {{token}}
+
+###
+
+POST {{baseUrl}}
+Content-Type: {{contentType}}
+Authorization: {{token}}
+
+{
+    "categoria": "avancado"
+}
+
+###
+
+PUT {{baseUrl}}/4
+Content-Type: {{contentType}}
+Authorization: {{token}}
+
+{
+    "categoria": "intermediario"
+}
+
+###
+
+DELETE {{baseUrl}}/2
+Authorization: {{token}}

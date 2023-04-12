@@ -1,0 +1,55 @@
+version: "3.7"
+services:
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      SERVICE_NAME: mysql
+    ports:
+      - "${LOCAL_DATABASE_PORT}:3306"
+    volumes:
+      - ./docker/mysql:/docker-entrypoint-initdb.d
+
+  api-dev:
+    image: repeti-api
+    build:
+      context: api/
+      dockerfile: Dockerfile
+    environment:
+      APP_ENV: ${APP_ENV}
+      LOCAL_DATABASE_URL: db
+      LOCAL_DATABASE_PORT: 3306
+      LOCAL_API_PORT: 8000
+    ports:
+      - "8000:8000"
+    restart: on-failure:5
+    depends_on:
+      - db
+  
+  api-prod:
+    image: repeti-api
+    build:
+      context: api/
+      dockerfile: Dockerfile
+    environment:
+      APP_ENV: prod
+      LOCAL_DATABASE_URL: db
+      LOCAL_DATABASE_PORT: 3306
+      LOCAL_API_PORT: 4000
+    ports:
+      - "8080:8080"
+    restart: on-failure:5
+    depends_on:
+      - db
+
+  app:
+    image: repeti-app
+    build:
+      context: app/
+      dockerfile: Dockerfile
+    ports:
+      - "4000:80"
+    restart: on-failure:5
+    depends_on:
+      - api-prod

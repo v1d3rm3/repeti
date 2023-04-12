@@ -1,0 +1,50 @@
+<div *ngIf="usuario$ | async as usuario">
+  <div class="row mat-typography">
+    <div class="col">
+      <h1>Editar permissão de {{ usuario.nome }}</h1>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col">
+      <a mat-button color="primary" class="me-2" routerLink="/admin/prova"
+        >VOLTAR</a
+      >
+    </div>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="atualizar()">
+    <div class="row">
+      <div class="col">
+        <mat-form-field style="width: 400px">
+          <div *ngIf="permissoes$ | async as permissoes">
+            <mat-radio-group aria-label="Selecione uma permissao">
+              <div *ngFor="let permissao of permissoes">
+                <mat-radio-button
+                  [value]="permissao.nome"
+                  [checked]="permissao.nome == 'ROLE_ADMIN'"
+                  name="permissao"
+                >
+                  {{ permissao.nome }}
+                </mat-radio-button>
+              </div>
+            </mat-radio-group>
+          </div>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <button
+          type="submit"
+          mat-raised-button
+          color="primary"
+          [disabled]="!form.valid"
+        >
+          Atualizar
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
