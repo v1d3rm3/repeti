@@ -1,10 +1,8 @@
 package com.repeti.api.model;
+
 import java.util.List;
-
 import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.*;
 
 @Getter
@@ -25,8 +23,11 @@ public class Categoria {
     private String categoria;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
-    private List<Questao> questoes;
+    @OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
+    private List<Categoria> subCategorias;
+
+    @OneToOne()
+    private Categoria pai;
 
     public Categoria(String categoria) {
         this.categoria = categoria;

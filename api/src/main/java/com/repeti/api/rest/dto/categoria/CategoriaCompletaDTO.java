@@ -24,9 +24,9 @@ public class CategoriaCompletaDTO {
         this.categoria = categoria.getCategoria();
 
         List<QuestaoCompletaDTO> a = new ArrayList<QuestaoCompletaDTO>();
-        for (Questao questao : categoria.getQuestoes()) {
-            a.add(QuestaoCompletaDTO.from(questao));
-        }
+        // for (Questao questao : categoria.getQuestoes()) {
+        //     a.add(QuestaoCompletaDTO.from(questao));
+        // }
         this.questoes = a;
     }
 }
