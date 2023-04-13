@@ -1,6 +1,4 @@
-# DIM0547-DevWebII-ProjetoII
-
-Projeto da segunda e terceira unidades da disciplina de Desenvolvimento de Sistemas Web II da UFRN.
+# Repeti
 
 # Inicializando o banco de dados através do Docker
 Para iniciar o ambiente com o Banco de Dados, primeiro é necessário instalar o Docker:
