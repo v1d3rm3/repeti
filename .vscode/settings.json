@@ -1,5 +1,6 @@
 {
     "thunder-client.saveToWorkspace": true,
     "thunder-client.workspaceRelativePath": "./tests/",
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.compile.nullAnalysis.mode": "automatic"
 }
