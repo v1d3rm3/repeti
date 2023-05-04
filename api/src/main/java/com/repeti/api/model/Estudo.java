@@ -32,7 +32,15 @@ public class Estudo {
   @Column(name = "qualidade")
   private Qualidade qualidade;
 
+  @ManyToOne()
+  @JoinColumn(name = "usuario_id", nullable = false)
   private Usuario usuario;
+
+  @ManyToOne()
+  @JoinColumn(name = "categoria_id", nullable = false)
   private Categoria categoria;
-  private List<Questao> questoesEstudadas; // na verdade, é QuestaoEstudada e não Questao.
+
+  @OneToMany()
+  @JoinColumn(name = "questao_estudada_id", nullable = true)
+  private List<QuestaoEstudada> questoesEstudadas;
 }
