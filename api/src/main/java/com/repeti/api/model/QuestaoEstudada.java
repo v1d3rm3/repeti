@@ -1,8 +1,14 @@
 package com.repeti.api.model;
 
-import java.util.List;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,12 +19,24 @@ import lombok.ToString;
 
 @Getter
 @Setter
-// @AllArgsConstructor
-// @NoArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @Builder
 @Entity
-@Table(name = "questao_estudo")
+@Table(name = "questao_estudada")
 public class QuestaoEstudada {
-  
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "nivel")
+    private Nivel nivel;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "qualidade")
+    private Qualidade qualidade;
+    @ManyToOne()
+    private Usuario usuario;
+    @ManyToOne()
+    private Estudo estudo;
 }
