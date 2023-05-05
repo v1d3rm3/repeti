@@ -1,6 +1,6 @@
 @baseUrl = http://localhost:8000/api/usuarios
 @contentType = application/json
-@token = Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBlbWFpbC5jb20iLCJleHAiOjE2ODMyODA5Mjl9.apB0GgK-7cLsqJ959fKrSzzKqvn_5Jx0MGmX72Vm0T1eOz7V18k7zncftcVqjO3xmetTX8CSyh3EfhHtXMUNdQ
+@token = Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMDFAZW1haWwuY29tIiwiZXhwIjoxNjgzMjgzNjk0fQ.kTJFRgnbkX_KPYDHMJeu1wBJmBxGA9iFh-XkMl_qLwDcB915maAL_IH-0RmRk4cadyfFoyxSJABMPObi_oxvgg
 
 
 ### CADASTRO 
@@ -8,8 +8,8 @@ POST {{ baseUrl }}
 Content-Type: {{ contentType }}
 
 {
-    "nome": "admin",
-    "email": "admin@email.com",
+    "nome": "user01",
+    "email": "user01@email.com",
     "senha": "123"
 }
 
@@ -18,13 +18,12 @@ POST {{ baseUrl }}/auth
 Content-Type: {{ contentType }}
 
 {
-    "email": "admin@email.com",
+    "email": "user01@email.com",
     "senha": "123"
 }
 
 ### INFORMACOES USUARIO LOGADO
 GET {{ baseUrl }}/info
-Authorization: {{ token }}
 
 
 ### TODOS OS USUARIOS

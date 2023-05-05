@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import com.repeti.api.model.Permissao;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,9 +25,7 @@ import com.repeti.api.model.Usuario;
 import com.repeti.api.rest.dto.TokenDTO;
 import com.repeti.api.rest.dto.UsuarioDTO;
 import com.repeti.api.rest.form.LoginForm;
-import com.repeti.api.rest.form.UsuarioPermissaoForm;
 import com.repeti.api.security.JwtService;
-import com.repeti.api.service.PermissaoService;
 import com.repeti.api.service.UsuarioService;
 
 import lombok.RequiredArgsConstructor;
@@ -39,7 +36,6 @@ import lombok.RequiredArgsConstructor;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
-    private final PermissaoService permissaoService;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
@@ -67,8 +63,6 @@ public class UsuarioController {
         if(usuarioService.isEmailNotUsed(usuario)){
             String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
             usuario.setSenha(senhaCriptografada);
-            Permissao permissao = permissaoService.getPermissaoByNome("ROLE_USER");
-            usuario.setPermissao(permissao);
             return UsuarioDTO.converter(usuarioService.salvar(usuario));
         }
         return new UsuarioDTO();
@@ -88,23 +82,6 @@ public class UsuarioController {
         }
     }
 
-    @PostMapping("{id}/permissoes")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public UsuarioDTO atribuirPermissao(@PathVariable Integer id, @RequestBody UsuarioPermissaoForm form) {
-            Permissao permissao = permissaoService.getPermissaoByNome(form.getNomePermissao());
-            Usuario usuario = usuarioService.atribuirPermissao(id, permissao);
-            return new UsuarioDTO(usuario);
-
-    }
-
-    @PostMapping("{email}/email/permissao")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public UsuarioDTO atribuirPermissaoporEmail(@PathVariable String email) {
-            Permissao permissao = permissaoService.getPermissaoByNome("ROLE_USER");
-            Usuario usuario = usuarioService.atribuirPermissaoPorEmail(email, permissao);
-            return new UsuarioDTO(usuario);
-
-    }
 
     @DeleteMapping("{id}")
     public void deletar(@PathVariable("id") String id) {

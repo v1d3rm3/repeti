@@ -1,6 +1,5 @@
 package com.repeti.api.model;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -15,6 +14,7 @@ import lombok.*;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @Builder
 @Entity
@@ -43,13 +43,10 @@ public class Usuario implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Permissao> permissoes;
 
-    public Usuario() {
-        this.permissoes = new ArrayList<Permissao>();
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        System.out.println(this.permissoes);
+        this.permissoes.add(new Permissao("ROLE_USER"));
         return this.permissoes;
     }
 
