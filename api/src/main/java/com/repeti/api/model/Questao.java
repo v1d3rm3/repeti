@@ -35,10 +35,6 @@ public class Questao {
     inverseJoinColumns = @JoinColumn(name = "alternativa_id"))
     private List<Alternativa> alternativas;
 
-    @ManyToMany(mappedBy = "questoes")
-    private List<Prova> provas;
-
-    //Funções
     public Questao(String enunciado){
         this.enunciado = enunciado;
     }

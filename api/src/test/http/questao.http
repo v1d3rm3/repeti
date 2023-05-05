@@ -1,0 +1,30 @@
+### @RequestMapping("api/questoes")
+@baseUrl = http://localhost:8000/api/questoes
+@contentType = application/json
+@token = Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMDFAZW1haWwuY29tIiwiZXhwIjoxNjgzMzE3MzY3fQ.G4HplY7KbK2Lg6kC4DfpSDHMVjeNgWGibSR-tkccnmzfEf9AT6wWFdQIZHhGAiUuXk4ecnRkEqE7HFpfPXxxnQ
+
+### @GetMapping 
+GET {{ baseUrl }}
+Authorization: {{ token }}
+
+### @PostMapping QuestaoForm form
+POST {{ baseUrl }}
+Content-Type: {{ contentType }}
+Authorization: {{ token }}
+
+{
+    "enunciado": "enunciado01"
+}
+
+### @GetMapping("{id}")
+GET {{ baseUrl }}/2
+Authorization: {{ token }}
+
+### @PatchMapping("{id}") @RequestBody QuestaoDto categoria)
+### @PutMapping("{id}/categoria") @RequestBody CategoriaDTO categoria)
+### @PutMapping("{id}/categoria/remover")
+### @PutMapping("{id}/resposta") @RequestBody AlternativaDto alternativa)
+### @PutMapping("{id}/alternativa") @RequestBody AlternativaDto alternativa)
+### @PutMapping("{id}/categoria/{categoriaId}") @PathVariable Integer categoriaId)
+### @PutMapping("{id}/alternativa/remover") @RequestBody AlternativaDto alternativa)
+### @DeleteMapping("{id}")
