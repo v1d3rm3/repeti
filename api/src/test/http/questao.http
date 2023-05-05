@@ -1,7 +1,7 @@
 ### @RequestMapping("api/questoes")
-@baseUrl = http://localhost:8000/api/questoes
-@contentType = application/json
-@token = Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMDFAZW1haWwuY29tIiwiZXhwIjoxNjgzMzMyODc2fQ.qJFw3bGCXXv4vShvsUMeMcwMUgqMLYBMOWtFSZnl7bUJu_LVANkCPRodohm_JF7WTBN2dfoLBF3A-qOR96uo6A
+@baseUrl = {{$dotenv baseUrl}}/questoes
+@contentType = {{$dotenv contentType}}
+@token = Bearer {{$dotenv token}}
 
 ### @GetMapping 
 GET {{ baseUrl }}
@@ -13,29 +13,29 @@ Content-Type: {{ contentType }}
 Authorization: {{ token }}
 
 {
-    "enunciado": "enunciado02"
+    "enunciado": "enunciado3"
 }
 
 ### @GetMapping("{id}")
-GET {{ baseUrl }}/2
+GET {{ baseUrl }}/3
 Authorization: {{ token }}
 
 ### @PostMapping("{id}/resposta") @RequestBody AlternativaDto alternativa)
-POST {{ baseUrl }}/1/resposta
+POST {{ baseUrl }}/2/resposta
 Content-Type: {{ contentType }}
 Authorization: {{ token }}
 
 {
-    "id": 1
+    "id": 9
 }
 
 ### @PutMapping("{id}/resposta") @RequestBody AlternativaDto alternativa)
-PUT {{ baseUrl }}/1/resposta
+PUT {{ baseUrl }}/2/resposta
 Content-Type: {{ contentType }}
 Authorization: {{ token }}
 
 {
-    "id": 1
+    "id": 9
 }
 
 ### @PatchMapping("{id}") @RequestBody QuestaoDto categoria)

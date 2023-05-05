@@ -52,7 +52,11 @@ public class QuestaoController {
 
     @GetMapping("{id}")
     public ResponseEntity<QuestaoCompletaDTO> recuperarPorId(@PathVariable Integer id) {
-        return ResponseEntity.ok(QuestaoCompletaDTO.from(questaoService.getQuestaoById(id)));
+        List<Alternativa> alternativas = alternativaService.listarPorQuestaoId(id);
+        Questao q = questaoService.getQuestaoById(id);
+        q.setAlternativas(alternativas);
+        questaoService.saveQuestao(q);
+        return ResponseEntity.ok(QuestaoCompletaDTO.from(q));
     }
 
     @PatchMapping("{id}")
@@ -114,17 +118,13 @@ public class QuestaoController {
     @PutMapping("{id}/resposta")
     public ResponseEntity<QuestaoCompletaDTO> update(@PathVariable Integer id,
             @RequestBody AlternativaDto alternativa) {
-        try {
             Alternativa alt = alternativaService.recuperarPorId(alternativa.getId());
             List<Alternativa> alternativas = alternativaService.listarPorQuestaoId(id);
             Questao q = questaoService.getQuestaoById(id);
+            q.setAlternativas(alternativas);
             q.setResposta(alt);
             questaoService.saveQuestao(q);
-            q.setAlternativas(alternativas);
             return ResponseEntity.ok(QuestaoCompletaDTO.from(q));
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Alternativa não encontrada");
-        }
     }
 
     @PutMapping("{id}/alternativa")

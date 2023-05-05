@@ -1,6 +1,6 @@
-@baseUrl = http://localhost:8000/api/usuarios
-@contentType = application/json
-@token = Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMDFAZW1haWwuY29tIiwiZXhwIjoxNjgzMzMyODc2fQ.qJFw3bGCXXv4vShvsUMeMcwMUgqMLYBMOWtFSZnl7bUJu_LVANkCPRodohm_JF7WTBN2dfoLBF3A-qOR96uo6A
+@baseUrl = {{$dotenv baseUrl}}/usuarios
+@contentType = {{$dotenv contentType}}
+@token = Bearer {{$dotenv token}}
 
 ### CADASTRO 
 POST {{ baseUrl }}
