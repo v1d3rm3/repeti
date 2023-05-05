@@ -1,27 +1,36 @@
-@baseUrl = http://localhost:8080/api/usuarios
+@baseUrl = http://localhost:8000/api/usuarios
 @contentType = application/json
-@token = Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmdWxhbm9AZW1haWwuY29tIiwiZXhwIjoxNjY3MDk3NzAwfQ.e5pZfRHuSfWgixAUliqu_P2rCqDkswdmqfDCSlsM7Y7GUEC6ILNKm_1t7lLktOwo1SKnD2-8MWBWLiWanLss0Q
+@token = Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBlbWFpbC5jb20iLCJleHAiOjE2ODMyODA5Mjl9.apB0GgK-7cLsqJ959fKrSzzKqvn_5Jx0MGmX72Vm0T1eOz7V18k7zncftcVqjO3xmetTX8CSyh3EfhHtXMUNdQ
 
-POST {{baseUrl}}
-Content-Type: {{contentType}}
+
+### CADASTRO 
+POST {{ baseUrl }}
+Content-Type: {{ contentType }}
 
 {
-    "nome": "Fulano",
-    "email": "fulano@email.com",
+    "nome": "admin",
+    "email": "admin@email.com",
     "senha": "123"
 }
 
-###
-
-POST {{baseUrl}}/auth
-Content-Type: {{contentType}}
+### LOGIN
+POST {{ baseUrl }}/auth
+Content-Type: {{ contentType }}
 
 {
-    "email": "fulano@email.com",
+    "email": "admin@email.com",
     "senha": "123"
 }
 
-###
+### INFORMACOES USUARIO LOGADO
+GET {{ baseUrl }}/info
+Authorization: {{ token }}
 
-GET {{baseUrl}}
-Authorization: {{token}}
+
+### TODOS OS USUARIOS
+GET {{ baseUrl }}
+Authorization: {{ token }}
+
+### BUSCAR PELO ID
+GET {{ baseUrl }}/5
+Authorization: {{ token }}

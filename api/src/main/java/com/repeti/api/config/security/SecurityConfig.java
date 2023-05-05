@@ -38,40 +38,48 @@ public class SecurityConfig {
             .authorizeHttpRequests((authz) -> {
                 try {
                     authz
-                        .antMatchers("/api/alternativas/**")
-                            .hasAnyRole("ADMIN","CLIENTEFREE", "CLIENTEPRO")
+                        .antMatchers("/api/usuarios/auth").permitAll()
 
-                        .antMatchers(HttpMethod.GET, "/api/categorias/**")
-                            .permitAll()
+                        .antMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
 
-                        .antMatchers("/api/categorias/**")
-                            .hasRole("ADMIN")
+                        .antMatchers("/api/usuarios/info").hasAnyRole("ADMIN", "USER")
 
-                        .antMatchers(HttpMethod.GET, "/api/listaDeEstudos/**")
-                            .permitAll()
+                        .antMatchers("/api/usuarios/**").hasRole("ADMIN")
 
-                        .antMatchers(HttpMethod.PATCH, "/api/listaDeEstudos/**")
-                            .permitAll()
+                        // .antMatchers("/api/alternativas/**")
+                        //     .hasAnyRole("ADMIN","CLIENTEFREE", "CLIENTEPRO")
 
-                        .antMatchers("/api/listaDeEstudos/**")
-                            .hasAnyRole("ADMIN","CLIENTEPRO")
+                        // .antMatchers(HttpMethod.GET, "/api/categorias/**")
+                        //     .permitAll()
 
-                        .antMatchers("/api/permissoes/**")
-                            .permitAll()
-                            // .hasRole("ADMIN")
+                        // .antMatchers("/api/categorias/**")
+                        //     .hasRole("ADMIN")
 
-                        .antMatchers("/api/provas/**")
-                            .hasAnyRole("ADMIN","CLIENTEPRO")
+                        // .antMatchers(HttpMethod.GET, "/api/listaDeEstudos/**")
+                        //     .permitAll()
 
-                        .antMatchers("/api/questoes/**")
-                            .hasAnyRole("ADMIN","CLIENTEPRO", "CLIENTEFREE")
+                        // .antMatchers(HttpMethod.PATCH, "/api/listaDeEstudos/**")
+                        //     .permitAll()
 
-                        .antMatchers(HttpMethod.POST, "/api/usuarios/**")
-                            .permitAll()
+                        // .antMatchers("/api/listaDeEstudos/**")
+                        //     .hasAnyRole("ADMIN","CLIENTEPRO")
 
-                        .antMatchers("/api/usuarios/**")
-                            .permitAll()
-                            // .hasRole("ADMIN")
+                        // .antMatchers("/api/permissoes/**")
+                        //     .permitAll()
+                        //     // .hasRole("ADMIN")
+
+                        // .antMatchers("/api/provas/**")
+                        //     .hasAnyRole("ADMIN","CLIENTEPRO")
+
+                        // .antMatchers("/api/questoes/**")
+                        //     .hasAnyRole("ADMIN","CLIENTEPRO", "CLIENTEFREE")
+
+                        // .antMatchers(HttpMethod.POST, "/api/usuarios/**")
+                        //     .permitAll()
+
+                        // .antMatchers("/api/usuarios/**")
+                        //     .permitAll()
+                        //     // .hasRole("ADMIN")
                         
                         .anyRequest().authenticated()   
                         .and() 

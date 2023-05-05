@@ -67,6 +67,8 @@ public class UsuarioController {
         if(usuarioService.isEmailNotUsed(usuario)){
             String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
             usuario.setSenha(senhaCriptografada);
+            Permissao permissao = permissaoService.getPermissaoByNome("ROLE_USER");
+            usuario.setPermissao(permissao);
             return UsuarioDTO.converter(usuarioService.salvar(usuario));
         }
         return new UsuarioDTO();
@@ -94,15 +96,15 @@ public class UsuarioController {
             return new UsuarioDTO(usuario);
 
     }
+
     @PostMapping("{email}/email/permissao")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public UsuarioDTO atribuirPermissaoporEmail(@PathVariable String email) {
-            Permissao permissao = permissaoService.getPermissaoByNome("ROLE_CLIENTEFREE");
+            Permissao permissao = permissaoService.getPermissaoByNome("ROLE_USER");
             Usuario usuario = usuarioService.atribuirPermissaoPorEmail(email, permissao);
             return new UsuarioDTO(usuario);
 
     }
-
 
     @DeleteMapping("{id}")
     public void deletar(@PathVariable("id") String id) {
