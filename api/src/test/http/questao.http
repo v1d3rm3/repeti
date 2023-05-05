@@ -1,7 +1,7 @@
 ### @RequestMapping("api/questoes")
 @baseUrl = http://localhost:8000/api/questoes
 @contentType = application/json
-@token = Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMDFAZW1haWwuY29tIiwiZXhwIjoxNjgzMzE3MzY3fQ.G4HplY7KbK2Lg6kC4DfpSDHMVjeNgWGibSR-tkccnmzfEf9AT6wWFdQIZHhGAiUuXk4ecnRkEqE7HFpfPXxxnQ
+@token = Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMDFAZW1haWwuY29tIiwiZXhwIjoxNjgzMzMyODc2fQ.qJFw3bGCXXv4vShvsUMeMcwMUgqMLYBMOWtFSZnl7bUJu_LVANkCPRodohm_JF7WTBN2dfoLBF3A-qOR96uo6A
 
 ### @GetMapping 
 GET {{ baseUrl }}
@@ -13,17 +13,34 @@ Content-Type: {{ contentType }}
 Authorization: {{ token }}
 
 {
-    "enunciado": "enunciado01"
+    "enunciado": "enunciado02"
 }
 
 ### @GetMapping("{id}")
 GET {{ baseUrl }}/2
 Authorization: {{ token }}
 
+### @PostMapping("{id}/resposta") @RequestBody AlternativaDto alternativa)
+POST {{ baseUrl }}/1/resposta
+Content-Type: {{ contentType }}
+Authorization: {{ token }}
+
+{
+    "id": 1
+}
+
+### @PutMapping("{id}/resposta") @RequestBody AlternativaDto alternativa)
+PUT {{ baseUrl }}/1/resposta
+Content-Type: {{ contentType }}
+Authorization: {{ token }}
+
+{
+    "id": 1
+}
+
 ### @PatchMapping("{id}") @RequestBody QuestaoDto categoria)
 ### @PutMapping("{id}/categoria") @RequestBody CategoriaDTO categoria)
 ### @PutMapping("{id}/categoria/remover")
-### @PutMapping("{id}/resposta") @RequestBody AlternativaDto alternativa)
 ### @PutMapping("{id}/alternativa") @RequestBody AlternativaDto alternativa)
 ### @PutMapping("{id}/categoria/{categoriaId}") @PathVariable Integer categoriaId)
 ### @PutMapping("{id}/alternativa/remover") @RequestBody AlternativaDto alternativa)

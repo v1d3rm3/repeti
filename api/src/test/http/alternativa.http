@@ -1,0 +1,22 @@
+### @RequestMapping("api/alternativa")
+@baseUrl = http://localhost:8000/api/alternativa
+@contentType = application/json
+@token = Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMDFAZW1haWwuY29tIiwiZXhwIjoxNjgzMzMyODc2fQ.qJFw3bGCXXv4vShvsUMeMcwMUgqMLYBMOWtFSZnl7bUJu_LVANkCPRodohm_JF7WTBN2dfoLBF3A-qOR96uo6A
+
+### @GetMapping("questao/{id}")
+GET {{ baseUrl }}/questao/1
+Authorization: {{ token }}
+
+### @PostMapping CriarAlternativaDto params)
+POST {{ baseUrl }}
+Content-Type: {{ contentType }}
+Authorization: {{ token }}
+
+{
+    "alternativa": "alternativa2-4",
+    "questaoId": 2 
+}
+
+### @PatchMapping("{id}") CriarAlternativaDto params)
+
+### @DeleteMapping("{id}")
