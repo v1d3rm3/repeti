@@ -12,7 +12,7 @@ public class QuestaoDto {
     private String enunciado;
 
     public static QuestaoDto from(Questao questao) {
-        var dto = new QuestaoDto();
+        QuestaoDto dto = new QuestaoDto();
         dto.setEnunciado(questao.getEnunciado());
         dto.setId(questao.getId());
         return dto;

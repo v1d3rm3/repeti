@@ -1,6 +1,6 @@
 @baseUrl = http://localhost:8080/api/perfis
 @contentType = application/json
-@token = Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmdWxhbm9AZW1haWwuY29tIiwiZXhwIjoxNjY3MDY5NjM2fQ.emQ8RL5kIO_XpRNm79Vhq02Mql-fU9MqOH5ZObhTcjTyYZI5YPvgzXuQJ5sISGIvDMaL6xA4qL57B7cTGs5uDg
+@token = Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMDFAZW1haWwuY29tIiwiZXhwIjoxNjgzMzM5NDU0fQ.3QVQTn0Ae7weP797feLWIQWL44sqp0WCtiJj1nkO3gsu2Vo2XH1V-Ag_9HFXKa-Zcca0-ln5nvyreSftPzSL-Q
 
 GET {{baseUrl}}
 Authorization: {{token}}

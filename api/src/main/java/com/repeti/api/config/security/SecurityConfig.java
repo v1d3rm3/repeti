@@ -38,40 +38,11 @@ public class SecurityConfig {
             .authorizeHttpRequests((authz) -> {
                 try {
                     authz
-                        .antMatchers("/api/alternativas/**")
-                            .hasAnyRole("ADMIN","CLIENTEFREE", "CLIENTEPRO")
+                        .antMatchers(HttpMethod.POST, "/api/usuarios/auth").permitAll()
 
-                        .antMatchers(HttpMethod.GET, "/api/categorias/**")
-                            .permitAll()
+                        .antMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
 
-                        .antMatchers("/api/categorias/**")
-                            .hasRole("ADMIN")
-
-                        .antMatchers(HttpMethod.GET, "/api/listaDeEstudos/**")
-                            .permitAll()
-
-                        .antMatchers(HttpMethod.PATCH, "/api/listaDeEstudos/**")
-                            .permitAll()
-
-                        .antMatchers("/api/listaDeEstudos/**")
-                            .hasAnyRole("ADMIN","CLIENTEPRO")
-
-                        .antMatchers("/api/permissoes/**")
-                            .permitAll()
-                            // .hasRole("ADMIN")
-
-                        .antMatchers("/api/provas/**")
-                            .hasAnyRole("ADMIN","CLIENTEPRO")
-
-                        .antMatchers("/api/questoes/**")
-                            .hasAnyRole("ADMIN","CLIENTEPRO", "CLIENTEFREE")
-
-                        .antMatchers(HttpMethod.POST, "/api/usuarios/**")
-                            .permitAll()
-
-                        .antMatchers("/api/usuarios/**")
-                            .permitAll()
-                            // .hasRole("ADMIN")
+                        .antMatchers("/api/**").hasRole("USER")
                         
                         .anyRequest().authenticated()   
                         .and() 

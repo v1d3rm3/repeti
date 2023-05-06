@@ -1,3 +1,20 @@
 {
-    "java.compile.nullAnalysis.mode": "automatic"
+    "java.compile.nullAnalysis.mode": "automatic",
+    "thunder-client.saveToWorkspace": true,
+    "thunder-client.workspaceRelativePath": "../tests/",
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "127.0.0.1",
+            "port": 3300,
+            "driver": "MySQL",
+            "name": "repeti_dev",
+            "database": "repeti_dev",
+            "username": "myuserdev",
+            "password": "myuserdev"
+        }
+    ],
 }

@@ -3,6 +3,9 @@ package com.repeti.api.model;
 import java.util.List;
 
 import javax.persistence.*;
+
+import com.repeti.api.exception.RegraNegocioException;
+
 import lombok.*;
 
 @Getter
@@ -35,12 +38,20 @@ public class Questao {
     inverseJoinColumns = @JoinColumn(name = "alternativa_id"))
     private List<Alternativa> alternativas;
 
-    @ManyToMany(mappedBy = "questoes")
-    private List<Prova> provas;
-
-    //Funções
     public Questao(String enunciado){
         this.enunciado = enunciado;
+    }
+
+    public void setResposta(Alternativa resposta) {
+        if (!this.alternativas.contains(resposta)) {
+            throw new RegraNegocioException("Questão não possui a alternativa informada como resposta");
+        }
+        
+        this.resposta = resposta;
+    }
+
+    public boolean checarResposta(Integer id) {
+        return (id == resposta.getId()) ? true : false;       
     }
     
 }

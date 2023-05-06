@@ -28,6 +28,7 @@ import com.repeti.api.rest.dto.AlternativaDto;
 import com.repeti.api.rest.dto.CategoriaDTO;
 import com.repeti.api.rest.dto.QuestaoDto;
 import com.repeti.api.rest.dto.questao.QuestaoCompletaDTO;
+import com.repeti.api.rest.dto.questao.RespostaQuestaoDto;
 import com.repeti.api.rest.form.QuestaoForm;
 import com.repeti.api.service.AlternativaService;
 import com.repeti.api.service.CategoriaService;
@@ -51,7 +52,11 @@ public class QuestaoController {
 
     @GetMapping("{id}")
     public ResponseEntity<QuestaoCompletaDTO> recuperarPorId(@PathVariable Integer id) {
-        return ResponseEntity.ok(QuestaoCompletaDTO.from(questaoService.getQuestaoById(id)));
+        List<Alternativa> alternativas = alternativaService.listarPorQuestaoId(id);
+        Questao q = questaoService.getQuestaoById(id);
+        q.setAlternativas(alternativas);
+        questaoService.saveQuestao(q);
+        return ResponseEntity.ok(QuestaoCompletaDTO.from(q));
     }
 
     @PatchMapping("{id}")
@@ -92,18 +97,34 @@ public class QuestaoController {
         }
     }
 
-    @PutMapping("{id}/resposta")
-    public ResponseEntity<QuestaoCompletaDTO> update(@PathVariable Integer id,
+    @PostMapping("{id}/resposta")
+    public ResponseEntity<RespostaQuestaoDto> checarResposta(@PathVariable Integer id,
             @RequestBody AlternativaDto alternativa) {
         try {
             Alternativa alt = alternativaService.recuperarPorId(alternativa.getId());
             Questao q = questaoService.getQuestaoById(id);
-            q.setResposta(alt);
-            questaoService.saveQuestao(q);
-            return ResponseEntity.ok(QuestaoCompletaDTO.from(q));
+
+            RespostaQuestaoDto respostaDto = new RespostaQuestaoDto();
+            respostaDto.setStatus(q.checarResposta(alt.getId()));
+            respostaDto.setResposta(q.getResposta().getId());
+
+            return ResponseEntity.ok(respostaDto);
+
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Alternativa não encontrada");
         }
+    }
+
+    @PutMapping("{id}/resposta")
+    public ResponseEntity<QuestaoCompletaDTO> update(@PathVariable Integer id,
+            @RequestBody AlternativaDto alternativa) {
+            Alternativa alt = alternativaService.recuperarPorId(alternativa.getId());
+            List<Alternativa> alternativas = alternativaService.listarPorQuestaoId(id);
+            Questao q = questaoService.getQuestaoById(id);
+            q.setAlternativas(alternativas);
+            q.setResposta(alt);
+            questaoService.saveQuestao(q);
+            return ResponseEntity.ok(QuestaoCompletaDTO.from(q));
     }
 
     @PutMapping("{id}/alternativa")

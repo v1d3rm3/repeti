@@ -26,9 +26,7 @@ public class QuestaoServiceImpl implements QuestaoService {
 
     @Override
     public Questao getQuestaoById(Integer id) {
-        return questaoRepository.findById(id).map(questao -> {
-            return questao;
-        }).orElseThrow(() -> null);
+        return questaoRepository.getReferenceById(id);
     }
 
     public void definirCategoria(Questao questao, Categoria categoria) {

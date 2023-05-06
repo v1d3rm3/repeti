@@ -1,0 +1,47 @@
+### @RequestMapping("api/questoes")
+@baseUrl = {{$dotenv baseUrl}}/questoes
+@contentType = {{$dotenv contentType}}
+@token = Bearer {{$dotenv token}}
+
+### @GetMapping 
+GET {{ baseUrl }}
+Authorization: {{ token }}
+
+### @PostMapping QuestaoForm form
+POST {{ baseUrl }}
+Content-Type: {{ contentType }}
+Authorization: {{ token }}
+
+{
+    "enunciado": "enunciado3"
+}
+
+### @GetMapping("{id}")
+GET {{ baseUrl }}/3
+Authorization: {{ token }}
+
+### @PostMapping("{id}/resposta") @RequestBody AlternativaDto alternativa)
+POST {{ baseUrl }}/2/resposta
+Content-Type: {{ contentType }}
+Authorization: {{ token }}
+
+{
+    "id": 9
+}
+
+### @PutMapping("{id}/resposta") @RequestBody AlternativaDto alternativa)
+PUT {{ baseUrl }}/2/resposta
+Content-Type: {{ contentType }}
+Authorization: {{ token }}
+
+{
+    "id": 9
+}
+
+### @PatchMapping("{id}") @RequestBody QuestaoDto categoria)
+### @PutMapping("{id}/categoria") @RequestBody CategoriaDTO categoria)
+### @PutMapping("{id}/categoria/remover")
+### @PutMapping("{id}/alternativa") @RequestBody AlternativaDto alternativa)
+### @PutMapping("{id}/categoria/{categoriaId}") @PathVariable Integer categoriaId)
+### @PutMapping("{id}/alternativa/remover") @RequestBody AlternativaDto alternativa)
+### @DeleteMapping("{id}")

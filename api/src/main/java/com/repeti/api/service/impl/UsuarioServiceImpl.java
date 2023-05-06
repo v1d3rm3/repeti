@@ -7,7 +7,6 @@ import javax.transaction.Transactional;
 
 import com.repeti.api.exception.RegraNegocioException;
 import com.repeti.api.exception.SenhaInvalidaException;
-import com.repeti.api.model.Permissao;
 import com.repeti.api.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,15 +41,6 @@ public class UsuarioServiceImpl implements UsuarioService {
             return true;
         }
         throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Email já Cadastrado");
-    }
-
-    @Transactional
-    @Override
-    public Usuario atribuirPermissao(Integer id, Permissao permissao) {
-        Usuario usuario = getUsuarioById(id);
-        usuario.getPermissoes().clear();
-        usuario.getPermissoes().add(permissao);
-        return repository.save(usuario);
     }
 
     @Override
@@ -107,10 +97,4 @@ public class UsuarioServiceImpl implements UsuarioService {
         return repository.findAll();
     }
 
-    @Override
-    public Usuario atribuirPermissaoPorEmail(String email, Permissao permissao) {
-        Usuario usuario = findByEmail(email);
-        usuario.getPermissoes().add(permissao);
-        return repository.save(usuario);
-    }
 }

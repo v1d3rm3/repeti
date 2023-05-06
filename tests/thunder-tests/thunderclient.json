@@ -156,16 +156,16 @@
     "colId": "446679f3-08cc-4b88-976c-58c149dc40c0",
     "containerId": "03f8be16-2b66-4768-9ff5-9067191ef14e",
     "name": "auth",
-    "url": "{{host}}/usuarios/auth",
+    "url": "/usuarios/auth",
     "method": "POST",
     "sortNum": 100000,
     "created": "2022-11-02T02:17:40.915Z",
-    "modified": "2023-04-08T14:08:58.036Z",
+    "modified": "2023-05-04T11:36:58.647Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"email\": \"2fulanoadmin@email.com\",\n    \"senha\": \"123\"\n}",
+      "raw": "{\n    \"email\": \"user01@email.com\",\n    \"senha\": \"123\"\n}",
       "form": []
     },
     "tests": []
@@ -305,16 +305,16 @@
     "colId": "446679f3-08cc-4b88-976c-58c149dc40c0",
     "containerId": "03f8be16-2b66-4768-9ff5-9067191ef14e",
     "name": "info",
-    "url": "{{host}}/usuarios/info",
+    "url": "/usuarios/info",
     "method": "GET",
     "sortNum": 180000,
     "created": "2022-11-02T06:06:49.510Z",
-    "modified": "2023-04-06T21:00:55.212Z",
+    "modified": "2023-05-04T11:41:02.799Z",
     "headers": [],
     "params": [],
     "auth": {
       "type": "bearer",
-      "bearer": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmdWxhbm9hZG1pbkBlbWFpbC5jb20iLCJleHAiOjE2Njk3ODAyNzl9.gyZMH9yNxp9WUEEfRy9Ob2zmyxSR4QdvU_6PdNw1-yK49-Q4-xr6eO82Vd6RrBGs-Jm1sLFnDgEgiD_qIwOsKQ"
+      "bearer": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMDFAZW1haWwuY29tIiwiZXhwIjoxNjgzMjE4MjE4fQ.uR53rzUn6U-b5x9eBFXzjhtvM39pmtIbqWsfli5CMa_cDrVwunZ_qgBKEopAeIICzvTtDmOABGZdf8zEWeqZJg"
     },
     "tests": []
   },

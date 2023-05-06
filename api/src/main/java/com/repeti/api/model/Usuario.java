@@ -43,9 +43,10 @@ public class Usuario implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Permissao> permissoes;
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        System.out.println(this.permissoes);
+        this.permissoes.add(new Permissao("ROLE_USER"));
         return this.permissoes;
     }
 
@@ -77,6 +78,10 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public boolean setPermissao(Permissao permissao) {
+        return this.permissoes.add(permissao);
     }
 
 }

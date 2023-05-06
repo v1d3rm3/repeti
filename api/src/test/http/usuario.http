@@ -1,27 +1,34 @@
-@baseUrl = http://localhost:8080/api/usuarios
-@contentType = application/json
-@token = Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmdWxhbm9AZW1haWwuY29tIiwiZXhwIjoxNjY3MDk3NzAwfQ.e5pZfRHuSfWgixAUliqu_P2rCqDkswdmqfDCSlsM7Y7GUEC6ILNKm_1t7lLktOwo1SKnD2-8MWBWLiWanLss0Q
+@baseUrl = {{$dotenv baseUrl}}/usuarios
+@contentType = {{$dotenv contentType}}
+@token = Bearer {{$dotenv token}}
 
-POST {{baseUrl}}
-Content-Type: {{contentType}}
+### CADASTRO 
+POST {{ baseUrl }}
+Content-Type: {{ contentType }}
 
 {
-    "nome": "Fulano",
-    "email": "fulano@email.com",
+    "nome": "user01",
+    "email": "user01@email.com",
     "senha": "123"
 }
 
-###
-
-POST {{baseUrl}}/auth
-Content-Type: {{contentType}}
+### LOGIN
+POST {{ baseUrl }}/auth
+Content-Type: {{ contentType }}
 
 {
-    "email": "fulano@email.com",
+    "email": "user01@email.com",
     "senha": "123"
 }
 
-###
+### INFORMACOES USUARIO LOGADO
+GET {{ baseUrl }}/info
+Authorization: {{ token }}
 
-GET {{baseUrl}}
-Authorization: {{token}}
+### TODOS OS USUARIOS
+GET {{ baseUrl }}
+Authorization: {{ token }}
+
+### BUSCAR PELO ID
+GET {{ baseUrl }}/5
+Authorization: {{ token }}

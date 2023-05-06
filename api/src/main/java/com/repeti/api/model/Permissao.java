@@ -9,6 +9,7 @@ import javax.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -16,6 +17,7 @@ import lombok.ToString;
 @Setter
 @Entity
 @ToString
+@NoArgsConstructor
 @Table(name = "permissao")
 public class Permissao implements GrantedAuthority {
 
@@ -23,6 +25,10 @@ public class Permissao implements GrantedAuthority {
     private Long id;
 
     private String nome;
+
+    public Permissao(String nome) {
+        this.nome = nome;
+    }
 
     @Override
     public String getAuthority() {
