@@ -28,10 +28,6 @@ public class Estudo {
   @Column(name = "nivel")
   private Nivel nivel;
 
-  @Enumerated(EnumType.STRING)
-  @Column(name = "qualidade")
-  private Qualidade qualidade;
-
   @ManyToOne()
   @JoinColumn(name = "usuario_id", nullable = false)
   private Usuario usuario;

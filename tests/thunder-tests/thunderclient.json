@@ -167,6 +167,9 @@
     "auth": {
       "type": "none"
     },
+    "auth": {
+      "type": "none"
+    },
     "tests": []
   },
   {
@@ -1287,6 +1290,20 @@
     "sortNum": 60000,
     "created": "2022-12-08T10:51:18.582Z",
     "modified": "2022-12-08T10:59:40.978Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "a6fb7c58-5574-4997-8752-e939c6c9e35d",
+    "colId": "446679f3-08cc-4b88-976c-58c149dc40c0",
+    "containerId": "2530074a-c29f-464a-9bba-8b337f610bcd",
+    "name": "test",
+    "url": "/api/estudos",
+    "method": "GET",
+    "sortNum": 330000,
+    "created": "2023-05-04T22:12:27.443Z",
+    "modified": "2023-05-04T22:12:40.799Z",
     "headers": [],
     "params": [],
     "tests": []

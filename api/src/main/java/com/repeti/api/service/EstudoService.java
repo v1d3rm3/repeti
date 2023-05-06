@@ -10,4 +10,5 @@ import com.repeti.api.rest.dto.estudo.RecuperarEstudosPorUsuarioDto;
 @Service
 public interface EstudoService {
     public List<Estudo> recuperarEstudosDeUsuario(RecuperarEstudosPorUsuarioDto params);
+    // public Estudo criar()
 }
