@@ -1,21 +1,47 @@
 package com.repeti.api.rest.controllers;
 
-import java.security.Principal;
+import java.util.List;
 
+import javax.validation.Valid;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.apache.catalina.connector.Response;
+import org.springframework.http.HttpStatus;
+
+import com.repeti.api.model.Estudo;
+import com.repeti.api.rest.dto.estudo.CriarEstudoReqDto;
+import com.repeti.api.service.EstudoService;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/estudos")
+@RequestMapping("/api/estudo")
 @RequiredArgsConstructor
 public class EstudoController {
 
+    private final EstudoService estudoService;
+
     @GetMapping
-    public void test(Principal principal) {
-        System.out.println(principal.toString());
+    public ResponseEntity<List<Estudo>> listar() {
+        return ResponseEntity.ok(this.estudoService.recuperarEstudosDeUsuario());
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Estudo> salvar(@RequestBody @Valid CriarEstudoReqDto params) {
+        return ResponseEntity.ok(estudoService.criar(params.getCategoria()));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Estudo> findById(@PathVariable Integer id) {
+        return ResponseEntity.ok(this.estudoService.recuperarEstudoPorId(id));
     }
 
     // private final UsuarioService usuarioService;

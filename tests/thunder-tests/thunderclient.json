@@ -167,9 +167,6 @@
     "auth": {
       "type": "none"
     },
-    "auth": {
-      "type": "none"
-    },
     "tests": []
   },
   {
@@ -232,17 +229,13 @@
     "method": "POST",
     "sortNum": 140000,
     "created": "2022-11-02T02:25:28.090Z",
-    "modified": "2022-12-01T11:31:20.729Z",
+    "modified": "2023-05-06T15:01:52.411Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
       "raw": "{\n    \"categoria\": \"categoria1\"\n}\n",
       "form": []
-    },
-    "auth": {
-      "type": "bearer",
-      "bearer": "{{tokenadmin}}"
     },
     "tests": []
   },
@@ -311,13 +304,9 @@
     "method": "GET",
     "sortNum": 180000,
     "created": "2022-11-02T06:06:49.510Z",
-    "modified": "2023-05-04T11:41:02.799Z",
+    "modified": "2023-05-06T13:22:47.669Z",
     "headers": [],
     "params": [],
-    "auth": {
-      "type": "bearer",
-      "bearer": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMDFAZW1haWwuY29tIiwiZXhwIjoxNjgzMjE4MjE4fQ.uR53rzUn6U-b5x9eBFXzjhtvM39pmtIbqWsfli5CMa_cDrVwunZ_qgBKEopAeIICzvTtDmOABGZdf8zEWeqZJg"
-    },
     "tests": []
   },
   {
@@ -329,13 +318,9 @@
     "method": "GET",
     "sortNum": 200000,
     "created": "2022-11-02T17:28:34.892Z",
-    "modified": "2022-11-06T19:08:12.179Z",
+    "modified": "2023-05-06T13:30:55.951Z",
     "headers": [],
     "params": [],
-    "auth": {
-      "type": "bearer",
-      "bearer": "{{tokenadmin}}"
-    },
     "tests": []
   },
   {
@@ -486,129 +471,6 @@
     "auth": {
       "type": "bearer",
       "bearer": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmdWxhbm9hZG1pbkBlbWFpbC5jb20iLCJleHAiOjE2Njc3NjkwNTV9.s6JKnq40wnjgYmJQojsEok1W3rzRRmDcVaKzDBXecfOZm80AE_qZknKgf4l-7liL3NZ0GZbfqJo2Fu_kymHPMA"
-    },
-    "tests": []
-  },
-  {
-    "_id": "37a80426-be56-4897-aece-45cfbe9c4642",
-    "colId": "446679f3-08cc-4b88-976c-58c149dc40c0",
-    "containerId": "45b66261-06b7-471e-8b96-2df1b8d909cb",
-    "name": "criar",
-    "url": "/api/prova",
-    "method": "POST",
-    "sortNum": 280000,
-    "created": "2022-11-06T17:48:01.884Z",
-    "modified": "2022-11-30T09:55:11.460Z",
-    "headers": [],
-    "params": [],
-    "body": {
-      "type": "json",
-      "raw": "{\n  \"nome\": \"Concurso da Assembleia Legislativa do RN\"\n}",
-      "form": []
-    },
-    "auth": {
-      "type": "bearer",
-      "bearer": "{{tokenadmin}}"
-    },
-    "tests": []
-  },
-  {
-    "_id": "a966fd50-8a78-42a7-9c85-220194e4b873",
-    "colId": "446679f3-08cc-4b88-976c-58c149dc40c0",
-    "containerId": "45b66261-06b7-471e-8b96-2df1b8d909cb",
-    "name": "listar",
-    "url": "/api/prova",
-    "method": "GET",
-    "sortNum": 290000,
-    "created": "2022-11-06T18:31:06.780Z",
-    "modified": "2022-11-06T18:31:22.102Z",
-    "headers": [],
-    "params": [],
-    "auth": {
-      "type": "bearer",
-      "bearer": "{{tokenadmin}}"
-    },
-    "tests": []
-  },
-  {
-    "_id": "b7ed01a8-61ee-4c02-8130-94e2887a70fb",
-    "colId": "446679f3-08cc-4b88-976c-58c149dc40c0",
-    "containerId": "45b66261-06b7-471e-8b96-2df1b8d909cb",
-    "name": "recuperar-por-id",
-    "url": "/api/prova/2",
-    "method": "GET",
-    "sortNum": 300000,
-    "created": "2022-11-06T18:34:40.408Z",
-    "modified": "2022-11-06T19:10:00.263Z",
-    "headers": [],
-    "params": [],
-    "auth": {
-      "type": "bearer",
-      "bearer": "{{tokenadmin}}"
-    },
-    "tests": []
-  },
-  {
-    "_id": "cd51e061-8ae1-4804-a557-fdcc9405bcd2",
-    "colId": "446679f3-08cc-4b88-976c-58c149dc40c0",
-    "containerId": "45b66261-06b7-471e-8b96-2df1b8d909cb",
-    "name": "remover",
-    "url": "/api/prova/1",
-    "method": "DELETE",
-    "sortNum": 310000,
-    "created": "2022-11-06T18:44:33.003Z",
-    "modified": "2022-11-06T18:45:43.430Z",
-    "headers": [],
-    "params": [],
-    "auth": {
-      "type": "bearer",
-      "bearer": "{{tokenadmin}}"
-    },
-    "tests": []
-  },
-  {
-    "_id": "034378e4-d25f-4b75-9b69-240de5a9e57f",
-    "colId": "446679f3-08cc-4b88-976c-58c149dc40c0",
-    "containerId": "45b66261-06b7-471e-8b96-2df1b8d909cb",
-    "name": "atualizar",
-    "url": "/api/prova",
-    "method": "PATCH",
-    "sortNum": 285000,
-    "created": "2022-11-06T18:58:47.489Z",
-    "modified": "2022-11-30T20:10:34.491Z",
-    "headers": [],
-    "params": [],
-    "body": {
-      "type": "json",
-      "raw": "{\n  \"id\": 8,\n  \"nome\": \"Prova 3\"\n}",
-      "form": []
-    },
-    "auth": {
-      "type": "bearer",
-      "bearer": "{{tokenadmin}}"
-    },
-    "tests": []
-  },
-  {
-    "_id": "89ca37be-6b4a-4de1-b747-6aa7526ea445",
-    "colId": "446679f3-08cc-4b88-976c-58c149dc40c0",
-    "containerId": "45b66261-06b7-471e-8b96-2df1b8d909cb",
-    "name": "adicionar-questao",
-    "url": "/api/prova/2/questao",
-    "method": "POST",
-    "sortNum": 320000,
-    "created": "2022-11-06T19:09:00.174Z",
-    "modified": "2022-11-06T19:09:34.904Z",
-    "headers": [],
-    "params": [],
-    "body": {
-      "type": "json",
-      "raw": "{\n  \"questaoId\": 1\n}",
-      "form": []
-    },
-    "auth": {
-      "type": "bearer",
-      "bearer": "{{tokenadmin}}"
     },
     "tests": []
   },
@@ -1298,14 +1160,47 @@
     "_id": "a6fb7c58-5574-4997-8752-e939c6c9e35d",
     "colId": "446679f3-08cc-4b88-976c-58c149dc40c0",
     "containerId": "2530074a-c29f-464a-9bba-8b337f610bcd",
-    "name": "test",
-    "url": "/api/estudos",
+    "name": "listar",
+    "url": "/estudo",
     "method": "GET",
     "sortNum": 330000,
     "created": "2023-05-04T22:12:27.443Z",
-    "modified": "2023-05-04T22:12:40.799Z",
+    "modified": "2023-05-06T13:35:25.872Z",
     "headers": [],
     "params": [],
+    "tests": []
+  },
+  {
+    "_id": "1bf418f2-771b-4be4-b996-6803e53c763c",
+    "colId": "446679f3-08cc-4b88-976c-58c149dc40c0",
+    "containerId": "2530074a-c29f-464a-9bba-8b337f610bcd",
+    "name": "recuperarPorId",
+    "url": "/estudo/1",
+    "method": "GET",
+    "sortNum": 340000,
+    "created": "2023-05-06T14:11:59.398Z",
+    "modified": "2023-05-06T14:12:15.896Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "1e384aff-fc0c-4c1e-9593-469d6981974f",
+    "colId": "446679f3-08cc-4b88-976c-58c149dc40c0",
+    "containerId": "2530074a-c29f-464a-9bba-8b337f610bcd",
+    "name": "criar",
+    "url": "/estudo",
+    "method": "POST",
+    "sortNum": 350000,
+    "created": "2023-05-06T14:59:00.313Z",
+    "modified": "2023-05-06T14:59:25.367Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"nivel\": \"Facil\",\n  \"categoria\": 1\n}",
+      "form": []
+    },
     "tests": []
   }
 ]

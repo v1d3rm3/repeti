@@ -54,20 +54,6 @@
         "sortNum": 60000
       },
       {
-        "_id": "a9f3e50c-2800-42df-85c6-3cb08b643747",
-        "name": "lista-de-estudos",
-        "containerId": "",
-        "created": "2022-11-04T19:17:06.843Z",
-        "sortNum": 70000
-      },
-      {
-        "_id": "45b66261-06b7-471e-8b96-2df1b8d909cb",
-        "name": "prova",
-        "containerId": "",
-        "created": "2022-11-06T17:47:56.640Z",
-        "sortNum": 80000
-      },
-      {
         "_id": "2530074a-c29f-464a-9bba-8b337f610bcd",
         "name": "estudo",
         "containerId": "",

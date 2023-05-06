@@ -33,7 +33,7 @@ public class Estudo {
   private Usuario usuario;
 
   @ManyToOne()
-  @JoinColumn(name = "categoria_id", nullable = false)
+  // @JoinColumn(name = "categoria_id", nullable = false)
   private Categoria categoria;
 
   @OneToMany()
