@@ -90,13 +90,9 @@
     "method": "GET",
     "sortNum": 50000,
     "created": "2022-11-02T02:05:11.737Z",
-    "modified": "2023-04-08T14:12:55.754Z",
+    "modified": "2023-05-06T13:12:06.897Z",
     "headers": [],
     "params": [],
-    "auth": {
-      "type": "bearer",
-      "bearer": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2aWN0b3JzY2hpbmFpZGVyQG91dGxvb2suY29tIiwiZXhwIjoxNjgwOTgxMDQ1fQ.9sImPjvL9BcsVzAx_DyZKl2znnVzCgWbAvdnPSV14-9CPLcqhRMzH5EcEqkMwUW2L9ZzdQVvBZYyZiuNk-KnzQ"
-    },
     "tests": []
   },
   {
@@ -108,12 +104,12 @@
     "method": "POST",
     "sortNum": 70000,
     "created": "2022-11-02T02:06:42.364Z",
-    "modified": "2023-04-08T13:59:25.123Z",
+    "modified": "2023-05-06T13:07:45.148Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"nome\": \"Fulano Admin\",\n    \"email\": \"2fulanoadmin@email.com\",\n    \"senha\": \"123\"\n}",
+      "raw": "{\n    \"nome\": \"Fulano Admin\",\n    \"email\": \"fulanoadmin@email.com\",\n    \"senha\": \"123\"\n}",
       "form": []
     },
     "tests": []
@@ -160,13 +156,16 @@
     "method": "POST",
     "sortNum": 100000,
     "created": "2022-11-02T02:17:40.915Z",
-    "modified": "2023-05-04T11:36:58.647Z",
+    "modified": "2023-05-06T13:09:05.178Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"email\": \"user01@email.com\",\n    \"senha\": \"123\"\n}",
+      "raw": "{\n    \"email\": \"fulanoadmin@email.com\",\n    \"senha\": \"123\"\n}",
       "form": []
+    },
+    "auth": {
+      "type": "none"
     },
     "tests": []
   },
