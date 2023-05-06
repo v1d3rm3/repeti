@@ -1175,11 +1175,11 @@
     "colId": "446679f3-08cc-4b88-976c-58c149dc40c0",
     "containerId": "2530074a-c29f-464a-9bba-8b337f610bcd",
     "name": "recuperarPorId",
-    "url": "/estudo/1",
+    "url": "/estudo/3",
     "method": "GET",
     "sortNum": 340000,
     "created": "2023-05-06T14:11:59.398Z",
-    "modified": "2023-05-06T14:12:15.896Z",
+    "modified": "2023-05-06T19:55:21.788Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -1201,6 +1201,20 @@
       "raw": "{\n  \"nivel\": \"Facil\",\n  \"categoria\": 1\n}",
       "form": []
     },
+    "tests": []
+  },
+  {
+    "_id": "6ee6810b-d3b8-4265-b3af-5197a77ac76f",
+    "colId": "446679f3-08cc-4b88-976c-58c149dc40c0",
+    "containerId": "2530074a-c29f-464a-9bba-8b337f610bcd",
+    "name": "encerrar-estudo",
+    "url": "/estudo/1",
+    "method": "DELETE",
+    "sortNum": 360000,
+    "created": "2023-05-06T20:35:19.857Z",
+    "modified": "2023-05-06T20:35:43.540Z",
+    "headers": [],
+    "params": [],
     "tests": []
   }
 ]

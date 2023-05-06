@@ -9,6 +9,6 @@ import org.springframework.data.repository.query.Param;
 import com.repeti.api.model.Estudo;
 
 public interface EstudoRepository extends JpaRepository<Estudo, Integer> {
-    @Query(value = "SELECT a FROM Estudo a WHERE a.usuario.id = :usuarioId")
+    @Query(value = "SELECT a FROM Estudo a WHERE a.usuario.id = :usuarioId AND a.desativado IS NULL")
     List<Estudo> listar(@Param("usuarioId") int usuarioId);
 }
