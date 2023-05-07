@@ -1,12 +1,10 @@
 package com.repeti.api.rest.controllers;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
 
-import com.repeti.api.model.Categoria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.util.UriComponentsBuilder;
 
+import com.repeti.api.model.Categoria;
 import com.repeti.api.rest.dto.CategoriaDTO;
 import com.repeti.api.rest.dto.categoria.CategoriaCompletaDTO;
 import com.repeti.api.rest.form.CategoriaForm;
@@ -50,22 +48,24 @@ public class CategoriaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<CategoriaDTO> save(@RequestBody @Valid CategoriaForm form, UriComponentsBuilder uriBuilder) {
-        Categoria categoria = form.converter();
-        categoriaService.saveCategoria(categoria);
-
-        URI uri = uriBuilder.path("/categorias/{id}").buildAndExpand(categoria.getId()).toUri();
-        return ResponseEntity.created(uri).body(new CategoriaDTO(categoria));
+    public ResponseEntity<Categoria> save(@RequestBody @Valid CategoriaForm form) {
+        Categoria categoria;
+        if (form.getPai() > 0) {
+            categoria = categoriaService.criar(form.getCategoria(), form.getPai());
+        } else {
+            categoria = categoriaService.criar(form.getCategoria());
+        }
+        return ResponseEntity.ok(categoria);
     }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable Integer id,
-                       @RequestBody Categoria categoria) {
+            @RequestBody Categoria categoria) {
         try {
             categoriaService.atualizarCategoria(id, categoria.getCategoria());
         } catch (Exception e) {
-           throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Categoria não encontrada");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Categoria não encontrada");
         }
     }
 
@@ -75,7 +75,7 @@ public class CategoriaController {
         try {
             categoriaService.removeCategoria(id);
         } catch (Exception e) {
-           throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Categoria não encontrada");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Categoria não encontrada");
         }
     }
 

@@ -20,6 +20,8 @@ public class CategoriaForm {
     @NotNull @NotEmpty @Length(min = 5)
     private String categoria;
 
+    private int pai;
+
     public Categoria converter() {
         return new Categoria(this.categoria);
     }

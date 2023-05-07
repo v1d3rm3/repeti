@@ -11,6 +11,9 @@ public interface CategoriaService {
 
     public Categoria saveCategoria(Categoria categoria);
 
+    public Categoria criar(String categoria);
+    public Categoria criar(String categoria, int pai);
+
     public void removeCategoria(String id);
 
     public void atualizarCategoria(int id, String categoria);
