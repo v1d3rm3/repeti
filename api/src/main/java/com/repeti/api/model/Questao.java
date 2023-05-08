@@ -28,6 +28,14 @@ public class Questao {
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "nivel")
+    private Nivel nivel;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "qualidade")
+    private Qualidade qualidade;
+
     @OneToOne
     @JoinColumn(name = "resposta_id")
     private Alternativa resposta;
