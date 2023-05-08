@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.repeti.api.exception.RegraNegocioException;
 
 import lombok.*;
@@ -30,10 +32,12 @@ public class Questao {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "nivel")
+    @ColumnDefault(value = "'MuitoFacil'")
     private Nivel nivel;
     
     @Enumerated(EnumType.STRING)
     @Column(name = "qualidade")
+    @ColumnDefault(value = "'Mediana'")
     private Qualidade qualidade;
 
     @OneToOne

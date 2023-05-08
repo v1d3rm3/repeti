@@ -104,13 +104,16 @@
     "method": "POST",
     "sortNum": 70000,
     "created": "2022-11-02T02:06:42.364Z",
-    "modified": "2023-05-06T13:07:45.148Z",
+    "modified": "2023-05-08T00:15:49.328Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
       "raw": "{\n    \"nome\": \"Fulano Admin\",\n    \"email\": \"fulanoadmin@email.com\",\n    \"senha\": \"123\"\n}",
       "form": []
+    },
+    "auth": {
+      "type": "none"
     },
     "tests": []
   },
@@ -229,12 +232,12 @@
     "method": "POST",
     "sortNum": 140000,
     "created": "2022-11-02T02:25:28.090Z",
-    "modified": "2023-05-06T15:01:52.411Z",
+    "modified": "2023-05-07T23:03:44.670Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"categoria\": \"categoria1\"\n}\n",
+      "raw": "{\n    \"categoria\": \"categoria7\",\n    \"pai\": 5\n}\n",
       "form": []
     },
     "tests": []
@@ -332,17 +335,13 @@
     "method": "POST",
     "sortNum": 210000,
     "created": "2022-11-02T18:15:02.147Z",
-    "modified": "2022-11-06T19:08:39.286Z",
+    "modified": "2023-05-08T00:14:54.109Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"enunciado\": \"intermediario1\"\n}\n",
+      "raw": "{\n    \"enunciado\": \"intermediario2\"\n}\n",
       "form": []
-    },
-    "auth": {
-      "type": "bearer",
-      "bearer": "{{tokenadmin}}"
     },
     "tests": []
   },
@@ -1213,6 +1212,20 @@
     "sortNum": 360000,
     "created": "2023-05-06T20:35:19.857Z",
     "modified": "2023-05-06T20:35:43.540Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "944fdb6a-6a0c-43d0-9dda-e666f6ac33e3",
+    "colId": "446679f3-08cc-4b88-976c-58c149dc40c0",
+    "containerId": "2530074a-c29f-464a-9bba-8b337f610bcd",
+    "name": "proxima-questao",
+    "url": "/estudo/2/proxima-questao",
+    "method": "GET",
+    "sortNum": 370000,
+    "created": "2023-05-07T23:17:59.381Z",
+    "modified": "2023-05-07T23:18:16.046Z",
     "headers": [],
     "params": [],
     "tests": []

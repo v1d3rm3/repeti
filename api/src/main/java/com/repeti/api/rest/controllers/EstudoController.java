@@ -61,8 +61,8 @@ public class EstudoController {
      * @return Questao A questão selecionada
      */
     @GetMapping("/{id}/proxima-questao")
-    public ResponseEntity<Questao> proximaQuestao() {
-        return null;
+    public ResponseEntity<Questao> proximaQuestao(@PathVariable Integer id) {
+        return ResponseEntity.ok(estudoService.proximaQuestao(id));
     }
 
     /**
@@ -78,5 +78,5 @@ public class EstudoController {
     // CASO USO: resolver questão
 
     // CASO USO: avaliar questão
-    
+
 }

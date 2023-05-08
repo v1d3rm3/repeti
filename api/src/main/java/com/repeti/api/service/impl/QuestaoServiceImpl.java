@@ -1,7 +1,10 @@
 package com.repeti.api.service.impl;
+
 import java.util.List;
 
 import com.repeti.api.model.Categoria;
+import com.repeti.api.model.Nivel;
+import com.repeti.api.model.Qualidade;
 import com.repeti.api.model.Questao;
 import com.repeti.api.repository.QuestaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,8 @@ public class QuestaoServiceImpl implements QuestaoService {
 
     @Override
     public Questao saveQuestao(Questao questao) {
+        questao.setNivel(Nivel.MuitoFacil);
+        questao.setQualidade(Qualidade.Mediana);
         return questaoRepository.save(questao);
     }
 
@@ -36,7 +41,7 @@ public class QuestaoServiceImpl implements QuestaoService {
 
     @Override
     public List<Questao> getListQuestao() {
-       return questaoRepository.findAll();
+        return questaoRepository.findAll();
     }
 
     public void atualizarQuestaoEnunciado(int id, String enunciado) {

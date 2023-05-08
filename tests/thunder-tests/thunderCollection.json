@@ -70,7 +70,7 @@
       ],
       "auth": {
         "type": "bearer",
-        "bearer": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmdWxhbm9hZG1pbkBlbWFpbC5jb20iLCJleHAiOjE2ODM0MjA4MjF9.q-OVh7yJGIYRrGYrscIF2WdLwONWwUUPoczx1nS4Brewxu5ftoaTHz8kNveA5o9sZxp00Y4KZ1k8dnTJH1IvzA"
+        "bearer": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmdWxhbm9hZG1pbkBlbWFpbC5jb20iLCJleHAiOjE2ODM1MjI5NTZ9.t2KKswnO8XOhlvZu7f_8rjyql2x-YXE6ZppVrQ0DHRTjsg_1MRChpsJZnUfdcCPb9LyueLr55QNLYrP82oFprA\""
       },
       "options": {
         "baseUrl": "localhost:8000/api"
