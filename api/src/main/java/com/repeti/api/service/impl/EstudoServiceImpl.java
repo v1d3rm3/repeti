@@ -3,6 +3,7 @@ package com.repeti.api.service.impl;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +17,7 @@ import com.repeti.api.model.Nivel;
 import com.repeti.api.model.Questao;
 import com.repeti.api.repository.CategoriaRepository;
 import com.repeti.api.repository.EstudoRepository;
+import com.repeti.api.repository.QuestaoEstudadaRepository;
 import com.repeti.api.repository.QuestaoRepository;
 import com.repeti.api.repository.UsuarioRepository;
 import com.repeti.api.service.EstudoService;
@@ -34,6 +36,9 @@ public class EstudoServiceImpl implements EstudoService {
 
     @Autowired
     QuestaoRepository questaoRepository;
+
+    @Autowired
+    QuestaoEstudadaRepository questaoEstudadaRepository;
 
     @Override
     public List<Estudo> recuperarEstudosDeUsuario() {
@@ -149,10 +154,44 @@ public class EstudoServiceImpl implements EstudoService {
         var questoes = questaoRepository.recuperarQuestoesPorNivelECategoria(estudo.getNivelAtual(), categoriasIds);
 
         // 1. eliminar as questões já estudadas
-        // 2. caso não haja mais questões para estudar? Próximo nível, como fazer isso?
-        // 3. se tiver questoes, sortear uma e retornar.
+        var questoesJaEstudadas = questaoEstudadaRepository.recuperarQuestaoEstudadasPorEstudo(estudoId,
+                estudo.getNivelAtual());
 
-        return questoes.get(0);
+        for (Questao q : questoes) {
+            var jaFoiFeita = questoesJaEstudadas.stream().anyMatch(qe -> qe.getQuestao().getId() == q.getId());
+            if (jaFoiFeita) {
+                questoes.remove(q);
+            }
+        }
+
+        // 2. caso não haja mais questões para estudar? Próximo nível, como fazer isso?
+        if (questoes.size() <= 0) {
+            if (estudo.getNivelAtual() == Nivel.MuitoDificil) {
+                return null;
+            } else {
+                estudo.setNivelAtual(proximoNivel(estudo.getNivelAtual()));
+                estudoRepository.save(estudo);
+                return proximaQuestao(estudo.getId());
+            }
+        }
+
+        // 3. se tiver questoes, sortear uma e retornar.
+        Random rand = new Random();
+        int i = rand.nextInt(questoes.size());
+
+        return questoes.get(i);
+    }
+
+    private Nivel proximoNivel(Nivel nivel) {
+        if (nivel == Nivel.MuitoFacil) {
+            return Nivel.Facil;
+        } else if (nivel == Nivel.Facil) {
+            return Nivel.Mediana;
+        } else if (nivel == Nivel.Mediana) {
+            return Nivel.Dificil;
+        } else {
+            return Nivel.MuitoDificil;
+        }
     }
 
     /**

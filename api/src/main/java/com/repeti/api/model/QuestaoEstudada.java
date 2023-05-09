@@ -39,4 +39,6 @@ public class QuestaoEstudada {
     private Usuario usuario;
     @ManyToOne()
     private Estudo estudo;
+    @ManyToOne
+    private Questao questao;
 }
