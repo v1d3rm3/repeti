@@ -2,6 +2,7 @@ package com.repeti.api.service.impl;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -157,10 +158,13 @@ public class EstudoServiceImpl implements EstudoService {
         var questoesJaEstudadas = questaoEstudadaRepository.recuperarQuestaoEstudadasPorEstudo(estudoId,
                 estudo.getNivelAtual());
 
-        for (Questao q : questoes) {
+        Iterator<Questao> it = questoes.iterator();
+
+        while (it.hasNext()) {
+            var q = it.next();
             var jaFoiFeita = questoesJaEstudadas.stream().anyMatch(qe -> qe.getQuestao().getId() == q.getId());
             if (jaFoiFeita) {
-                questoes.remove(q);
+                it.remove();
             }
         }
 

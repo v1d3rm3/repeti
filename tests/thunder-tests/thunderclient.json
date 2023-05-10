@@ -214,13 +214,9 @@
     "method": "GET",
     "sortNum": 130000,
     "created": "2022-11-02T02:25:22.297Z",
-    "modified": "2022-11-06T16:12:11.267Z",
+    "modified": "2023-05-09T23:53:55.586Z",
     "headers": [],
     "params": [],
-    "auth": {
-      "type": "bearer",
-      "bearer": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmdWxhbm9hZG1pbkBlbWFpbC5jb20iLCJleHAiOjE2Njc3NjkwNTV9.s6JKnq40wnjgYmJQojsEok1W3rzRRmDcVaKzDBXecfOZm80AE_qZknKgf4l-7liL3NZ0GZbfqJo2Fu_kymHPMA"
-    },
     "tests": []
   },
   {
@@ -232,12 +228,12 @@
     "method": "POST",
     "sortNum": 140000,
     "created": "2022-11-02T02:25:28.090Z",
-    "modified": "2023-05-07T23:03:44.670Z",
+    "modified": "2023-05-09T23:54:35.130Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"categoria\": \"categoria7\",\n    \"pai\": 5\n}\n",
+      "raw": "{\n    \"categoria\": \"categoria6\",\n    \"pai\": 4\n  \n}\n",
       "form": []
     },
     "tests": []
@@ -335,12 +331,12 @@
     "method": "POST",
     "sortNum": 210000,
     "created": "2022-11-02T18:15:02.147Z",
-    "modified": "2023-05-08T00:14:54.109Z",
+    "modified": "2023-05-09T23:55:24.355Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"enunciado\": \"intermediario2\"\n}\n",
+      "raw": "{\n    \"enunciado\": \"muitofacil\"\n}\n",
       "form": []
     },
     "tests": []
@@ -350,21 +346,17 @@
     "colId": "446679f3-08cc-4b88-976c-58c149dc40c0",
     "containerId": "e73a222f-0b99-4bef-9f0d-02371602202f",
     "name": "Put Categoria",
-    "url": "/questoes/1/categoria",
+    "url": "/questoes/3/categoria",
     "method": "PUT",
     "sortNum": 220000,
     "created": "2022-11-03T16:40:42.004Z",
-    "modified": "2022-11-06T16:14:23.946Z",
+    "modified": "2023-05-09T23:56:30.662Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
       "raw": "{\n   \"categoria\": \"intermediario\"\n}",
       "form": []
-    },
-    "auth": {
-      "type": "bearer",
-      "bearer": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmdWxhbm9hZG1pbkBlbWFpbC5jb20iLCJleHAiOjE2Njc3NjkwNTV9.s6JKnq40wnjgYmJQojsEok1W3rzRRmDcVaKzDBXecfOZm80AE_qZknKgf4l-7liL3NZ0GZbfqJo2Fu_kymHPMA"
     },
     "tests": []
   },
@@ -1061,13 +1053,9 @@
     "method": "GET",
     "sortNum": 135000,
     "created": "2022-12-01T12:47:19.631Z",
-    "modified": "2022-12-01T12:47:32.327Z",
+    "modified": "2023-05-09T23:55:00.124Z",
     "headers": [],
     "params": [],
-    "auth": {
-      "type": "bearer",
-      "bearer": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmdWxhbm9hZG1pbkBlbWFpbC5jb20iLCJleHAiOjE2Njc3NjkwNTV9.s6JKnq40wnjgYmJQojsEok1W3rzRRmDcVaKzDBXecfOZm80AE_qZknKgf4l-7liL3NZ0GZbfqJo2Fu_kymHPMA"
-    },
     "tests": []
   },
   {
@@ -1192,12 +1180,12 @@
     "method": "POST",
     "sortNum": 350000,
     "created": "2023-05-06T14:59:00.313Z",
-    "modified": "2023-05-06T14:59:25.367Z",
+    "modified": "2023-05-09T23:57:29.000Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"nivel\": \"Facil\",\n  \"categoria\": 1\n}",
+      "raw": "{\n  \"nivel\": \"MuitoFacil\",\n  \"categoria\": 3\n}",
       "form": []
     },
     "tests": []
@@ -1221,11 +1209,11 @@
     "colId": "446679f3-08cc-4b88-976c-58c149dc40c0",
     "containerId": "2530074a-c29f-464a-9bba-8b337f610bcd",
     "name": "proxima-questao",
-    "url": "/estudo/2/proxima-questao",
+    "url": "/estudo/1/proxima-questao",
     "method": "GET",
     "sortNum": 370000,
     "created": "2023-05-07T23:17:59.381Z",
-    "modified": "2023-05-07T23:18:16.046Z",
+    "modified": "2023-05-09T23:57:56.570Z",
     "headers": [],
     "params": [],
     "tests": []
