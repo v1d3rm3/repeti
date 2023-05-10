@@ -16,6 +16,8 @@ import com.repeti.api.model.Categoria;
 import com.repeti.api.model.Estudo;
 import com.repeti.api.model.Nivel;
 import com.repeti.api.model.Questao;
+import com.repeti.api.model.QuestaoEstudada;
+import com.repeti.api.repository.AlternativaRepository;
 import com.repeti.api.repository.CategoriaRepository;
 import com.repeti.api.repository.EstudoRepository;
 import com.repeti.api.repository.QuestaoEstudadaRepository;
@@ -25,6 +27,9 @@ import com.repeti.api.service.EstudoService;
 
 @Component
 public class EstudoServiceImpl implements EstudoService {
+
+    @Autowired
+    AlternativaRepository alternativaRepository;
 
     @Autowired
     EstudoRepository estudoRepository;
@@ -218,6 +223,43 @@ public class EstudoServiceImpl implements EstudoService {
         }
 
         return arr;
+    }
+
+    /*
+     * Resolver uma questão em um estudo, vai receber a questão que está 
+     * relacionada com a resolução, a alternativa que foi escolhido como resposta
+     * e o estudo que está relacionado à questão.
+     * 
+     * Regras:
+     * 1. O usuário deve ser 'dono' do estudo
+     * 2. A questão deve ser deve realmente relação com o estudo atual.
+     */
+    @Override
+    public QuestaoEstudada resolver(int questaoId, int alternativaId, int estudoId) {
+        var email = SecurityContextHolder.getContext().getAuthentication().getName();
+        var usuario = usuarioRepository.findByEmail(email).get();
+
+        var estudoOptional = estudoRepository.findById(estudoId);
+        var alternativaOptional = alternativaRepository.findById(alternativaId);
+
+        if (!estudoOptional.isPresent()) {
+            throw new EntidadeNaoEncontradaException("Estudo não existe.");
+        }
+
+        if (!alternativaOptional.isPresent()) {
+            throw new EntidadeNaoEncontradaException("Alternativa não existe.");
+        }
+
+        var estudo = estudoOptional.get();
+        var alternativa = alternativaOptional.get();
+
+        // verificar se usuário é dono do estudo
+        if (estudo.getUsuario().getId() != usuario.getId()) {
+            throw new RegraNegocioException("O usuário não criou este estudo");
+        }
+
+        // alternativa.get
+        return null;
     }
 
 }

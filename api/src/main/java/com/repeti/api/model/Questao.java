@@ -44,10 +44,7 @@ public class Questao {
     @JoinColumn(name = "resposta_id")
     private Alternativa resposta;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable( name = "alternativas_questoes", 
-    joinColumns = @JoinColumn(name = "questao_id"), 
-    inverseJoinColumns = @JoinColumn(name = "alternativa_id"))
+    @OneToMany
     private List<Alternativa> alternativas;
 
     public Questao(String enunciado){
