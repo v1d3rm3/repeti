@@ -41,4 +41,6 @@ public class QuestaoEstudada {
     private Estudo estudo;
     @ManyToOne
     private Questao questao;
+    @ManyToOne 
+    private Alternativa alternativaEscolhida;
 }

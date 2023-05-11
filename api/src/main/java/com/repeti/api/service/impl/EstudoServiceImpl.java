@@ -258,8 +258,12 @@ public class EstudoServiceImpl implements EstudoService {
             throw new RegraNegocioException("O usuário não criou este estudo");
         }
 
-        // alternativa.get
-        return null;
+        var questaoEstudada = new QuestaoEstudada();
+        questaoEstudada.setEstudo(estudo);
+        questaoEstudada.setUsuario(usuario);
+        questaoEstudada.setAlternativaEscolhida(alternativa);
+        questaoEstudada.setQuestao(alternativa.getQuestao());
+        return questaoEstudadaRepository.save(questaoEstudada);
     }
 
 }
