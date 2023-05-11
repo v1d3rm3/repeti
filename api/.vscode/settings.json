@@ -17,4 +17,5 @@
             "password": "myuserdev"
         }
     ],
+    "java.configuration.updateBuildConfiguration": "automatic",
 }

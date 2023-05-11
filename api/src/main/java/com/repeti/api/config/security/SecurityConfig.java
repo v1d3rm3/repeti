@@ -38,19 +38,16 @@ public class SecurityConfig {
             .authorizeHttpRequests((authz) -> {
                 try {
                     authz
+                        .antMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                         .antMatchers(HttpMethod.POST, "/api/usuarios/auth").permitAll()
-
                         .antMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
-
                         .antMatchers("/api/**").hasRole("USER")
-                        
                         .anyRequest().authenticated()   
                         .and() 
                             .sessionManagement()
                             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                         .and()
                             .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
