@@ -20,13 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.repeti.api.model.Categoria;
-import com.repeti.api.rest.dto.CategoriaDTO;
 import com.repeti.api.rest.dto.categoria.CategoriaCompletaDTO;
 import com.repeti.api.rest.form.CategoriaForm;
 import com.repeti.api.service.CategoriaService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 @RestController
 @RequestMapping("api/categorias")
+@SecurityRequirement(name = "bearer-key")
 public class CategoriaController {
 
     @Autowired

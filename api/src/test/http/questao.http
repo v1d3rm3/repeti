@@ -3,6 +3,8 @@
 @contentType = {{$dotenv contentType}}
 @token = Bearer {{$dotenv token}}
 
+@id = 5
+
 ### @GetMapping 
 GET {{ baseUrl }}
 Authorization: {{ token }}
@@ -17,30 +19,40 @@ Authorization: {{ token }}
 }
 
 ### @GetMapping("{id}")
-GET {{ baseUrl }}/3
+GET {{ baseUrl }}/{{ id }}
 Authorization: {{ token }}
 
 ### @PostMapping("{id}/resposta") @RequestBody AlternativaDto alternativa)
-POST {{ baseUrl }}/2/resposta
+POST {{ baseUrl }}/{{ id }}/responder
 Content-Type: {{ contentType }}
 Authorization: {{ token }}
 
 {
-    "id": 9
+    "id": 5
 }
 
 ### @PutMapping("{id}/resposta") @RequestBody AlternativaDto alternativa)
-PUT {{ baseUrl }}/2/resposta
+POST {{ baseUrl }}/{{ id }}/resposta
 Content-Type: {{ contentType }}
 Authorization: {{ token }}
 
 {
-    "id": 9
+    "id": 10
 }
 
-### @PatchMapping("{id}") @RequestBody QuestaoDto categoria)
 ### @PutMapping("{id}/categoria") @RequestBody CategoriaDTO categoria)
+PUT {{ baseUrl }}/{{ id }}/categoria
+Content-Type: {{ contentType }}
+Authorization: {{ token }}
+{
+   "categoria": "Matematica"
+}
+
+### @PatchMapping("{id}") @RequestBody QuestaoDto questao)
+
+
 ### @PutMapping("{id}/categoria/remover")
+
 ### @PutMapping("{id}/alternativa") @RequestBody AlternativaDto alternativa)
 ### @PutMapping("{id}/categoria/{categoriaId}") @PathVariable Integer categoriaId)
 ### @PutMapping("{id}/alternativa/remover") @RequestBody AlternativaDto alternativa)

@@ -25,9 +25,11 @@ import com.repeti.api.model.Usuario;
 import com.repeti.api.rest.dto.TokenDTO;
 import com.repeti.api.rest.dto.UsuarioDTO;
 import com.repeti.api.rest.form.LoginForm;
+import com.repeti.api.rest.form.UsuarioForm;
 import com.repeti.api.security.JwtService;
 import com.repeti.api.service.UsuarioService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -50,6 +52,7 @@ public class UsuarioController {
         return UsuarioDTO.converter(usuario);
     }
 
+    @SecurityRequirement(name = "bearer-key")
     @GetMapping("/info")
     public Usuario info(Principal principal) {
         Usuario usuario = usuarioService.findByEmail(principal.getName());
@@ -58,8 +61,9 @@ public class UsuarioController {
     
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UsuarioDTO salvar( @RequestBody @Valid Usuario usuario ) {
+    public UsuarioDTO salvar( @RequestBody @Valid UsuarioForm form ) {
 
+        Usuario usuario = form.toUsuario(); 
         if(usuarioService.isEmailNotUsed(usuario)){
             String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
             usuario.setSenha(senhaCriptografada);

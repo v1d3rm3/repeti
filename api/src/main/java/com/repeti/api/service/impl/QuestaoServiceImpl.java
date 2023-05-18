@@ -41,6 +41,7 @@ public class QuestaoServiceImpl implements QuestaoService {
 
     @Override
     public List<Questao> getListQuestao() {
+        
         return questaoRepository.findAll();
     }
 

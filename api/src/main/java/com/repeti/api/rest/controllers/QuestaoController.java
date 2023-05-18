@@ -1,12 +1,10 @@
 package com.repeti.api.rest.controllers;
 
-import java.util.List;
 import java.net.URI;
+import java.util.List;
 
 import javax.validation.Valid;
 
-import com.repeti.api.model.Categoria;
-import com.repeti.api.model.Questao;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,6 +22,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.repeti.api.exception.RegraNegocioException;
 import com.repeti.api.model.Alternativa;
+import com.repeti.api.model.Categoria;
+import com.repeti.api.model.Questao;
 import com.repeti.api.rest.dto.AlternativaDto;
 import com.repeti.api.rest.dto.CategoriaDTO;
 import com.repeti.api.rest.dto.QuestaoDto;
@@ -33,11 +33,15 @@ import com.repeti.api.rest.form.QuestaoForm;
 import com.repeti.api.service.AlternativaService;
 import com.repeti.api.service.CategoriaService;
 import com.repeti.api.service.QuestaoService;
-import lombok.*;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.RequiredArgsConstructor;
+import lombok.var;
 
 @RestController
 @RequestMapping("api/questoes")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearer-key")
 public class QuestaoController {
     private final QuestaoService questaoService;
     private final CategoriaService categoriaService;
@@ -60,8 +64,8 @@ public class QuestaoController {
     }
 
     @PatchMapping("{id}")
-    public void atualizar(@PathVariable Integer id, @RequestBody QuestaoDto categoria) {
-        questaoService.atualizarQuestaoEnunciado(id, categoria.getEnunciado());
+    public void atualizar(@PathVariable Integer id, @RequestBody QuestaoDto questao) {
+        questaoService.atualizarQuestaoEnunciado(id, questao.getEnunciado());
     }
 
     @PutMapping("{id}/categoria")
@@ -97,9 +101,8 @@ public class QuestaoController {
         }
     }
 
-    @PostMapping("{id}/resposta")
-    public ResponseEntity<RespostaQuestaoDto> checarResposta(@PathVariable Integer id,
-            @RequestBody AlternativaDto alternativa) {
+    @PostMapping("{id}/responder")
+    public ResponseEntity<RespostaQuestaoDto> checarResposta(@PathVariable Integer id, @RequestBody AlternativaDto alternativa) {
         try {
             Alternativa alt = alternativaService.recuperarPorId(alternativa.getId());
             Questao q = questaoService.getQuestaoById(id);
@@ -115,7 +118,7 @@ public class QuestaoController {
         }
     }
 
-    @PutMapping("{id}/resposta")
+    @PostMapping("{id}/resposta")
     public ResponseEntity<QuestaoCompletaDTO> update(@PathVariable Integer id,
             @RequestBody AlternativaDto alternativa) {
             Alternativa alt = alternativaService.recuperarPorId(alternativa.getId());
@@ -128,8 +131,7 @@ public class QuestaoController {
     }
 
     @PutMapping("{id}/alternativa")
-    public ResponseEntity<QuestaoCompletaDTO> updateAlternativas(@PathVariable Integer id,
-            @RequestBody AlternativaDto alternativa) {
+    public ResponseEntity<QuestaoCompletaDTO> updateAlternativas(@PathVariable Integer id, @RequestBody AlternativaDto alternativa) {
         try {
             Alternativa alt = alternativaService.recuperarPorId(alternativa.getId());
             Questao q = questaoService.getQuestaoById(id);

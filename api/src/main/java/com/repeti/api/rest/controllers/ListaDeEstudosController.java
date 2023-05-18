@@ -20,8 +20,11 @@ import com.repeti.api.rest.dto.lista_de_estudos.AtualizarListaDeEstudosDto;
 import com.repeti.api.rest.dto.lista_de_estudos.CriarListaDeEstudosDto;
 import com.repeti.api.service.ListaDeEstudosService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 @RestController
 @RequestMapping("api/lista-de-estudos")
+@SecurityRequirement(name = "bearer-key")
 public class ListaDeEstudosController {
 
     @Autowired

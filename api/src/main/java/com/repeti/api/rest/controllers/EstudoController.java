@@ -14,17 +14,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.repeti.api.model.Estudo;
 import com.repeti.api.model.Questao;
+import com.repeti.api.model.QuestaoEstudada;
+import com.repeti.api.rest.dto.AlternativaDto;
 import com.repeti.api.rest.dto.estudo.CriarEstudoReqDto;
+import com.repeti.api.rest.dto.estudo.EstudoResDTO;
+import com.repeti.api.rest.dto.questao.RespostaQuestaoDto;
 import com.repeti.api.service.EstudoService;
-
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/estudo")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearer-key")
 public class EstudoController {
 
     private final EstudoService estudoService;
@@ -36,8 +40,9 @@ public class EstudoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Estudo> criar(@RequestBody @Valid CriarEstudoReqDto params) {
-        return ResponseEntity.ok(estudoService.criar(params.getCategoria()));
+    public ResponseEntity<EstudoResDTO> criar(@RequestBody @Valid CriarEstudoReqDto params) {
+        Estudo estudo = estudoService.criar(params.getCategoria());
+        return ResponseEntity.ok(EstudoResDTO.from(estudo));
     }
 
     @GetMapping("/{id}")
@@ -76,6 +81,15 @@ public class EstudoController {
     }
 
     // CASO USO: resolver questão
+    @PostMapping("/{estudoId}/questao/{questaoId}/resolver")
+    public ResponseEntity<RespostaQuestaoDto> resolver(@PathVariable Integer estudoId,@PathVariable Integer questaoId, @RequestBody AlternativaDto alternativa) {
+        QuestaoEstudada questaoEstudada = estudoService.resolver(questaoId, alternativa.getId(), estudoId);
+
+        RespostaQuestaoDto respostaDto = new RespostaQuestaoDto();
+
+        return ResponseEntity.ok(respostaDto.converter(questaoEstudada));
+    }
+
 
     // CASO USO: avaliar questão
 

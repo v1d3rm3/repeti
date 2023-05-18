@@ -240,6 +240,7 @@ public class EstudoServiceImpl implements EstudoService {
         var usuario = usuarioRepository.findByEmail(email).get();
 
         var estudoOptional = estudoRepository.findById(estudoId);
+        var questaoOptional = questaoRepository.findById(questaoId);
         var alternativaOptional = alternativaRepository.findById(alternativaId);
 
         if (!estudoOptional.isPresent()) {
@@ -251,6 +252,7 @@ public class EstudoServiceImpl implements EstudoService {
         }
 
         var estudo = estudoOptional.get();
+        var questao = questaoOptional.get();
         var alternativa = alternativaOptional.get();
 
         // verificar se usuário é dono do estudo
@@ -262,7 +264,7 @@ public class EstudoServiceImpl implements EstudoService {
         questaoEstudada.setEstudo(estudo);
         questaoEstudada.setUsuario(usuario);
         questaoEstudada.setAlternativaEscolhida(alternativa);
-        questaoEstudada.setQuestao(alternativa.getQuestao());
+        questaoEstudada.setQuestao(questao);
         return questaoEstudadaRepository.save(questaoEstudada);
     }
 

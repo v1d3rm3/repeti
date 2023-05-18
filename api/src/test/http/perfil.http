@@ -1,4 +1,4 @@
-@baseUrl = http://localhost:8080/api/perfis
+@baseUrl = http://localhost:8000/api/perfis
 @contentType = application/json
 @token = Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMDFAZW1haWwuY29tIiwiZXhwIjoxNjgzMzM5NDU0fQ.3QVQTn0Ae7weP797feLWIQWL44sqp0WCtiJj1nkO3gsu2Vo2XH1V-Ag_9HFXKa-Zcca0-ln5nvyreSftPzSL-Q
 

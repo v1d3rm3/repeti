@@ -43,4 +43,8 @@ public class QuestaoEstudada {
     private Questao questao;
     @ManyToOne 
     private Alternativa alternativaEscolhida;
+
+    public boolean checarResposta() {
+        return questao.checarResposta(alternativaEscolhida.getId());
+    }
 }

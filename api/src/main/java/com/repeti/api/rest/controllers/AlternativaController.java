@@ -20,8 +20,11 @@ import com.repeti.api.rest.dto.AlternativaDto;
 import com.repeti.api.rest.dto.alternativa.CriarAlternativaDto;
 import com.repeti.api.service.AlternativaService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 @RestController
 @RequestMapping("api/alternativa")
+@SecurityRequirement(name = "bearer-key")
 public class AlternativaController {
 
     @Autowired

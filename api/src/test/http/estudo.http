@@ -1,0 +1,31 @@
+@RequestMapping("/api/estudo")
+@baseUrl = {{$dotenv baseUrl}}/estudo
+@contentType = {{$dotenv contentType}}
+@token = Bearer {{$dotenv token}}
+
+### @GetMapping
+GET {{ baseUrl }}
+Authorization: {{ token }}
+
+### @PostMapping CriarEstudoReqDto params
+POST {{ baseUrl }}
+Content-Type: {{ contentType }}
+Authorization: {{ token }}
+
+{
+    "categoria": 1
+}
+
+### @GetMapping("/{id}") 
+GET {{ baseUrl }}/{{ estudoId }}
+Authorization: {{ token }}
+
+### @GetMapping("/{id}/proxima-questao")
+GET {{ baseUrl }}/{{ estudoId }}
+Authorization: {{ token }}
+
+### @DeleteMapping("/{id}")
+DELETE  {{ baseUrl }}/{{ estudoId }}
+Authorization: {{ token }}
+
+### @PostMapping("/{estudoId}/questao/{questaoId}/resolver") AlternativaDto alternativa

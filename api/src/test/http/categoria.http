@@ -1,6 +1,6 @@
-@baseUrl = http://localhost:8080/api/categorias
-@contentType = application/json
-@token = Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMDFAZW1haWwuY29tIiwiZXhwIjoxNjgzMzM5NDU0fQ.3QVQTn0Ae7weP797feLWIQWL44sqp0WCtiJj1nkO3gsu2Vo2XH1V-Ag_9HFXKa-Zcca0-ln5nvyreSftPzSL-Q
+@baseUrl = {{$dotenv baseUrl}}/categorias
+@contentType = {{$dotenv contentType}}
+@token = Bearer {{$dotenv token}}
 
 GET {{baseUrl}}
 Authorization: {{token}}
@@ -12,7 +12,19 @@ Content-Type: {{contentType}}
 Authorization: {{token}}
 
 {
-    "categoria": "avancado"
+    "categoria": "Matematica"
+}
+
+###
+
+POST {{baseUrl}}
+Content-Type: {{contentType}}
+Authorization: {{token}}
+
+{
+    "categoria": "Aritimetica",
+    "pai": 1
+  
 }
 
 ###
@@ -22,7 +34,7 @@ Content-Type: {{contentType}}
 Authorization: {{token}}
 
 {
-    "categoria": "intermediario"
+    "categoria": "Exatas"
 }
 
 ###
