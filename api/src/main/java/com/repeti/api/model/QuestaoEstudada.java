@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,6 +39,7 @@ public class QuestaoEstudada {
     @ManyToOne()
     private Usuario usuario;
     @ManyToOne()
+    @JsonBackReference
     private Estudo estudo;
     @ManyToOne
     private Questao questao;

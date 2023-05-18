@@ -34,8 +34,9 @@ public class EstudoController {
     private final EstudoService estudoService;
 
     @GetMapping
-    public ResponseEntity<List<Estudo>> listar() {
-        return ResponseEntity.ok(this.estudoService.recuperarEstudosDeUsuario());
+    public ResponseEntity<List<EstudoResDTO>> listar() {
+        List<Estudo> estudo = estudoService.recuperarEstudosDeUsuario();
+        return ResponseEntity.ok(EstudoResDTO.from(estudo));
     }
 
     @PostMapping
@@ -46,8 +47,9 @@ public class EstudoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Estudo> findById(@PathVariable Integer id) {
-        return ResponseEntity.ok(this.estudoService.recuperarEstudoPorId(id));
+    public ResponseEntity<EstudoResDTO> findById(@PathVariable Integer id) {
+        Estudo estudo = this.estudoService.recuperarEstudoPorId(id);
+        return ResponseEntity.ok(EstudoResDTO.from(estudo));
     }
 
     /**

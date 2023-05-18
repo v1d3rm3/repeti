@@ -62,6 +62,10 @@ public class EstudoServiceImpl implements EstudoService {
         }
 
         var estudo = optionalEstudo.get();
+        var questoes = questaoEstudadaRepository.recuperarQuestaoEstudadasPorEstudo(estudo.getId());
+        estudo.setQuestoesEstudadas(questoes);
+
+        questoes.forEach(q -> System.out.println(q.getQuestao().getEnunciado()));
 
         // verifica se estudo está ativo
         if (estudo.getDesativado() != null) {
