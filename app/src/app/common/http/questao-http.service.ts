@@ -33,7 +33,7 @@ export class QuestaoHttpService {
   }
 
   remover(id: number) {
-    return this._http.delete(`${environment.apiURL}/questoes/${id}`)
+    return this._http.delete(`${environment.apiURL}/questoes/${id}`);
   }
 
   definirCategoria(questaoId: number, categoriaId: number) {
@@ -44,7 +44,7 @@ export class QuestaoHttpService {
   }
 
   definirReposta(questaoId: number, alternativaId: number) {
-    return this._http.put<void>(
+    return this._http.post<void>(
       `${environment.apiURL}/questoes/${questaoId}/resposta`,
       {
         id: alternativaId,

@@ -8,11 +8,11 @@
       <mat-icon>list</mat-icon>
     </button>
     <button
-      *ngIf="temPapel(UsuarioPapel.Administrador)"
-      [routerLink]="['/admin/']"
+      *ngIf="temPapel(UsuarioPapel.Usuario)"
+      [routerLink]="['/user/']"
       mat-icon-button
       color="primary"
-      aria-label="admin_panel_settings"
+      aria-label="user_panel_settings"
     >
       <mat-icon>admin_panel_settings</mat-icon>
     </button>

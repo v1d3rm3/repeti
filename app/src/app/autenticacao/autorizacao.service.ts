@@ -15,7 +15,7 @@ export class AutorizacaoService {
   temPapel(papel: UsuarioPapel) {
     const sessao = this._sessaoUsuarioService.recuperarSessao();
     if (sessao) {
-      return sessao.permissoes.filter(v => v.nome === papel).length > 0;
+      return sessao.authorities.filter((v) => v.nome === papel).length > 0;
     } else {
       return false;
     }

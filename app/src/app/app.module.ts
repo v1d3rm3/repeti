@@ -11,7 +11,6 @@ import { AutenticacaoModule } from './autenticacao/autenticacao.module';
 import { AutenticacaoService } from './autenticacao/autenticacao.service';
 import { SessaoUsuarioService } from './autenticacao/sessao-usuario.service';
 import { TokenService } from './autenticacao/token.service';
-import { ListaPermissoesComponent } from './permissoes/lista-permissoes/lista-permissoes.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -40,7 +39,7 @@ function verificacaoDeSessaoAtiva(
 }
 
 @NgModule({
-  declarations: [AppComponent, ListaPermissoesComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -51,7 +50,7 @@ function verificacaoDeSessaoAtiva(
     MatButtonModule,
     MatMenuModule,
     MatIconModule,
-    RouterModule
+    RouterModule,
   ],
   providers: [
     {
