@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -27,6 +28,7 @@ import com.repeti.api.model.Questao;
 import com.repeti.api.rest.dto.AlternativaDto;
 import com.repeti.api.rest.dto.CategoriaDTO;
 import com.repeti.api.rest.dto.QuestaoDto;
+import com.repeti.api.rest.dto.estudo.AvaliarQuestaoEstudadaReqDto;
 import com.repeti.api.rest.dto.questao.QuestaoCompletaDTO;
 import com.repeti.api.rest.dto.questao.RespostaQuestaoDto;
 import com.repeti.api.rest.form.QuestaoForm;
@@ -102,7 +104,8 @@ public class QuestaoController {
     }
 
     @PostMapping("{id}/responder")
-    public ResponseEntity<RespostaQuestaoDto> checarResposta(@PathVariable Integer id, @RequestBody AlternativaDto alternativa) {
+    public ResponseEntity<RespostaQuestaoDto> checarResposta(@PathVariable Integer id,
+            @RequestBody AlternativaDto alternativa) {
         try {
             Alternativa alt = alternativaService.recuperarPorId(alternativa.getId());
             Questao q = questaoService.getQuestaoById(id);
@@ -121,17 +124,18 @@ public class QuestaoController {
     @PostMapping("{id}/resposta")
     public ResponseEntity<QuestaoCompletaDTO> update(@PathVariable Integer id,
             @RequestBody AlternativaDto alternativa) {
-            Alternativa alt = alternativaService.recuperarPorId(alternativa.getId());
-            List<Alternativa> alternativas = alternativaService.listarPorQuestaoId(id);
-            Questao q = questaoService.getQuestaoById(id);
-            q.setAlternativas(alternativas);
-            q.setResposta(alt);
-            questaoService.saveQuestao(q);
-            return ResponseEntity.ok(QuestaoCompletaDTO.from(q));
+        Alternativa alt = alternativaService.recuperarPorId(alternativa.getId());
+        List<Alternativa> alternativas = alternativaService.listarPorQuestaoId(id);
+        Questao q = questaoService.getQuestaoById(id);
+        q.setAlternativas(alternativas);
+        q.setResposta(alt);
+        questaoService.saveQuestao(q);
+        return ResponseEntity.ok(QuestaoCompletaDTO.from(q));
     }
 
     @PutMapping("{id}/alternativa")
-    public ResponseEntity<QuestaoCompletaDTO> updateAlternativas(@PathVariable Integer id, @RequestBody AlternativaDto alternativa) {
+    public ResponseEntity<QuestaoCompletaDTO> updateAlternativas(@PathVariable Integer id,
+            @RequestBody AlternativaDto alternativa) {
         try {
             Alternativa alt = alternativaService.recuperarPorId(alternativa.getId());
             Questao q = questaoService.getQuestaoById(id);
@@ -213,5 +217,15 @@ public class QuestaoController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Questao não encontrada");
         }
 
+    }
+
+    /**
+     * Avalia tanto o Nível quanto a Qualidade de uma 
+     * Questão.
+     */
+    @PostMapping("avaliar")
+    public void avaliarQuestaoEstudada(@RequestBody AvaliarQuestaoEstudadaReqDto params) {
+        var email = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println(email);
     }
 }

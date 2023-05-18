@@ -1217,5 +1217,24 @@
     "headers": [],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "e73ccc50-f4bf-4caa-b114-200d9e2cb53b",
+    "colId": "446679f3-08cc-4b88-976c-58c149dc40c0",
+    "containerId": "e73a222f-0b99-4bef-9f0d-02371602202f",
+    "name": "avaliar-questao-estudada",
+    "url": "/questoes/avaliar",
+    "method": "POST",
+    "sortNum": 270000,
+    "created": "2023-05-18T22:27:02.146Z",
+    "modified": "2023-05-18T22:31:48.362Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{}",
+      "form": []
+    },
+    "tests": []
   }
 ]

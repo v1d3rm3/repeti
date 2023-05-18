@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,14 +15,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.repeti.api.model.Estudo;
 import com.repeti.api.model.Questao;
 import com.repeti.api.model.QuestaoEstudada;
 import com.repeti.api.rest.dto.AlternativaDto;
+import com.repeti.api.rest.dto.estudo.AvaliarQuestaoEstudadaReqDto;
 import com.repeti.api.rest.dto.estudo.CriarEstudoReqDto;
 import com.repeti.api.rest.dto.estudo.EstudoResDTO;
 import com.repeti.api.rest.dto.questao.RespostaQuestaoDto;
 import com.repeti.api.service.EstudoService;
+
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 
@@ -82,17 +86,23 @@ public class EstudoController {
         estudoService.pararEstudo(id);
     }
 
-    // CASO USO: resolver questão
+    /**
+     * Resolve uma questão dentro de um estudo.
+     * Isso gera uma `QuestaoEstudada` relacionada
+     * tanto com EstudoId quanto à QuestãoId.
+     * 
+     * @param estudoId
+     * @param questaoId
+     * @param alternativa
+     * @return
+     */
     @PostMapping("/{estudoId}/questao/{questaoId}/resolver")
-    public ResponseEntity<RespostaQuestaoDto> resolver(@PathVariable Integer estudoId,@PathVariable Integer questaoId, @RequestBody AlternativaDto alternativa) {
+    public ResponseEntity<RespostaQuestaoDto> resolver(@PathVariable Integer estudoId, @PathVariable Integer questaoId,
+            @RequestBody AlternativaDto alternativa) {
         QuestaoEstudada questaoEstudada = estudoService.resolver(questaoId, alternativa.getId(), estudoId);
 
         RespostaQuestaoDto respostaDto = new RespostaQuestaoDto();
 
         return ResponseEntity.ok(respostaDto.converter(questaoEstudada));
     }
-
-
-    // CASO USO: avaliar questão
-
 }
