@@ -13,6 +13,8 @@ import { CadastroComponent } from './cadastro/cadastro.component';
 import { QuestaoComponent } from './questao/questao.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { EstudosComponent } from './estudos/estudos.component';
+import {DialogModule} from '@angular/cdk/dialog';
+
 
 @NgModule({
   declarations: [HomeComponent, LoginComponent, CadastroComponent, QuestaoComponent, EstudosComponent],
@@ -26,6 +28,7 @@ import { EstudosComponent } from './estudos/estudos.component';
     MatButtonModule,
     MatRadioModule,
     ReactiveFormsModule,
+    DialogModule
   ],
   exports: [HomeComponent],
 })

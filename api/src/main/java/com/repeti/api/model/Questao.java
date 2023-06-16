@@ -40,6 +40,7 @@ public class Questao {
     @ColumnDefault(value = "'Mediana'")
     private Qualidade qualidade;
 
+    // TODO: remover
     @OneToOne
     @JoinColumn(name = "resposta_id")
     private Alternativa resposta;

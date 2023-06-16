@@ -28,11 +28,11 @@ public class Alternativa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    // TODO: renomear para "descricao"
     private String alternativa;
 
     private Boolean resposta;
 
     @ManyToOne
-    // @JoinColumn(name = "questao_id", nullable = false)
     private Questao questao;
 }
