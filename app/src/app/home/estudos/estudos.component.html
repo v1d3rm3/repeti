@@ -1,4 +1,4 @@
-<h2 class="text-xl m-0 mb-2 font-sans">Estudos</h2>
+<!-- <h2 class="text-xl m-0 mb-2 font-sans">Estudos</h2>-->
 <div class="bg-slate-100 p-2 rounded h-24 flex justify-center items-center gap-2 mb-4 border">
   <div class="flex flex-col justify-center items-center">
     <p class="m-0 flex text-zinc-400 font-normal gap-1 items-center">
@@ -10,7 +10,8 @@
           d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
       </svg> Você ainda não adicionou estudos
     </p>
-    <a class="mt-2 font-medium text-blue-600 dark:text-blue-500 hover:underline tracking-wide cursor-pointer text-xl">Adicionar
+    <a class="mt-2 font-medium text-blue-600 dark:text-blue-500 hover:underline tracking-wide cursor-pointer text-xl"
+      (click)="adicionarEstudo()">Criar
       estudo</a>
   </div>
 </div>
