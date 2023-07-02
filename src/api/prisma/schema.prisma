@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Categoria {
+  id               Int         @id @default(autoincrement())
+  nome             String
+  pai              Categoria?   @relation("recursiva", fields: [categoria_pai_id], references: [id])
+  categoria_pai_id Int?
+  subcategorias    Categoria[] @relation("recursiva")
+  questoes         Questao[]
+  estudos          Estudo[]
+
+  @@map("categoria")
+}
+
+model Usuario {
+  id                 Int               @id @default(autoincrement())
+  nome               String
+  sobrenome          String
+  email              String
+  senha              String
+  estudos            Estudo[]
+  questoes           Questao[]
+  questoes_estudadas QuestaoEstudada[]
+
+  @@map("usuario")
+}
+
+model Estudo {
+  id                 Int               @id @default(autoincrement())
+  nivel_atual        String
+  desativado         DateTime
+  estudante          Usuario           @relation(fields: [estudante_id], references: [id])
+  estudante_id       Int
+  questoes_estudadas QuestaoEstudada[]
+  categoria          Categoria         @relation(fields: [categoria_id], references: [id])
+  categoria_id       Int
+
+  @@map("estudo")
+}
+
+model QuestaoEstudada {
+  id             Int         @id @default(autoincrement())
+  qualidade      String
+  nivel          String
+  alternativa    Alternativa @relation(fields: [alternativa_id], references: [id])
+  alternativa_id Int
+  estudante      Usuario     @relation(fields: [estudante_id], references: [id])
+  estudante_id   Int
+  estudo         Estudo?     @relation(fields: [estudo_id], references: [id])
+  estudo_id      Int?
+
+  @@map("questao_estudada")
+}
+
+model Questao {
+  id            Int           @id @default(autoincrement())
+  enunciado     String
+  qualidade     String
+  nivel         String
+  alternativas  Alternativa[]
+  elaborador    Usuario       @relation(fields: [elaborador_id], references: [id])
+  elaborador_id Int
+  categoria     Categoria     @relation(fields: [categoria_id], references: [id])
+  categoria_id  Int
+
+  @@map("questao")
+}
+
+model Alternativa {
+  id              Int               @id @default(autoincrement())
+  descricao       String
+  resposta        Boolean
+  questao         Questao           @relation(fields: [questao_id], references: [id])
+  questao_id      Int
+  QuestaoEstudada QuestaoEstudada[]
+
+  @@map("alternativa")
+}
