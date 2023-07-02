@@ -2,7 +2,7 @@
 @contentType = {{$dotenv contentType}}
 @token = Bearer {{$dotenv token}}
 
-GET {{baseUrl}}
+GET {{baseUrl}}?nome=
 Authorization: {{token}}
 
 ###

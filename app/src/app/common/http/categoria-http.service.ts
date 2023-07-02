@@ -6,10 +6,18 @@ import { ICategoria } from '../models/categoria';
 
 @Injectable({ providedIn: 'root' })
 export class CategoriaHttpService {
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) { }
 
   recuperar() {
     return this._http.get<ICategoria[]>(`${environment.apiURL}/categorias`);
+  }
+
+  recuperarPorNome(nome: string) {
+    return this._http.get<ICategoria[]>(`${environment.apiURL}/categorias`, {
+      params: {
+        nome
+      }
+    });
   }
 
   criar(categoria: string) {

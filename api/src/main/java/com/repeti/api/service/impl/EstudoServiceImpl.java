@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import com.repeti.api.dao.EstudoModificacaoSQL;
+import com.repeti.api.dao.InserirEstudoBancoObjeto;
 import com.repeti.api.exception.EntidadeNaoEncontradaException;
 import com.repeti.api.exception.RegraNegocioException;
 import com.repeti.api.model.Categoria;
@@ -45,6 +47,9 @@ public class EstudoServiceImpl implements EstudoService {
 
     @Autowired
     QuestaoEstudadaRepository questaoEstudadaRepository;
+
+    @Autowired
+    EstudoModificacaoSQL estudoModificacaoSQL;
 
     @Override
     public List<Estudo> recuperarEstudosDeUsuario() {
@@ -89,7 +94,7 @@ public class EstudoServiceImpl implements EstudoService {
         var usuario = usuarioRepository.findByEmail(email).get();
         estudo.setUsuario(usuario);
 
-        return estudoRepository.save(estudo);
+        return estudoModificacaoSQL.inserir(InserirEstudoBancoObjeto.deEstudo(estudo));
     }
 
     @Override
@@ -230,7 +235,7 @@ public class EstudoServiceImpl implements EstudoService {
     }
 
     /*
-     * Resolver uma questão em um estudo, vai receber a questão que está 
+     * Resolver uma questão em um estudo, vai receber a questão que está
      * relacionada com a resolução, a alternativa que foi escolhido como resposta
      * e o estudo que está relacionado à questão.
      * 

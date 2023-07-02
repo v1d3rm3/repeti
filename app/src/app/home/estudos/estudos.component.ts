@@ -14,7 +14,7 @@ export class EstudosComponent {
 
   adicionarEstudo() {
     const dialogRef = this.dialog.open<string>(CriarEstudoDialogComponent, {
-      width: '700px',
+      width: '500px',
       data: {},
     });
 

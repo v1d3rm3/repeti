@@ -3,8 +3,11 @@ package com.repeti.api.rest.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.validation.Valid;
 
+import org.hibernate.Hibernate;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -35,12 +39,8 @@ public class CategoriaController {
     CategoriaService categoriaService;
 
     @GetMapping
-    public List<CategoriaCompletaDTO> find() {
-        List<CategoriaCompletaDTO> a = new ArrayList<CategoriaCompletaDTO>();
-        for (Categoria cat : categoriaService.getListCategoria()) {
-            a.add(new CategoriaCompletaDTO(cat));
-        }
-        return a;
+    public List<Categoria> recuperar(@RequestParam String nome) {
+        return categoriaService.recuperarPorNome(nome);
     }
 
     @GetMapping("{id}")

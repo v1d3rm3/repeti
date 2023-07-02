@@ -2,12 +2,12 @@ package com.repeti.api.service.impl;
 
 import java.util.List;
 
-import com.repeti.api.exception.EntidadeNaoEncontradaException;
-import com.repeti.api.model.Categoria;
-import com.repeti.api.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.repeti.api.exception.EntidadeNaoEncontradaException;
+import com.repeti.api.model.Categoria;
+import com.repeti.api.repository.CategoriaRepository;
 import com.repeti.api.service.CategoriaService;
 
 @Component
@@ -26,15 +26,15 @@ public class CategoriaServiceImpl implements CategoriaService {
         categoriaRepository.deleteById(Integer.parseInt(id));
     }
 
-    @Override
-    public Categoria getCategoriaByNome(String nome) {
-        return categoriaRepository.findByCategoria(nome);
-    }
+    // @Override
+    // public Categoria getCategoriaByNome(String nome) {
+    //     return categoriaRepository.recuperarPorNome(nome);
+    // }
 
-    @Override
-    public List<Categoria> getListCategoria() {
-        return categoriaRepository.findAll();
-    }
+    // @Override
+    // public List<Categoria> getListCategoria() {
+    // return categoriaRepository.findAll();
+    // }
 
     @Override
     public Categoria recuperarPorId(int id) {
@@ -70,5 +70,10 @@ public class CategoriaServiceImpl implements CategoriaService {
         cat.setPai(catPai);
         return categoriaRepository.save(cat);
 
+    }
+
+    @Override
+    public List<Categoria> recuperarPorNome(String nome) {
+        return categoriaRepository.recuperarPorNome(nome);
     }
 }

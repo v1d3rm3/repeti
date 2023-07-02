@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { environment } from '../../../environments/environments';
+import { CategoriaHttpService } from '../../common/http/categoria-http.service';
 
 interface Categoria {
   id: number;
@@ -35,7 +36,7 @@ interface Categoria {
   ],
   template: `
     <div class="p-3">
-      <h2 class="text-2xl mb-3">Criar estudo</h2>
+      <h2 class="text-xl font-bold mb-3">Criar estudo</h2>
       <input
         type="text"
         [formControl]="filtroControl"
@@ -51,7 +52,7 @@ interface Categoria {
 
       <p
         *ngIf="
-          categoriasFiltros.length == 0 &&
+          categorias.length == 0 &&
           this.filtroControl.value &&
           this.filtroControl.value !== ''
         "
@@ -68,7 +69,7 @@ interface Categoria {
         class="mt-3"
       >
         <li
-          *ngFor="let cat of categoriasFiltros"
+          *ngFor="let cat of categorias"
           [cdkOption]="cat"
           class="w-full p-3 hover:bg-gray-200 focus:bg-gray-200 rounded cursor-pointer"
         >
@@ -80,54 +81,41 @@ interface Categoria {
 })
 export class CriarEstudoDialogComponent implements OnInit {
   filtroControl: FormControl<string>;
-
   categorias: Categoria[] = [];
-  categoriasFiltros: Categoria[] = [];
-
   categoria: readonly Categoria[] = [];
 
   constructor(
-    private _httpClientService: HttpClient,
+    private _categoriaHttpService: CategoriaHttpService,
     private _dialogRef: DialogRef<boolean>
   ) {
     this.filtroControl = new FormControl();
   }
 
   ngOnInit() {
-    this.filtroControl.valueChanges.pipe(debounceTime(200)).subscribe((res) => {
-      this.categoriasFiltros = this.categorias.filter((v) => {
-        const a = res
-          ?.toUpperCase()
-          ?.normalize('NFD')
-          ?.replace(/[\u0300-\u036f]/g, '');
-        const b = v?.categoria
-          ?.toUpperCase()
-          ?.normalize('NFD')
-          ?.replace(/[\u0300-\u036f]/g, '');
-        return b.includes(a);
-      });
+    this._carregarCategorias(() => {
+      this.filtroControl.valueChanges.pipe(debounceTime(200)).subscribe(() => this._carregarCategorias());
     });
+  }
 
-    this._httpClientService
-      .get<Categoria[]>(`${environment.apiURL}/categorias`)
-      .subscribe((res) => {
-        this.categorias = res;
-      });
+  private _carregarCategorias(after?: () => void) {
+    const nome = this.filtroControl.value;
+    this._categoriaHttpService.recuperarPorNome(nome).subscribe(res => {
+      this.categorias = res;
+      if (after) after();
+    });
   }
 
   selecionado(categorias: readonly Categoria[]) {
     const [categoria] = categorias;
-    this._httpClientService
-      .post(`${environment.apiURL}/estudo`, {
-        nivel: 'MuitoFacil',
-        categoria: categoria.id,
-      })
-      .subscribe({
-        next: () => this._dialogRef.close(true),
-      });
+    console.log(categoria);
 
-    // criar estudo...
-
-    // _dialogRef
+    // this._httpClientService
+    //   .post(`${environment.apiURL}/estudo`, {
+    //     nivel: 'MuitoFacil',
+    //     categoria: categoria.id,
+    //   })
+    //   .subscribe({
+    //     next: () => this._dialogRef.close(true),
+    //   });
   }
 }

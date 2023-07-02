@@ -74,7 +74,9 @@ public class QuestaoController {
     public ResponseEntity<QuestaoCompletaDTO> updateCategoria(@PathVariable Integer id,
             @RequestBody CategoriaDTO categoria) {
         try {
-            Categoria cat = categoriaService.getCategoriaByNome(categoria.getCategoria());
+            // TODO
+            // Categoria cat = categoriaService.getCategoriaByNome(categoria.getCategoria());
+            Categoria cat = null;
             Questao q = questaoService.getQuestaoById(id);
 
             if (cat == null) {
