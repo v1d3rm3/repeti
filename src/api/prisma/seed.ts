@@ -21,6 +21,15 @@ async function main() {
       categoria_pai_id: cat_mat.id,
     },
   });
+
+  await prisma.usuario.create({
+    data: {
+      email: 'fulano@domain.com',
+      nome: 'Fulano',
+      sobrenome: 'De Tal',
+      senha: '123456789',
+    },
+  });
 }
 
 main();

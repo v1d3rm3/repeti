@@ -1,0 +1,16 @@
+@baseUrl = {{$dotenv BASE_URL}}/auth
+@token = Bearer {{$dotenv TOKEN}}
+
+POST {{baseUrl}}/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "fulano@domain.com",
+  "senha": "123456789"
+}
+
+###
+
+GET {{baseUrl}}/profile HTTP/1.1
+Authorization: {{token}}
+

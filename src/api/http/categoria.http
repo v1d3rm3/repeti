@@ -1,1 +1,8 @@
-GET http://localhost:3000/categoria/por-nome
+@baseUrl = {{$dotenv BASE_URL}}/categoria
+@token = Bearer {{$dotenv TOKEN}}
+
+GET {{baseUrl}}
+Authorization: {{token}}
+
+###
+
