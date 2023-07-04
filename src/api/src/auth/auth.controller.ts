@@ -17,8 +17,8 @@ export class AuthController {
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  signIn(@Body() params: Record<string, any>) {
-    return this.authService.signIn(params.email, params.senha);
+  login(@Body() params: Record<string, any>) {
+    return this.authService.login(params.email, params.senha);
   }
 
   @Get('profile')

@@ -19,4 +19,8 @@ export class UsuarioImpl implements IUsuario {
     const s = await bcrypt.hash(senha, 10);
     this._senha = s;
   }
+
+  async compararSenha(senhaDescriptografada: string): Promise<boolean> {
+    return await bcrypt.compare(senhaDescriptografada, this.senha);
+  }
 }

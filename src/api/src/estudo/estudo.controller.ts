@@ -6,12 +6,17 @@ import {
   Post,
   Req,
 } from '@nestjs/common';
+import { EstudoCadastrarReq } from '../core/models/rest/estudo/estudo-cadastrar-req';
+import { EstudoService } from './estudo.service';
 
 @Controller('estudo')
 export class EstudoController {
+
+  constructor(private estudoService: EstudoService) {}
+
   @HttpCode(HttpStatus.OK)
   @Post()
-  async criar(@Body() params: Record<string, any>, @Req() req) {
-    console.log(req.user);
+  async criar(@Body() params: EstudoCadastrarReq, @Req() req) {
+    this.estudoService.cadastrar(params, req.user.id);
   }
 }

@@ -4,4 +4,5 @@ import { Usuario } from '@prisma/client';
 export interface IUsuario extends Usuario {
   setSenhaComCriptografia(senha: string);
   setSenhaSemCriptografia(senha: string);
+  compararSenha(senhaDescriptografada: string): boolean | Promise<boolean>;
 }

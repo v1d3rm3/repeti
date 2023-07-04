@@ -4,5 +4,5 @@
         "**/node_modules": true
     },
     "editor.tabSize": 2,
-    "prettier.prettierPath": "/root/.asdf/shims/prettier"
+    "prettier.prettierPath": "/usr/local/share/npm-global/bin/prettier"
 }

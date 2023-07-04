@@ -7,10 +7,6 @@ import { IUsuario } from '../../core/models/interface/usuario';
 import { PrismaService } from '../../core/prisma/prisma.service';
 import { ResultQuery } from '../../core/result-query';
 
-function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 @Injectable()
 export class UsuarioDao {
   constructor(private readonly prismaService: PrismaService) {}
@@ -73,7 +69,7 @@ export class UsuarioDao {
         u.nome 'nome',
         u.sobrenome 'sobrenome',
         u.email 'email',
-        u.senha 'senha'
+        u.senha '_senha'
       from usuario u
       where u.email = ${params.data}
     `;
