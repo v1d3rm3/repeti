@@ -1,0 +1,15 @@
+@baseUrl = {{$dotenv BASE_URL}}/usuario
+@token = Bearer {{$dotenv TOKEN}}
+
+POST {{baseUrl}} HTTP/1.1
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "nome": "Sicrano",
+  "sobrenome": "Da Silva",
+  "email": "sicrano@domain.com",
+  "senha": "123456789"
+}
+
+###

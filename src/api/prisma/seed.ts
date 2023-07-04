@@ -1,4 +1,6 @@
 import { PrismaClient } from '@prisma/client';
+import { UsuarioBuilder } from '../src/core/models/impl/usuario-builder';
+import { UsuarioParaBancoMapper } from '../src/core/models/impl/usuario-para-banco-mapper';
 
 const prisma = new PrismaClient();
 
@@ -22,13 +24,14 @@ async function main() {
     },
   });
 
+  let usuario = UsuarioBuilder.create()
+    .email('fulano@domain.com')
+    .nome('Fulano')
+    .sobrenome('De Tal');
+  usuario = await usuario.senhaSemCriptografiaAsync('123456789');
+
   await prisma.usuario.create({
-    data: {
-      email: 'fulano@domain.com',
-      nome: 'Fulano',
-      sobrenome: 'De Tal',
-      senha: '123456789',
-    },
+    data: UsuarioParaBancoMapper.mapear(usuario.build()),
   });
 }
 

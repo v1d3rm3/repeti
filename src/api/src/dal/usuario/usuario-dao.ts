@@ -1,12 +1,68 @@
-import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { Prisma, PrismaClient } from '@prisma/client';
+import { plainToClass } from 'class-transformer';
 import { DaoParamsWrapper } from '../../core/dao-params';
-import { PrismaService } from '../../core/prisma.service';
+import { UsuarioImpl } from '../../core/models/impl/usuario';
+import { IUsuario } from '../../core/models/interface/usuario';
+import { PrismaService } from '../../core/prisma/prisma.service';
 import { ResultQuery } from '../../core/result-query';
+
+function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 @Injectable()
 export class UsuarioDao {
   constructor(private readonly prismaService: PrismaService) {}
+
+  async cadastrar(params: DaoParamsWrapper<IUsuario>) {
+    const prisma: Prisma.TransactionClient | PrismaClient =
+      params?.tx ?? this.prismaService;
+    const isTransaction = params?.tx ? true : false;
+
+    if (!isTransaction) {
+      const end_result = await (prisma as PrismaClient).$transaction(
+        async (tx) => {
+          return await this.cadastrar({ data: params.data, tx });
+        },
+      );
+      return ResultQuery.create(end_result).normalizeResult();
+    } else {
+      try {
+        await prisma.$queryRaw`
+        insert into usuario (nome, sobrenome, email, senha)
+        values (
+          ${params.data.nome},
+          ${params.data.sobrenome},
+          ${params.data.email},
+          ${params.data.senha}
+        )
+      `;
+
+        const [{ id: lastId }] = await prisma.$queryRaw<
+          {
+            id: string;
+          }[]
+        >`select last_insert_id() 'id'`;
+
+        return prisma.$queryRaw`
+        select
+          u.id 'id',
+          u.nome 'nome',
+          u.sobrenome 'sobrenome',
+          u.email 'email'
+        from usuario u
+        where u.id = ${lastId};
+      `;
+      } catch (e) {
+        if (e?.meta?.code == 1062) {
+          throw new BadRequestException('Usuário já existe');
+        } else {
+          console.log(e);
+        }
+      }
+    }
+  }
 
   async recuperarPorEmail(params: DaoParamsWrapper<string>) {
     const prisma = params?.tx ?? this.prismaService;
@@ -22,16 +78,9 @@ export class UsuarioDao {
       where u.email = ${params.data}
     `;
 
-    return ResultQuery.create(
-      res,
-    ).normalizeResult() as Prisma.UsuarioGetPayload<{
-      select: {
-        id;
-        email;
-        nome;
-        senha;
-        sobrenome;
-      };
-    }>;
+    return plainToClass(
+      UsuarioImpl,
+      ResultQuery.create(res).normalizeResult(),
+    ) as IUsuario;
   }
 }

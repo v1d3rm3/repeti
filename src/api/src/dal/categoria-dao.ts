@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../core/prisma.service';
+import { PrismaService } from '../core/prisma/prisma.service';
 import { ResultQuery } from '../core/result-query';
 import { ICategoriaDao } from './i-categoria-dao';
 

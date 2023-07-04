@@ -1,0 +1,11 @@
+@baseUrl = {{$dotenv BASE_URL}}/estudo
+@token = Bearer {{$dotenv TOKEN}}
+
+POST {{baseUrl}}
+Authorization: {{token}}
+Content-Type: application/json
+
+{}
+
+###
+

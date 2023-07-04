@@ -1,6 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 
 export interface DaoParamsWrapper<T> {
   data: T;
-  tx?: PrismaClient;
+  tx?: Prisma.TransactionClient;
 }

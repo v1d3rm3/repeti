@@ -13,7 +13,7 @@ datasource db {
 model Categoria {
   id               Int         @id @default(autoincrement())
   nome             String
-  pai              Categoria?   @relation("recursiva", fields: [categoria_pai_id], references: [id])
+  pai              Categoria?  @relation("recursiva", fields: [categoria_pai_id], references: [id])
   categoria_pai_id Int?
   subcategorias    Categoria[] @relation("recursiva")
   questoes         Questao[]
@@ -26,7 +26,7 @@ model Usuario {
   id                 Int               @id @default(autoincrement())
   nome               String
   sobrenome          String
-  email              String
+  email              String            @unique()
   senha              String
   estudos            Estudo[]
   questoes           Questao[]
