@@ -1,15 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import { EstudoCadastrarReq } from '../core/models/rest/estudo/estudo-cadastrar-req';
 import { EstudoBuilder } from '../core/models/impl/estudo/estudo-builder';
+import { Nivel } from '../core/models/interface/nivel';
+import { EstudoCadastrarReq } from '../core/models/rest/estudo/estudo-cadastrar-req';
+import { EstudoDao } from '../dal/estudo-dao';
+import { UsuarioDao } from '../dal/usuario/usuario-dao';
 
 @Injectable()
 export class EstudoService {
+  constructor(
+    private readonly estudoDao: EstudoDao,
+    private readonly usuarioDao: UsuarioDao,
+  ) {}
 
-  async cadastrar(estudo: EstudoCadastrarReq, usuarioId: number) {
+  async cadastrar(estudo: EstudoCadastrarReq, email: string) {
+    const usuario = await this.usuarioDao.recuperarPorEmail({ data: email });
+
     const estudoItem = EstudoBuilder.create()
       .categoriaId(estudo.categoriaId)
-      .estudanteId(estudo.estudanteId)
+      .estudanteId(usuario.id)
+      .nivelAtual(Nivel.MuitoFacil)
       .build();
-    // PARA BANCO DE DADOS
+
+    return await this.estudoDao.criar({ data: estudoItem });
   }
 }

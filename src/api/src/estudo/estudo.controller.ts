@@ -11,12 +11,11 @@ import { EstudoService } from './estudo.service';
 
 @Controller('estudo')
 export class EstudoController {
-
   constructor(private estudoService: EstudoService) {}
 
   @HttpCode(HttpStatus.OK)
   @Post()
   async criar(@Body() params: EstudoCadastrarReq, @Req() req) {
-    this.estudoService.cadastrar(params, req.user.id);
+    return await this.estudoService.cadastrar(params, req.user.username);
   }
 }

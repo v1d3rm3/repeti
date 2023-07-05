@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { Prisma, PrismaClient } from '@prisma/client';
 import { plainToClass } from 'class-transformer';
 import { DaoParamsWrapper } from '../../core/dao-params';
@@ -35,26 +39,24 @@ export class UsuarioDao {
         )
       `;
 
-        const [{ id: lastId }] = await prisma.$queryRaw<
-          {
-            id: string;
-          }[]
-        >`select last_insert_id() 'id'`;
+        const [{ id: lastId }] =
+          await prisma.$queryRaw<any>`select last_insert_id() 'id'`;
 
         return prisma.$queryRaw`
-        select
-          u.id 'id',
-          u.nome 'nome',
-          u.sobrenome 'sobrenome',
-          u.email 'email'
-        from usuario u
-        where u.id = ${lastId};
-      `;
+          select
+            u.id 'id',
+            u.nome 'nome',
+            u.sobrenome 'sobrenome',
+            u.email 'email'
+          from usuario u
+          where u.id = ${lastId};
+        `;
       } catch (e) {
         if (e?.meta?.code == 1062) {
           throw new BadRequestException('Usuário já existe');
         } else {
-          console.log(e);
+          console.error(e);
+          throw new InternalServerErrorException(e);
         }
       }
     }
@@ -62,6 +64,8 @@ export class UsuarioDao {
 
   async recuperarPorEmail(params: DaoParamsWrapper<string>) {
     const prisma = params?.tx ?? this.prismaService;
+
+    console.log(params);
 
     const [res]: any = await prisma.$queryRaw`
       select 

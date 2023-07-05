@@ -35,10 +35,16 @@ model Usuario {
   @@map("usuario")
 }
 
+model CategoriaVersaoCache {
+  versao Int @id
+
+  @@map("categoria_versao_cache")
+}
+
 model Estudo {
   id                 Int               @id @default(autoincrement())
   nivel_atual        String
-  desativado         DateTime
+  desativado         DateTime?
   estudante          Usuario           @relation(fields: [estudante_id], references: [id])
   estudante_id       Int
   questoes_estudadas QuestaoEstudada[]
