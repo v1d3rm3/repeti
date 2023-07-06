@@ -27,6 +27,7 @@ importers:
       bcrypt: 5.1.0
       class-transformer: 0.5.1
       dot-object: 2.1.4
+      dotenv: 16.3.1
       eslint: ^8.42.0
       eslint-config-prettier: ^8.8.0
       eslint-plugin-prettier: ^4.2.1
@@ -53,6 +54,7 @@ importers:
       bcrypt: 5.1.0
       class-transformer: 0.5.1
       dot-object: 2.1.4
+      dotenv: 16.3.1
       mysql2: 3.4.5
       reflect-metadata: 0.1.13
       rxjs: 7.8.1
@@ -4544,6 +4546,11 @@ packages:
 
   /dotenv/16.1.4:
     resolution: {integrity: sha512-m55RtE8AsPeJBpOIFKihEmqUcoVncQIwo7x9U8ZwLEZw9ZpXboz2c+rvog+jUaJvVrZ5kBOeYQBX5+8Aa/OZQw==}
+    engines: {node: '>=12'}
+    dev: false
+
+  /dotenv/16.3.1:
+    resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==}
     engines: {node: '>=12'}
     dev: false
 

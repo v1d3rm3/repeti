@@ -11,7 +11,7 @@ export class EstudoService {
   constructor(
     private readonly estudoDao: EstudoDao,
     private readonly usuarioDao: UsuarioDao,
-    private readonly proximaQuestaoTM: ProximaQuestaoTemplateMethod,
+    private readonly proximaQuestaoTemplateMethod: ProximaQuestaoTemplateMethod,
   ) {}
 
   async cadastrar(estudo: EstudoCadastrarReq, email: string) {
@@ -38,8 +38,6 @@ export class EstudoService {
   async proximaQuestao(estudoId: number, email: string) {
     const usuario = await this.usuarioDao.recuperarPorEmail({ data: email });
     const estudo = await this.estudoDao.recuperarPorId({ data: estudoId });
-
-    console.log(this.proximaQuestaoTM.proximaQuestao(estudo));
 
     if (!estudo) {
       throw new BadRequestException('Estudo não existe');
