@@ -2,12 +2,11 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Prisma, PrismaClient } from '@prisma/client';
 import { plainToClass } from 'class-transformer';
 import { DaoParamsWrapper } from '../core/dao-params';
-import { EstudoImpl } from '../core/models/impl/estudo/estudo';
+import { QuestaoImpl } from '../core/models/impl/questao/questao';
 import { IEstudo } from '../core/models/interface/estudo';
+import { IQuestao } from '../core/models/interface/questao';
 import { PrismaService } from '../core/prisma/prisma.service';
 import { ResultQuery } from '../core/result-query';
-import { IQuestao } from '../core/models/interface/questao';
-import { QuestaoImpl } from '../core/models/impl/questao/questao';
 
 @Injectable()
 export class QuestaoDao {

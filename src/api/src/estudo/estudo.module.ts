@@ -6,14 +6,6 @@ import { ProximaQuestaoTemplateMethod } from './framework/proxima-questao-templa
 
 @Module({
   controllers: [EstudoController],
-  providers: [
-    EstudoService,
-    {
-      provide: ProximaQuestaoTemplateMethod,
-      useFactory: () => {
-        return ProximaQuestaoAleatoriaTemplateMethod;
-      },
-    },
-  ],
+  providers: [EstudoService],
 })
 export class EstudoModule {}

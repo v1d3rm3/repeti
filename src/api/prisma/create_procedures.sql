@@ -264,3 +264,47 @@ BEGIN
     )
     collate utf8mb4_0900_ai_ci;
 END; 
+
+-- ###########################
+-- QUESTAO
+-- ###########################
+
+CREATE PROCEDURE questao_recuperarPorCategoria(IN categoriaId INT)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        RESIGNAL;
+    END;
+
+    DECLARE EXIT HANDLER FOR SQLWARNING
+    BEGIN
+        RESIGNAL;
+    END;
+
+    select 
+      -- TODO: CAMPOS DE QUESTAO
+    from questao q;
+    
+    -- select
+    --   e.id 'id',
+    --   e.categoria_id 'categoriaId',
+    --   e.estudante_id 'estudanteId',
+    --   e.nivel_atual 'nivelAtual',
+    --   u.id 'estudante.id',
+    --   u.nome 'estudante.nome',
+    --   u.sobrenome 'estudante.sobrenome',
+    --   u.email 'estudante.email',
+    --   c.id 'categoria.id',
+    --   c.nome 'categoria.nome'
+    -- from estudo e
+    -- left join usuario u 
+    -- on u.id = e.estudante_id
+    -- left join categoria c 
+    -- on c.id = e.categoria_id
+    -- where (
+    --   e.estudante_id = estudanteId 
+    --   and e.categoria_id = categoriaId
+    --   and e.desativado is null
+    -- )
+    -- collate utf8mb4_0900_ai_ci;
+END; 

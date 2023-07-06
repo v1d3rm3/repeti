@@ -1,3 +1,4 @@
+import { ICategoria } from '../../interface/categoria';
 import { IEstudo } from '../../interface/estudo';
 import { IUsuario } from '../../interface/usuario';
 
@@ -7,6 +8,6 @@ export class EstudoImpl implements IEstudo {
   desativado: Date;
   estudanteId: number;
   categoriaId: number;
-  categoria?: any;
+  categoria?: ICategoria;
   estudante?: IUsuario;
 }
