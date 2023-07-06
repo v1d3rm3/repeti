@@ -1,87 +1,57 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { Prisma, PrismaClient } from '@prisma/client';
-import { plainToClass } from 'class-transformer';
+import { Injectable } from '@nestjs/common';
+import { plainToClass, plainToInstance } from 'class-transformer';
 import { DaoParamsWrapper } from '../core/dao-params';
 import { EstudoImpl } from '../core/models/impl/estudo/estudo';
 import { IEstudo } from '../core/models/interface/estudo';
-import { PrismaService } from '../core/prisma/prisma.service';
+import { MysqlService } from '../core/mysql/mysql.service';
 import { ResultQuery } from '../core/result-query';
 
 @Injectable()
 export class EstudoDao {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(private readonly mysqlService: MysqlService) {}
 
   async criar(params: DaoParamsWrapper<IEstudo>) {
-    const prisma: Prisma.TransactionClient | PrismaClient =
-      params?.tx ?? this.prismaService;
-
-    const isTransaction = params?.tx ? true : false;
-    let res: IEstudo;
-
-    try {
-      if (!isTransaction) {
-        [res] = await (prisma as PrismaClient).$transaction(async (tx) => {
-          return await this.criarQuery(params.data, tx);
-        });
-      } else {
-        [res] = await this.criarQuery(params.data, params.tx);
-      }
-    } catch (e) {
-      console.error(e);
-      throw new InternalServerErrorException();
-    }
+    const [res] = await this.mysqlService.query(
+      'call estudo_cadastrar(?,?,?);',
+      [
+        params.data.estudanteId,
+        params.data.categoriaId,
+        params.data.nivelAtual,
+      ],
+    );
 
     ResultQuery.create(res).normalizeResult();
     return plainToClass(EstudoImpl, res);
   }
 
-  private async criarQuery(estudo: IEstudo, prisma: Prisma.TransactionClient) {
-    await prisma.$queryRaw`
-          insert into estudo (estudante_id, categoria_id, nivel_atual)
-          values (
-            ${estudo.estudanteId},
-            ${estudo.categoriaId},
-            ${estudo.nivelAtual}
+  async listar(params: DaoParamsWrapper<number>) {
+    const res = await this.mysqlService.query('call estudo_recuperar(?);', [
+      params.data,
+    ]);
 
-        )`;
-
-    const [{ id: lastId }] =
-      await prisma.$queryRaw<any>`select last_insert_id() 'id'`;
-
-    return await prisma.$queryRaw<IEstudo[]>`
-        select
-          e.id 'id',
-          e.categoria_id 'categoriaId',
-          e.estudante_id 'estudanteId',
-          e.nivel_atual 'nivelAtual',
-          u.id 'estudante.id',
-          u.nome 'estudante.nome',
-          u.sobrenome 'estudante.sobrenome',
-          u.email 'estudante.email',
-          c.id 'categoria.id',
-          c.nome 'categoria.nome'
-        from estudo e
-        left join usuario u 
-        on u.id = e.estudante_id
-        left join categoria c 
-        on c.id = e.categoria_id
-        where e.id = ${lastId};
-      `;
+    ResultQuery.create(res).normalizeResult();
+    return plainToInstance(EstudoImpl, res);
   }
 
-  async recuperarPorNome(nome: string) {
-    const res: object[] = await this.prismaService.$queryRaw`
-      select 
-        c1.id 'id',  
-        c1.nome 'nome', 
-        c2.id 'pai.id',
-        c2.nome 'pai.nome'
-      from categoria c1
-      left join categoria c2
-      on c2.categoria_pai_id = c1.id
-      where isnull(${nome}) or c1.nome like concat('%', concat(${nome}, '%'))
-    `;
+  async recuperarAtivaPorCategoriaId(
+    params: DaoParamsWrapper<Pick<IEstudo, 'estudanteId' | 'categoriaId'>>,
+  ) {
+    const [res] = await this.mysqlService.query(
+      'call estudo_recuperarAtivaPorCategoriaId(?, ?);',
+      [params.data.estudanteId, params.data.categoriaId],
+    );
 
-    return ResultQuery.create(res).normalizeResult();
+    ResultQuery.create(res).normalizeResult();
+    return plainToInstance(EstudoImpl, res);
+  }
+
+  async recuperarPorId(params: DaoParamsWrapper<number>) {
+    const [res] = await this.mysqlService.query(
+      'call estudo_recuperarPorId(?);',
+      [params.data],
+    );
+
+    ResultQuery.create(res).normalizeResult();
+    return plainToInstance(EstudoImpl, res);
   }
 }

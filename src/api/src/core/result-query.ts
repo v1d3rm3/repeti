@@ -14,7 +14,8 @@ export class ResultQuery<T> {
    */
   normalizeResult() {
     if (Array.isArray(this.res)) return this.normalizeManyResult(this.res);
-    else return this.normalizeOneResult(this.res);
+    else if (this.res) return this.normalizeOneResult(this.res);
+    else return this.res;
   }
 
   private normalizeManyResult(res: T[]) {

@@ -1,0 +1,10 @@
+@baseUrl = {{$dotenv BASE_URL}}/questao
+@token = Bearer {{$dotenv TOKEN}}
+
+POST {{baseUrl}} HTTP/1.1
+Authorization: {{token}}
+Content-Type: application/json
+
+{}
+
+###

@@ -16,7 +16,7 @@ Authorization: {{token}}
 
 ###
 
-GET {{baseUrl}}/proxima-questao HTTP/1.1
+GET {{baseUrl}}/proxima-questao?estudoId=1 HTTP/1.1
 Authorization: {{token}}
 
 ###
