@@ -4,11 +4,11 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
-import { DaoParamsWrapper } from '../../core/dao-params';
-import { UsuarioImpl } from '../../core/models/impl/usuario';
-import { IUsuario } from '../../core/models/interface/usuario';
-import { MysqlService } from '../../core/mysql/mysql.service';
-import { ResultQuery } from '../../core/result-query';
+import { DaoParamsWrapper } from '../core/dao-params';
+import { UsuarioImpl } from '../core/models/impl/usuario';
+import { IUsuario } from '../core/models/interface/usuario';
+import { MysqlService } from '../core/mysql/mysql.service';
+import { ResultQuery } from '../core/result-query';
 
 @Injectable()
 export class UsuarioDao {

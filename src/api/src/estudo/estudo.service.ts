@@ -1,9 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { TodasAsQuestoesForamEstudadasException } from '../core/exceptions/todas-as-questoes-foram-estudadas.exception';
 import { EstudoBuilder } from '../core/models/impl/estudo/estudo-builder';
 import { Nivel } from '../core/models/interface/nivel';
 import { EstudoCadastrarReq } from '../core/models/rest/estudo/estudo-cadastrar-req';
 import { EstudoDao } from '../dal/estudo-dao';
-import { UsuarioDao } from '../dal/usuario/usuario-dao';
+import { UsuarioDao } from '../dal/usuario-dao';
 import { ProximaQuestaoTemplateMethod } from './framework/proxima-questao-template-method';
 
 @Injectable()
@@ -45,6 +46,16 @@ export class EstudoService {
 
     if (estudo.estudante.id !== usuario.id) {
       throw new BadRequestException('Você não é dono deste estudo');
+    }
+
+    try {
+      return await this.proximaQuestaoTemplateMethod.proximaQuestao(estudo);
+    } catch (e) {
+      if (e instanceof TodasAsQuestoesForamEstudadasException) {
+        // DO SOMETHING
+        console.log('DO SOMETHING');
+      }
+      throw e;
     }
   }
 

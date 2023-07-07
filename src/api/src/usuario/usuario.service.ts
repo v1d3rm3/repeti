@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UsuarioBuilder } from '../core/models/impl/usuario-builder';
 import { UsuarioCadastrarReq } from '../core/models/rest/usuario/usuario-cadastrar-req';
-import { UsuarioDao } from '../dal/usuario/usuario-dao';
+import { UsuarioDao } from '../dal/usuario-dao';
 
 @Injectable()
 export class UsuarioService {

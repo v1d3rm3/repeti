@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { QuestaoCriarReq } from '../core/models/rest/questao/questao-criar-req';
-import { UsuarioDao } from '../dal/usuario/usuario-dao';
+import { UsuarioDao } from '../dal/usuario-dao';
 import { QuestaoBuilder } from '../core/models/impl/questao/questao-builder';
 
 @Injectable()

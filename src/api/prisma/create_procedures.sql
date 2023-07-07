@@ -62,6 +62,7 @@ END;
 -- ###########################
 -- CATEGORIA
 -- ###########################
+
 CREATE PROCEDURE categoria_recuperarPorNome(IN nome VARCHAR(255))
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -101,8 +102,9 @@ BEGIN
     select 
       c1.id 'id',  
       c1.nome 'nome', 
-      c2.id 'pai.id',
-      c2.nome 'pai.nome'
+      c1.categoria_pai_id 'categoriaPaiId',
+      c2.id 'categoriaPai.id',
+      c2.nome 'categoriaPai.nome'
     from categoria c1
     left join categoria c2
     on c2.categoria_pai_id = c1.id
@@ -269,7 +271,50 @@ END;
 -- QUESTAO
 -- ###########################
 
-CREATE PROCEDURE questao_recuperarPorCategoria(IN categoriaId INT)
+-- RECUPERA SOMENTE O ID (DIMINUIR CARGA)
+CREATE PROCEDURE Questao_recuperarSomenteIdPorCategoria(IN categoriaId INT)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        RESIGNAL;
+    END;
+
+    DECLARE EXIT HANDLER FOR SQLWARNING
+    BEGIN
+        RESIGNAL;
+    END;
+
+    select q.id 'id'
+    from questao q
+    where q.categoria_id = categoriaId
+    collate utf8mb4_0900_ai_ci;
+END; 
+
+CREATE PROCEDURE Questao_recuperarPorIds(IN listaIds VARCHAR(255))
+BEGIN
+  DECLARE query VARCHAR(1000);
+
+  DECLARE EXIT HANDLER FOR SQLEXCEPTION
+  BEGIN
+      RESIGNAL;
+  END;
+
+  DECLARE EXIT HANDLER FOR SQLWARNING
+  BEGIN
+      RESIGNAL;
+  END;
+  
+  -- Monta a query dinamicamente
+  SET @query = CONCAT('SELECT q.id as id, q.nivel as nivel, q.qualidade as qualidade, q.elaborador_id as elaboradorId, q.categoria_id as categoriaId from questao q WHERE q.id IN (', listaIds, ');');
+  
+  -- Executa a query
+  PREPARE stmt FROM @query;
+  EXECUTE stmt;
+  DEALLOCATE PREPARE stmt;
+
+END; 
+
+CREATE PROCEDURE Questao_recuperarAlternativasPorQuestaoId(IN questaoId INT)
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
@@ -282,29 +327,33 @@ BEGIN
     END;
 
     select 
-      -- TODO: CAMPOS DE QUESTAO
-    from questao q;
-    
-    -- select
-    --   e.id 'id',
-    --   e.categoria_id 'categoriaId',
-    --   e.estudante_id 'estudanteId',
-    --   e.nivel_atual 'nivelAtual',
-    --   u.id 'estudante.id',
-    --   u.nome 'estudante.nome',
-    --   u.sobrenome 'estudante.sobrenome',
-    --   u.email 'estudante.email',
-    --   c.id 'categoria.id',
-    --   c.nome 'categoria.nome'
-    -- from estudo e
-    -- left join usuario u 
-    -- on u.id = e.estudante_id
-    -- left join categoria c 
-    -- on c.id = e.categoria_id
-    -- where (
-    --   e.estudante_id = estudanteId 
-    --   and e.categoria_id = categoriaId
-    --   and e.desativado is null
-    -- )
-    -- collate utf8mb4_0900_ai_ci;
+      a.id 'id',
+      a.descricao 'descricao',
+      a.resposta 'resposta',
+      a.questao_id 'questaoId'
+    from alternativa a
+    where a.questao_id = questaoId
+    collate utf8mb4_0900_ai_ci;
+END; 
+
+-- ###########################
+-- QUESTOES ESTUDADAS
+-- ###########################
+
+CREATE PROCEDURE QuestaoEstudada_recuperarSomenteIdPorEstudo(IN estudoId INT)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        RESIGNAL;
+    END;
+
+    DECLARE EXIT HANDLER FOR SQLWARNING
+    BEGIN
+        RESIGNAL;
+    END;
+
+    select qe.id 'id'
+    from questao_estudada qe
+    where qe.estudo_id = estudoId
+    collate utf8mb4_0900_ai_ci;
 END; 

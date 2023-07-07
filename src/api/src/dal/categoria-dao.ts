@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
+import { CategoriaImpl } from '../core/models/impl/categoria/categoria';
 import { MysqlService } from '../core/mysql/mysql.service';
 import { ResultQuery } from '../core/result-query';
-import { ICategoriaDao } from './i-categoria-dao';
 
 @Injectable()
-export class CategoriaDao implements ICategoriaDao {
+export class CategoriaDao {
   constructor(private readonly mysqlService: MysqlService) {}
 
   async recuperarPorNome(nome: string) {
@@ -13,8 +14,8 @@ export class CategoriaDao implements ICategoriaDao {
       [nome],
     );
 
-    // TODO
-    return ResultQuery.create(res).normalizeResult();
+    ResultQuery.create(res).normalizeResult();
+    return plainToInstance(CategoriaImpl, res);
   }
 
   async recuperarTodas() {
@@ -23,8 +24,7 @@ export class CategoriaDao implements ICategoriaDao {
       [],
     );
 
-    // TODO
     const resultadoNormalizado = ResultQuery.create(res).normalizeResult();
-    return resultadoNormalizado;
+    return res.map((e) => plainToInstance(CategoriaImpl, e));
   }
 }
