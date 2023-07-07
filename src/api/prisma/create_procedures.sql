@@ -297,28 +297,26 @@ BEGIN
     collate utf8mb4_0900_ai_ci;
 END; 
 
+CREATE PROCEDURE Estudo_atualizarNivelAtual(IN estudoId INT, IN nivelAtual VARCHAR(100))
+BEGIN
+  DECLARE EXIT HANDLER FOR SQLEXCEPTION
+  BEGIN
+      RESIGNAL;
+  END;
+
+  DECLARE EXIT HANDLER FOR SQLWARNING
+  BEGIN
+      RESIGNAL;
+  END;
+
+  update estudo 
+  set nivel_atual = nivelAtual
+  where id = estudoId;
+END; 
+
 -- ###########################
 -- QUESTAO
 -- ###########################
-
--- RECUPERA SOMENTE O ID (DIMINUIR CARGA)
--- CREATE PROCEDURE Questao_recuperarSomenteIdPorCategoria(IN categoriaId INT)
--- BEGIN
---     DECLARE EXIT HANDLER FOR SQLEXCEPTION
---     BEGIN
---         RESIGNAL;
---     END;
-
---     DECLARE EXIT HANDLER FOR SQLWARNING
---     BEGIN
---         RESIGNAL;
---     END;
-
---     select q.id 'id'
---     from questao q
---     where q.categoria_id = categoriaId
---     collate utf8mb4_0900_ai_ci;
--- END; 
 
 CREATE PROCEDURE Questao_recuperarSomenteIdPorCategoria(IN listaIds VARCHAR(255))
 BEGIN
@@ -334,6 +332,28 @@ BEGIN
   END;
 
   SET @query = CONCAT('SELECT q.id as id from questao q WHERE q.categoria_id IN (', listaIds, ');');
+
+  -- Executa a query
+  PREPARE stmt FROM @query;
+  EXECUTE stmt;
+  DEALLOCATE PREPARE stmt;
+END; 
+
+-- Recupera questões por categoria e nível atual
+CREATE PROCEDURE Questao_recuperarSomenteIdPorCategoriaENivel(IN listaIds VARCHAR(255), IN nivel VARCHAR(100))
+BEGIN
+  DECLARE query VARCHAR(1000);
+  DECLARE EXIT HANDLER FOR SQLEXCEPTION
+  BEGIN
+      RESIGNAL;
+  END;
+
+  DECLARE EXIT HANDLER FOR SQLWARNING
+  BEGIN
+      RESIGNAL;
+  END;
+
+  SET @query = CONCAT('SELECT q.id as id from questao q WHERE q.categoria_id IN (', listaIds, ') AND nivel = \'', nivel,'\';');
 
   -- Executa a query
   PREPARE stmt FROM @query;

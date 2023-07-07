@@ -54,4 +54,13 @@ export class EstudoDao {
     ResultQuery.create(res).normalizeResult();
     return plainToInstance(EstudoImpl, res);
   }
+
+  async atualizarNivelAtual(params: DaoParamsWrapper<IEstudo>) {
+    await this.mysqlService.query('call Estudo_atualizarNivelAtual(?, ?);', [
+      params.data.id,
+      params.data.nivelAtual,
+    ]);
+
+    return {};
+  }
 }

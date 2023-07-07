@@ -10,9 +10,11 @@ export abstract class ProximaQuestaoTemplateMethod {
     const conjuntoDeQuestoes = await this.recuperarConjuntoDeQuestoes(estudo);
     return await this.selecionarQuestao(conjuntoDeQuestoes);
   }
+
   protected abstract recuperarConjuntoDeQuestoes(
     estudo: IEstudo,
   ): Promise<IQuestaoSomenteId[]>;
+
   protected abstract selecionarQuestao(
     conjuntoDeQuestoes: IQuestaoSomenteId[],
   ): Promise<IQuestao>;

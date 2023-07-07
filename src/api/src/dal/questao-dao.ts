@@ -6,6 +6,7 @@ import { AlternativaImpl } from '../core/models/impl/questao/alternativa';
 import { QuestaoImpl } from '../core/models/impl/questao/questao';
 import { IAlternativa } from '../core/models/interface/alternativa';
 import { IEstudo } from '../core/models/interface/estudo';
+import { Nivel } from '../core/models/interface/nivel';
 import { IQuestao } from '../core/models/interface/questao';
 import { MysqlService } from '../core/mysql/mysql.service';
 import { PrismaService } from '../core/prisma/prisma.service';
@@ -74,6 +75,18 @@ export class QuestaoDao {
     const res = await this.mysqlService.query<IQuestao>(
       'call Questao_recuperarSomenteIdPorCategoria(?);',
       [params.data?.join(',')],
+    );
+
+    ResultQuery.create(res).normalizeResult();
+    return res.map((e) => plainToInstance(QuestaoImpl, e));
+  }
+
+  async recuperarPorCategoriaENivelSomenteId(
+    params: DaoParamsWrapper<{ categoriasIds: number[]; nivel: Nivel }>,
+  ): Promise<Pick<IQuestao, 'id'>[]> {
+    const res = await this.mysqlService.query<IQuestao>(
+      'call Questao_recuperarSomenteIdPorCategoriaENivel(?, ?);',
+      [params.data?.categoriasIds?.join(','), params.data?.nivel],
     );
 
     ResultQuery.create(res).normalizeResult();

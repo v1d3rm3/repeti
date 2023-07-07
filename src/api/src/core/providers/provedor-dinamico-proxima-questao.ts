@@ -1,13 +1,13 @@
 import { Provider } from '@nestjs/common';
 import { ProximaQuestaoAleatoriaTemplateMethod } from 'src/estudo/framework/proxima-questao-aleatoria-template-method';
-import { ProximaQuestaoTemplateMethod } from 'src/estudo/framework/proxima-questao-template-method';
+import { ProximaQuestaoPorNivelTemplateMethod } from '../../estudo/framework/proxima-questao-por-nivel-template-method';
 
 function recuperarInstancia() {
   const featProximaQuestao = process.env.FEAT_PROXIMA_QUESTAO;
   if (process.env.FEAT_PROXIMA_QUESTAO === 'aleatorio') {
     return ProximaQuestaoAleatoriaTemplateMethod;
-  } else if (process.env.FEAT_PROXIMA_QUESTAO === '') {
-    return ProximaQuestaoAleatoriaTemplateMethod;
+  } else if (process.env.FEAT_PROXIMA_QUESTAO === 'por-nivel') {
+    return ProximaQuestaoPorNivelTemplateMethod;
   } else if (process.env.FEAT_PROXIMA_QUESTAO === '') {
     return ProximaQuestaoAleatoriaTemplateMethod;
   } else {
