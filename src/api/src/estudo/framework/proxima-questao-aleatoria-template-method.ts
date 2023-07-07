@@ -28,7 +28,8 @@ export class ProximaQuestaoAleatoriaTemplateMethod extends ProximaQuestaoTemplat
     // 0. recupera a categoria e todas as suas subcategorias
     const categorias = this.categoriaStore
       .recuperarTodasAsSubcategorias(estudo.categoria.id)
-      ?.map((e) => e.id);
+      ?.filter((c) => c && c.id)
+      ?.map((c) => c?.id);
 
     // 1. selecionar todos os ids das possiveis questoes
     const q = await this.questaoDao.recuperarPorCategoriaSomenteId({
