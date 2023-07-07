@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { CategoriaStore } from '../../categoria-store';
 import { TodasAsQuestoesForamEstudadasException } from '../../core/exceptions/todas-as-questoes-foram-estudadas.exception';
 import { IEstudo } from '../../core/models/interface/estudo';
 import { IQuestao } from '../../core/models/interface/questao';
@@ -17,16 +18,21 @@ export class ProximaQuestaoAleatoriaTemplateMethod extends ProximaQuestaoTemplat
   constructor(
     private readonly questaoDao: QuestaoDao,
     private readonly questaoEstudadaDao: QuestaoEstudadaDao,
+    private readonly categoriaStore: CategoriaStore,
   ) {
     super();
   }
 
   // TODO: COMUM, ISSO PODE IR FORA...
   async recuperarConjuntoDeQuestoes(estudo: IEstudo) {
+    // 0. recupera a categoria e todas as suas subcategorias
+    const categorias = this.categoriaStore
+      .recuperarTodasAsSubcategorias(estudo.categoria.id)
+      ?.map((e) => e.id);
+
     // 1. selecionar todos os ids das possiveis questoes
-    // TODO: NA VERDADE, É SELECIONAR POR CATEGORIAS
     const q = await this.questaoDao.recuperarPorCategoriaSomenteId({
-      data: estudo.categoria.id,
+      data: categorias,
     });
 
     // 2. selecionar todas as questoes que foram feitas

@@ -7,6 +7,12 @@ import { Qualidade } from '../src/core/models/interface/qualidade';
 const prisma = new PrismaClient();
 
 async function main() {
+  await prisma.categoriaVersaoCache.create({
+    data: {
+      versao: 1,
+    },
+  });
+
   // ###############
   // CATEGORIAS
   // ###############

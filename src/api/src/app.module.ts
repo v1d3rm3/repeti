@@ -2,6 +2,7 @@ import { Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { config as dotEnvConfig } from 'dotenv';
 import { AuthModule } from './auth/auth.module';
+import { CategoriaStore, CategoriaStoreProvider } from './categoria-store';
 import { CategoriaController } from './categoria/categoria.controller';
 import { CategoriaService } from './categoria/categoria.service';
 import { MysqlModule } from './core/mysql/mysql.module';
@@ -34,7 +35,8 @@ dotEnvConfig();
   providers: [
     CategoriaService,
     ...ProvedorDinamicoProximaQuestao(ProximaQuestaoTemplateMethod),
+    CategoriaStoreProvider(),
   ],
-  exports: [ProximaQuestaoTemplateMethod],
+  exports: [ProximaQuestaoTemplateMethod, CategoriaStore],
 })
 export class AppModule {}

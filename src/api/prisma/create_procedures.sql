@@ -109,7 +109,37 @@ BEGIN
     left join categoria c2
     on c2.categoria_pai_id = c1.id
     COLLATE utf8mb4_0900_ai_ci;
+END;
+
+CREATE PROCEDURE CategoriaVersaoCache_recuperar()
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        RESIGNAL;
+    END;
+
+    DECLARE EXIT HANDLER FOR SQLWARNING
+    BEGIN
+        RESIGNAL;
+    END;
+
+    select v.versao 'versao'
+    from categoria_versao_cache v;
 END; 
+
+CREATE TRIGGER Categoria_atualizaVersaoCacheEmInsercao AFTER INSERT ON categoria
+FOR EACH ROW
+BEGIN
+  UPDATE categoria_versao_cache
+  SET versao = versao + 1;
+END;
+
+CREATE TRIGGER Categoria_atualizaVersaoCacheEmAtualizacao AFTER UPDATE ON categoria
+FOR EACH ROW
+BEGIN
+  UPDATE categoria_versao_cache
+  SET versao = versao + 1;
+END;
 
 -- ###########################
 -- ESTUDO
@@ -272,22 +302,43 @@ END;
 -- ###########################
 
 -- RECUPERA SOMENTE O ID (DIMINUIR CARGA)
-CREATE PROCEDURE Questao_recuperarSomenteIdPorCategoria(IN categoriaId INT)
+-- CREATE PROCEDURE Questao_recuperarSomenteIdPorCategoria(IN categoriaId INT)
+-- BEGIN
+--     DECLARE EXIT HANDLER FOR SQLEXCEPTION
+--     BEGIN
+--         RESIGNAL;
+--     END;
+
+--     DECLARE EXIT HANDLER FOR SQLWARNING
+--     BEGIN
+--         RESIGNAL;
+--     END;
+
+--     select q.id 'id'
+--     from questao q
+--     where q.categoria_id = categoriaId
+--     collate utf8mb4_0900_ai_ci;
+-- END; 
+
+CREATE PROCEDURE Questao_recuperarSomenteIdPorCategoria(IN listaIds VARCHAR(255))
 BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-        RESIGNAL;
-    END;
+  DECLARE query VARCHAR(1000);
+  DECLARE EXIT HANDLER FOR SQLEXCEPTION
+  BEGIN
+      RESIGNAL;
+  END;
 
-    DECLARE EXIT HANDLER FOR SQLWARNING
-    BEGIN
-        RESIGNAL;
-    END;
+  DECLARE EXIT HANDLER FOR SQLWARNING
+  BEGIN
+      RESIGNAL;
+  END;
 
-    select q.id 'id'
-    from questao q
-    where q.categoria_id = categoriaId
-    collate utf8mb4_0900_ai_ci;
+  SET @query = CONCAT('SELECT q.id as id from questao q WHERE q.categoria_id IN (', listaIds, ');');
+
+  -- Executa a query
+  PREPARE stmt FROM @query;
+  EXECUTE stmt;
+  DEALLOCATE PREPARE stmt;
 END; 
 
 CREATE PROCEDURE Questao_recuperarPorIds(IN listaIds VARCHAR(255))

@@ -6,10 +6,9 @@ export function CategoriaStoreProvider(): Provider {
   return {
     provide: CategoriaStore,
     useFactory: async (categoriaDao: CategoriaDao) => {
-      //
       const categorias = await categoriaDao.recuperarTodas();
-      // PUXAR VERSAO.... CONTINUA....
-      return new CategoriaStore();
+      const versao = await categoriaDao.recuperarVersaoCache();
+      return new CategoriaStore(categorias, versao);
     },
     inject: [CategoriaDao],
   };
@@ -29,6 +28,9 @@ export class CategoriaStore {
    * e todas as categorias filhas.
    */
   recuperarTodasAsSubcategorias(categoriaId: number) {
+    // IDENTIFICA PROBLEMA AQUI
+    console.log(this._todosOsFilhos);
+    
     return this._todosOsFilhos.get(categoriaId);
   }
 

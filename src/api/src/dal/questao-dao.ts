@@ -69,11 +69,11 @@ export class QuestaoDao {
   }
 
   async recuperarPorCategoriaSomenteId(
-    params: DaoParamsWrapper<number>,
+    params: DaoParamsWrapper<number[]>,
   ): Promise<Pick<IQuestao, 'id'>[]> {
     const res = await this.mysqlService.query<IQuestao>(
       'call Questao_recuperarSomenteIdPorCategoria(?);',
-      [params.data],
+      [params.data?.join(',')],
     );
 
     ResultQuery.create(res).normalizeResult();
