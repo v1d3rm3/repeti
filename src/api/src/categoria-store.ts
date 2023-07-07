@@ -16,9 +16,11 @@ export function CategoriaStoreProvider(): Provider {
 
 export class CategoriaStore {
   private readonly _todosOsFilhos: Map<number, ICategoria[]>;
+  private readonly _todasAsCategorias: Map<number, ICategoria>;
 
   constructor(categorias: ICategoria[], private _versao: number) {
     this._todosOsFilhos = this._transformarArrayEmMapa(categorias);
+    this._todasAsCategorias = this._transformaArrayParaMapa(categorias);
   }
 
   /**
@@ -28,10 +30,13 @@ export class CategoriaStore {
    * e todas as categorias filhas.
    */
   recuperarTodasAsSubcategorias(categoriaId: number) {
-    // IDENTIFICA PROBLEMA AQUI
-    console.log(this._todosOsFilhos);
-    
-    return this._todosOsFilhos.get(categoriaId);
+    const itensFinal = [];
+    const categoriasFilhas = this._todosOsFilhos.get(categoriaId);
+    if (categoriasFilhas && Array.isArray(categoriasFilhas))
+      itensFinal.push(...categoriasFilhas);
+    else if (categoriasFilhas) itensFinal.push(categoriasFilhas);
+    itensFinal.push(this._todasAsCategorias.get(categoriaId));
+    return itensFinal;
   }
 
   atualizarVersao(novaVersao: number) {
@@ -52,8 +57,24 @@ export class CategoriaStore {
       if (mapa.has(paiId)) {
         mapa.get(paiId)?.push(objeto);
       } else {
-        mapa.set(paiId, [objeto]);
+        if (paiId === null || paiId === undefined) {
+          mapa.set(objeto.id, []);
+        } else {
+          mapa.set(paiId, [objeto]);
+        }
       }
+    }
+
+    return mapa;
+  }
+
+  private _transformaArrayParaMapa(
+    categorias: ICategoria[],
+  ): Map<number, ICategoria> {
+    const mapa = new Map<number, ICategoria>();
+
+    for (const categoria of categorias) {
+      mapa.set(categoria.id, categoria);
     }
 
     return mapa;
