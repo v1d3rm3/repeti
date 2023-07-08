@@ -394,9 +394,9 @@ END;
 -- QUESTAO
 -- ###########################
 
-CREATE PROCEDURE Questao_recuperarSomenteIdPorCategoria(IN listaIds VARCHAR(255))
+CREATE PROCEDURE Questao_recuperarSomenteIdPorCategoria(IN listaIds TEXT)
 BEGIN
-  DECLARE query VARCHAR(1000);
+  DECLARE query TEXT;
   DECLARE EXIT HANDLER FOR SQLEXCEPTION
   BEGIN
       RESIGNAL;
@@ -416,9 +416,9 @@ BEGIN
 END; 
 
 -- Recupera questões por categoria e nível atual
-CREATE PROCEDURE Questao_recuperarSomenteIdPorCategoriaENivel(IN listaIds VARCHAR(255), IN nivel VARCHAR(100))
+CREATE PROCEDURE Questao_recuperarSomenteIdPorCategoriaENivel(IN listaIds TEXT, IN nivel VARCHAR(100))
 BEGIN
-  DECLARE query VARCHAR(1000);
+  DECLARE query TEXT;
   DECLARE EXIT HANDLER FOR SQLEXCEPTION
   BEGIN
       RESIGNAL;
@@ -437,9 +437,9 @@ BEGIN
   DEALLOCATE PREPARE stmt;
 END; 
 
-CREATE PROCEDURE Questao_recuperarPorIds(IN listaIds VARCHAR(255))
+CREATE PROCEDURE Questao_recuperarPorIds(IN listaIds TEXT)
 BEGIN
-  DECLARE query VARCHAR(1000);
+  DECLARE query TEXT;
 
   DECLARE EXIT HANDLER FOR SQLEXCEPTION
   BEGIN
