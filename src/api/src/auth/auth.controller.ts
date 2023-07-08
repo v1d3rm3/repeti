@@ -7,8 +7,8 @@ import {
   Post,
   Request,
 } from '@nestjs/common';
-import { AuthService } from './auth.service';
 import { Public } from '../core/decorators/public.decorator';
+import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
@@ -21,8 +21,8 @@ export class AuthController {
     return this.authService.login(params.email, params.senha);
   }
 
-  @Get('profile')
+  @Get('me')
   getProfile(@Request() req) {
-    return req.user;
+    return this.authService.me(req.user.username);
   }
 }

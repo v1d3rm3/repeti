@@ -17,4 +17,10 @@ export class AuthService {
       access_token: await this.jwtService.signAsync(payload),
     };
   }
+
+  async me(email: string) {
+    const usuario = await this.usuarioDao.recuperarPorEmail({ data: email });
+    usuario['_senha'] = undefined;
+    return usuario;
+  }
 }

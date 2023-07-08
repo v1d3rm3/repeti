@@ -11,6 +11,6 @@ Content-Type: application/json
 
 ###
 
-GET {{baseUrl}}/profile HTTP/1.1
+GET {{baseUrl}}/me HTTP/1.1
 Authorization: {{token}}
 
