@@ -1,37 +1,33 @@
-"use client";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+'use client'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { signIn } from 'next-auth/react'
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const router = useRouter();
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const router = useRouter()
 
   const handleSubmit = async (e: any) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    toast.success("Login realizado com sucesso!");
-    router.push("/dashboard");
+    const response = await signIn('credentials', {
+      redirect: false,
+      email,
+      password,
+    })
 
-    // const response = await signIn("credentials", {
-    //   redirect: false,
-    //   email,
-    //   password,
-    // });
-
-    // if (!response?.error) {
-    //   router.push("/suggestion/list");
-    // } else {
-    //   toast.error("Sorry, authentication failed!", {
-    //     position: toast.POSITION.TOP_CENTER,
-    //   });
-    // }
-  };
+    if (!response?.error) {
+      toast.success('Login realizado com sucesso!')
+      router.push('/dashboard')
+    } else {
+      toast.error('Não foi possível realizar o login')
+    }
+  }
 
   return (
     <main className="mt-2 max-w-screen-xl m-auto h-full p-4 md:p-6 lg:p-8">
@@ -57,11 +53,7 @@ export default function Login() {
           />
         </div>
         <div className="flex flex-col items-center justify-center w-full sm:mt-20">
-          <form
-            id="form-login"
-            onSubmit={handleSubmit}
-            className="w-full md:w-2/3 lg:w-5/6"
-          >
+          <form id="form-login" onSubmit={handleSubmit} className="w-full md:w-2/3 lg:w-5/6">
             <div className="mb-4">
               <label htmlFor="email" className="block mb-2 font-medium">
                 E-mail:
@@ -72,7 +64,7 @@ export default function Login() {
                 className="w-full px-3 py-2 text-black border rounded-md focus:outline-none ring-2 ring-black"
                 value={email}
                 placeholder="email@example.com"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={e => setEmail(e.target.value)}
               />
             </div>
             <div className="mb-4">
@@ -85,7 +77,7 @@ export default function Login() {
                 className="w-full px-3 py-2 text-black border rounded-md focus:outline-none ring-2 ring-black"
                 value={password}
                 placeholder="Digite sua senha..."
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={e => setPassword(e.target.value)}
               />
             </div>
             <button
@@ -108,5 +100,5 @@ export default function Login() {
         </div>
       </div>
     </main>
-  );
+  )
 }
