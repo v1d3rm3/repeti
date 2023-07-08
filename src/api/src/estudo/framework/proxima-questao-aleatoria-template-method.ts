@@ -57,7 +57,6 @@ export class ProximaQuestaoAleatoriaTemplateMethod extends ProximaQuestaoTemplat
   ): Promise<IQuestao> {
     if (conjuntoDeQuestoes?.length === 0)
       throw new TodasAsQuestoesForamEstudadasException();
-
     const questoesDisponiveis = await this.questaoDao.recuperarPorIds({
       data: conjuntoDeQuestoes.map((e) => e.id),
     });

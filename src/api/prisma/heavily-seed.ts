@@ -10,12 +10,13 @@ import { Nivel } from '../src/core/models/interface/nivel';
 import { Qualidade } from '../src/core/models/interface/qualidade';
 import { IQuestao } from '../src/core/models/interface/questao';
 
-const NUM_QUESTOES = 10500;
+const NUM_QUESTOES = 120000;
 const NUM_CATEGORIAS = 1500;
 
 const prisma = new PrismaClient();
 
 async function main() {
+  console.time('seed time');
   await prisma.categoriaVersaoCache.create({
     data: {
       versao: 1,
@@ -87,9 +88,9 @@ async function main() {
       };
     }),
   });
-}
 
-main();
+  console.timeEnd('seed time');
+}
 
 function gerarCategorias(): ICategoria[] {
   const numeroCategorias = NUM_CATEGORIAS;
@@ -125,7 +126,7 @@ function gerarQuestoes(): IQuestao[] {
     const alternativas = [];
     for (let j = 0; j < 4; j++) {
       const descricao = faker.lorem.sentence({ min: 1, max: 3 });
-      const resposta = j === indiceResposta;
+      const resposta = j + 1 === indiceResposta;
       const o = AlternativaBuilder.create()
         .descricao(descricao)
         .resposta(resposta)
@@ -163,3 +164,5 @@ function gerarQuestoes(): IQuestao[] {
   }
   return questoes;
 }
+
+main();

@@ -6,7 +6,7 @@ Authorization: {{token}}
 Content-Type: application/json
 
 {
-  "categoriaId": 7
+  "categoriaId": 490
 }
 
 ###
@@ -16,8 +16,15 @@ Authorization: {{token}}
 
 ###
 
+# recupera o estudo completo por id
+GET {{baseUrl}}/id/1 HTTP/1.1
+Authorization: {{token}}
+
+###
+
 GET {{baseUrl}}/proxima-questao?estudoId=1 HTTP/1.1
 Authorization: {{token}}
+
 
 ###
 
@@ -27,8 +34,8 @@ Authorization: {{token}}
 
 {
   "estudoId": 1,
-  "questaoId": 1,
-  "alternativaId": 2
+  "questaoId": 12763,
+  "alternativaId": 51051
 }
 
 ###
@@ -38,10 +45,9 @@ Content-Type: application/json
 Authorization: {{token}}
 
 {
-  "estudoId": 1,
-  "questaoId": 1,
+  "questaoEstudadaId": 1,
   "nivel": "Facil",
-  "qualidade": "Bom"
+  "qualidade": "MuitoDificil"
 }
 
 ###

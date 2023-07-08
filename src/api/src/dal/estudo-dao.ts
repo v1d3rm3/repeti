@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { plainToClass, plainToInstance } from 'class-transformer';
+import { PoolConnection } from 'mysql2/promise';
 import { DaoParamsWrapper } from '../core/dao-params';
 import { EstudoImpl } from '../core/models/impl/estudo/estudo';
 import { QuestaoEstudadaImpl } from '../core/models/impl/questao/questao-estudada';
@@ -92,5 +93,13 @@ export class EstudoDao {
     );
     ResultQuery.create(res).normalizeResult();
     return plainToInstance(QuestaoEstudadaImpl, res);
+  }
+
+  async desativar(params: DaoParamsWrapper<number>) {
+    await this.mysqlService.query(
+      'call Estudo_desativar(?);',
+      [params.data],
+      params?.tx as PoolConnection,
+    );
   }
 }

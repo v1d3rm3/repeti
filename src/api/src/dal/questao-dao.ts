@@ -20,8 +20,7 @@ export class QuestaoDao {
   ) {}
 
   async criar(params: DaoParamsWrapper<IQuestao>) {
-    const prisma: Prisma.TransactionClient | PrismaClient =
-      params?.tx ?? this.prismaService;
+    const prisma: any = params?.tx ?? this.prismaService;
 
     const isTransaction = params?.tx ? true : false;
     let res: IEstudo;
@@ -32,7 +31,7 @@ export class QuestaoDao {
           return await this.criarQuery(params.data, tx);
         });
       } else {
-        [res] = await this.criarQuery(params.data, params.tx);
+        [res] = await this.criarQuery(params.data, params?.tx as any);
       }
     } catch (e) {
       console.error(e);

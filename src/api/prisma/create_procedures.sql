@@ -387,8 +387,24 @@ BEGIN
   where qe.estudo_id = estudoId
   and q.id = questaoId
   collate utf8mb4_0900_ai_ci;
-
 END; 
+
+CREATE PROCEDURE Estudo_desativar(IN estudoId INT)
+BEGIN
+  DECLARE EXIT HANDLER FOR SQLEXCEPTION
+  BEGIN
+      RESIGNAL;
+  END;
+
+  DECLARE EXIT HANDLER FOR SQLWARNING
+  BEGIN
+      RESIGNAL;
+  END;
+
+  update estudo 
+  SET desativado = now()
+  where id = estudoId;
+END;
 
 -- ###########################
 -- QUESTAO
@@ -508,7 +524,7 @@ BEGIN
 END; 
 
 -- ###########################
--- QUESTOES ESTUDADAS
+-- QUESTAO ESTUDADA
 -- ###########################
 
 CREATE PROCEDURE QuestaoEstudada_recuperarQuestoesPorEstudoSomenteId(IN estudoId INT)
@@ -532,3 +548,65 @@ BEGIN
     where qe.estudo_id = estudoId
     collate utf8mb4_0900_ai_ci;
 END; 
+
+CREATE PROCEDURE QuestaoEstudada_recuperarPorId(IN questaoEstudadaId INT)
+BEGIN
+  DECLARE EXIT HANDLER FOR SQLEXCEPTION
+  BEGIN
+      RESIGNAL;
+  END;
+
+  DECLARE EXIT HANDLER FOR SQLWARNING
+  BEGIN
+      RESIGNAL;
+  END;
+
+  select 
+    qe.id as id,
+    qe.acertou as acertou,
+    qe.nivel as nivel,
+    qe.qualidade as qualidade,
+    qe.estudante_id as estudanteId,
+    qe.estudo_id as estudoId,
+    qe.alternativa_id as alternativaId,
+    a.id as 'alternativa.id',
+    a.descricao as 'alternativa.descricao',
+    a.resposta as 'alternativa.resposta',
+    a.questao_id as 'alternativa.questaoId',
+    q.id as 'questao.id',
+    q.enunciado as 'questao.enunciado',
+    q.nivel as 'questao.nivel',
+    q.qualidade as 'questao.qualidade',
+    q.elaborador_id as 'questao.elaboradorId',
+    q.categoria_id as 'questao.categoriaId',
+    u.id as 'estudante.id',
+    u.nome as 'estudante.nome',
+    u.sobrenome as 'estudante.sobrenome',
+    u.email as 'estudante.email'
+  from questao_estudada qe
+  left join alternativa a
+  on a.id = qe.alternativa_id
+  left join questao q
+  on q.id = a.questao_id
+  left join usuario u
+  on u.id = qe.estudante_id
+  where qe.id = questaoEstudadaId
+  collate utf8mb4_0900_ai_ci;
+END; 
+
+CREATE PROCEDURE QuestaoEstudada_atualizarNivelEQualidade(IN questaoEstudadaId INT, IN nivel VARCHAR(100), IN qualidade VARCHAR(100))
+BEGIN
+  DECLARE EXIT HANDLER FOR SQLEXCEPTION
+  BEGIN
+      RESIGNAL;
+  END;
+
+  DECLARE EXIT HANDLER FOR SQLWARNING
+  BEGIN
+      RESIGNAL;
+  END;
+
+  update questao_estudada 
+  SET nivel = nivel, qualidade = qualidade
+  where id = questaoEstudadaId;
+END;
