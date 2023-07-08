@@ -11,10 +11,15 @@ export const metadata = {
 }
 
 async function getSession(cookie: string): Promise<Session> {
-  const response = JSON.parse('{"user":"", "age":30, "city":"New York"}')
-  const session = response.user
+  const response = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/session`, {
+    headers: {
+      cookie,
+    },
+  })
 
-  return Object.keys(cookie).length > 0 ? session : null
+  const session = await response.json()
+
+  return Object.keys(session).length > 0 ? session : null
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

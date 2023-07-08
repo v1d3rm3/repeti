@@ -1,27 +1,45 @@
-import React from "react";
-import { User, AlarmClock, MessagesSquare } from "lucide-react";
+import React from 'react'
+import { User, AlarmClock, MessagesSquare } from 'lucide-react'
+import { useSession } from 'next-auth/react'
+import { Loading } from '../Loading'
 
 export interface Question {
-  _id: string;
-  title: string;
-  content: string;
-  userName: string;
-  categoryName: string;
-  dataFormated: string;
+  _id: string
+  title: string
+  content: string
+  userName: string
+  categoryName: string
+  dataFormated: string
 }
 
-export interface QuestionProps {
-  questions: Question[];
+export interface Props {
+  token: string
 }
 
-export default function QuestionList({ questions }: QuestionProps) {
+const getStudies = async (token: string) => {
+  console.log(token)
+  const res = await fetch(`/api/study`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token,
+    },
+  })
+
+  const data = await res.json()
+
+  return data.body
+}
+
+export async function QuestionList(props: Props) {
+  let questions: Question[] = []
+
+  questions = await getStudies(props.token)
+
   return (
     <>
-      {questions?.map((question) => (
-        <div
-          key={question._id}
-          className="bg-blue-950 text-white px-6 py-4 rounded overflow-hidden shadow-lg mb-4"
-        >
+      {questions?.map(question => (
+        <div key={question._id} className="bg-blue-950 text-white px-6 py-4 rounded overflow-hidden shadow-lg mb-4">
           <div className="font-bold text-xl mb-2">{question.title}</div>
           <div className="text-slate-100 text-base font-serif text-justify">
             {question.content}
@@ -44,5 +62,5 @@ export default function QuestionList({ questions }: QuestionProps) {
         </div>
       ))}
     </>
-  );
+  )
 }
