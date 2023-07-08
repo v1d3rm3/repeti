@@ -9,7 +9,7 @@ export class AuthService {
   async login(username, pass) {
     const usuario = await this.usuarioDao.recuperarPorEmail({ data: username });
 
-    if (!(await usuario.compararSenha(pass))) {
+    if (!usuario || !(await usuario.compararSenha(pass))) {
       throw new UnauthorizedException();
     }
     const payload = { username: usuario.email, sub: usuario.id };
