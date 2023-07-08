@@ -24,8 +24,13 @@ export class MysqlService {
 
   async query<T>(sql: string, params: any[], pool?: PoolConnection) {
     const pc = pool ?? this.pool;
-    const [[res]] = (await pc.query(sql, params)) as any;
-    return res as T[];
+    const resultFromQuery = await pc.query(sql, params);
+    if (resultFromQuery && resultFromQuery[0] && resultFromQuery[0][0]) {
+      const [[res]] = resultFromQuery as any;
+      return res as T[];
+    } else {
+      return [];
+    }
   }
 
   async getConnection() {

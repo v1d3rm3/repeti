@@ -56,14 +56,15 @@ model Estudo {
 
 model QuestaoEstudada {
   id             Int         @id @default(autoincrement())
-  qualidade      String
-  nivel          String
+  qualidade      String?
+  nivel          String?
   alternativa    Alternativa @relation(fields: [alternativa_id], references: [id])
   alternativa_id Int
   estudante      Usuario     @relation(fields: [estudante_id], references: [id])
   estudante_id   Int
   estudo         Estudo?     @relation(fields: [estudo_id], references: [id])
   estudo_id      Int?
+  acertou        Boolean
 
   @@map("questao_estudada")
 }

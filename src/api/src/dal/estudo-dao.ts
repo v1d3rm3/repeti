@@ -1,8 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { plainToClass, plainToInstance } from 'class-transformer';
+import { PoolConnection } from 'mysql2/promise';
 import { DaoParamsWrapper } from '../core/dao-params';
 import { EstudoImpl } from '../core/models/impl/estudo/estudo';
+import { QuestaoEstudadaImpl } from '../core/models/impl/questao/questao-estudada';
 import { IEstudo } from '../core/models/interface/estudo';
+import { IQuestaoEstudada } from '../core/models/interface/questao-estudada';
 import { MysqlService } from '../core/mysql/mysql.service';
 import { ResultQuery } from '../core/result-query';
 
@@ -53,5 +56,50 @@ export class EstudoDao {
 
     ResultQuery.create(res).normalizeResult();
     return plainToInstance(EstudoImpl, res);
+  }
+
+  async atualizarNivelAtual(params: DaoParamsWrapper<IEstudo>) {
+    await this.mysqlService.query('call Estudo_atualizarNivelAtual(?, ?);', [
+      params.data.id,
+      params.data.nivelAtual,
+    ]);
+
+    return {};
+  }
+
+  async criarQuestaoEstudadaEmEstudo(
+    params: DaoParamsWrapper<IQuestaoEstudada>,
+  ) {
+    const [res] = await this.mysqlService.query(
+      'call Estudo_criarQuestaoEstudadaEmEstudo(?,?,?,?);',
+      [
+        params.data.estudanteId,
+        params.data.estudoId,
+        params.data.alternativaId,
+        params.data.acertou,
+      ],
+    );
+
+    ResultQuery.create(res).normalizeResult();
+    return plainToInstance(QuestaoEstudadaImpl, res);
+  }
+
+  async recuperarQuestaoEstudadaPorQuestaoId(
+    params: DaoParamsWrapper<{ questaoId: number; estudoId: number }>,
+  ) {
+    const [res] = await this.mysqlService.query(
+      'call Estudo_recuperarQuestaoEstudadaPorQuestaoId(?,?);',
+      [params.data.estudoId, params.data.questaoId],
+    );
+    ResultQuery.create(res).normalizeResult();
+    return plainToInstance(QuestaoEstudadaImpl, res);
+  }
+
+  async desativar(params: DaoParamsWrapper<number>) {
+    await this.mysqlService.query(
+      'call Estudo_desativar(?);',
+      [params.data],
+      params?.tx as PoolConnection,
+    );
   }
 }

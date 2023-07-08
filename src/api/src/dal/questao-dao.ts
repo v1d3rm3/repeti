@@ -6,6 +6,7 @@ import { AlternativaImpl } from '../core/models/impl/questao/alternativa';
 import { QuestaoImpl } from '../core/models/impl/questao/questao';
 import { IAlternativa } from '../core/models/interface/alternativa';
 import { IEstudo } from '../core/models/interface/estudo';
+import { Nivel } from '../core/models/interface/nivel';
 import { IQuestao } from '../core/models/interface/questao';
 import { MysqlService } from '../core/mysql/mysql.service';
 import { PrismaService } from '../core/prisma/prisma.service';
@@ -19,8 +20,7 @@ export class QuestaoDao {
   ) {}
 
   async criar(params: DaoParamsWrapper<IQuestao>) {
-    const prisma: Prisma.TransactionClient | PrismaClient =
-      params?.tx ?? this.prismaService;
+    const prisma: any = params?.tx ?? this.prismaService;
 
     const isTransaction = params?.tx ? true : false;
     let res: IEstudo;
@@ -31,7 +31,7 @@ export class QuestaoDao {
           return await this.criarQuery(params.data, tx);
         });
       } else {
-        [res] = await this.criarQuery(params.data, params.tx);
+        [res] = await this.criarQuery(params.data, params?.tx as any);
       }
     } catch (e) {
       console.error(e);
@@ -80,6 +80,18 @@ export class QuestaoDao {
     return res.map((e) => plainToInstance(QuestaoImpl, e));
   }
 
+  async recuperarPorCategoriaENivelSomenteId(
+    params: DaoParamsWrapper<{ categoriasIds: number[]; nivel: Nivel }>,
+  ): Promise<Pick<IQuestao, 'id'>[]> {
+    const res = await this.mysqlService.query<IQuestao>(
+      'call Questao_recuperarSomenteIdPorCategoriaENivel(?, ?);',
+      [params.data?.categoriasIds?.join(','), params.data?.nivel],
+    );
+
+    ResultQuery.create(res).normalizeResult();
+    return res.map((e) => plainToInstance(QuestaoImpl, e));
+  }
+
   async recuperarPorIds(
     params: DaoParamsWrapper<number[]>,
   ): Promise<IQuestao[]> {
@@ -106,5 +118,15 @@ export class QuestaoDao {
 
     ResultQuery.create(res).normalizeResult();
     return res.map((e) => plainToInstance(AlternativaImpl, e));
+  }
+
+  async recuperarPorId(params: DaoParamsWrapper<number>) {
+    const [res] = await this.mysqlService.query<IQuestao>(
+      'call Questao_recuperarPorId(?);',
+      [params.data],
+    );
+
+    ResultQuery.create(res).normalizeResult();
+    return plainToInstance(QuestaoImpl, res);
   }
 }

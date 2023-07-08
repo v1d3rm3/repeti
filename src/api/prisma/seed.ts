@@ -16,6 +16,7 @@ async function main() {
   // ###############
   // CATEGORIAS
   // ###############
+
   const cat_port = await prisma.categoria.create({
     data: {
       nome: 'Português',
@@ -115,6 +116,7 @@ async function main() {
   // ###############
   // QUESTOES
   // ###############
+
   await prisma.questao.create({
     include: {
       alternativas: true,

@@ -6,6 +6,7 @@ import { IQuestaoEstudada } from '../../interface/questao-estudada';
 import { IUsuario } from '../../interface/usuario';
 
 export class QuestaoEstudadaImpl implements IQuestaoEstudada {
+  acertou: boolean;
   nivel: Nivel;
   qualidade: Qualidade;
   alternativaId: number;

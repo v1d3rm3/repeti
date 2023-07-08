@@ -6,7 +6,8 @@ import { Qualidade } from './qualidade';
 import { IUsuario } from './usuario';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IQuestaoEstudada extends Pick<QuestaoEstudada, 'id'> {
+export interface IQuestaoEstudada
+  extends Pick<QuestaoEstudada, 'id' | 'acertou'> {
   nivel: Nivel;
   qualidade: Qualidade;
   alternativaId: number;
