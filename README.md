@@ -1,3 +1,7 @@
+## Pendências
+- [ ] recarregar categortias em caso de mudanças na versão
+- [ ] reavaliar questoes... toda vez que tiver feito ela, ou uma vez depois de algum periodo de tempo?
+
 ## Utilizando o projeto
 
 **Instale o Docker na sua máquina!**
