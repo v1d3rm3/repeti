@@ -452,7 +452,7 @@ BEGIN
   END;
   
   -- Monta a query dinamicamente
-  SET @query = CONCAT('SELECT q.id as id, q.nivel as nivel, q.qualidade as qualidade, q.elaborador_id as elaboradorId, q.categoria_id as categoriaId from questao q WHERE q.id IN (', listaIds, ');');
+  SET @query = CONCAT('SELECT q.id as id, q.enunciado as enunciado, q.nivel as nivel, q.qualidade as qualidade, q.elaborador_id as elaboradorId, q.categoria_id as categoriaId from questao q WHERE q.id IN (', listaIds, ');');
   
   -- Executa a query
   PREPARE stmt FROM @query;
