@@ -120,4 +120,14 @@ export class QuestaoDao {
     ResultQuery.create(res).normalizeResult();
     return res.map((e) => plainToInstance(AlternativaImpl, e));
   }
+
+  async recuperarPorId(params: DaoParamsWrapper<number>) {
+    const [res] = await this.mysqlService.query<IQuestao>(
+      'call Questao_recuperarPorId(?);',
+      [params.data],
+    );
+
+    ResultQuery.create(res).normalizeResult();
+    return plainToInstance(QuestaoImpl, res);
+  }
 }

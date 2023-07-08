@@ -1,9 +1,17 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { CategoriaStore } from '../categoria-store';
+import { AlternativaNaoFazParteDeQuestaoException } from '../core/exceptions/alternativa-nao-faz-parte-de-questao.exception';
+import { EntidadeNaoExisteException } from '../core/exceptions/entidade-nao-existe.exception';
+import { QuestaoJaFoiAvaliadaException } from '../core/exceptions/questao-ja-foi-avaliada.exception';
 import { TodasAsQuestoesForamEstudadasException } from '../core/exceptions/todas-as-questoes-foram-estudadas.exception';
+import { EstudoImpl } from '../core/models/impl/estudo/estudo';
 import { EstudoBuilder } from '../core/models/impl/estudo/estudo-builder';
+import { QuestaoImpl } from '../core/models/impl/questao/questao';
+import { QuestaoEstudadaBuilder } from '../core/models/impl/questao/questao-estudada-builder';
 import { Nivel } from '../core/models/interface/nivel';
 import { EstudoCadastrarReq } from '../core/models/rest/estudo/estudo-cadastrar-req';
 import { EstudoDao } from '../dal/estudo-dao';
+import { QuestaoDao } from '../dal/questao-dao';
 import { UsuarioDao } from '../dal/usuario-dao';
 import { ProximaQuestaoTemplateMethod } from './framework/proxima-questao-template-method';
 
@@ -13,6 +21,8 @@ export class EstudoService {
     private readonly estudoDao: EstudoDao,
     private readonly usuarioDao: UsuarioDao,
     private readonly proximaQuestaoTemplateMethod: ProximaQuestaoTemplateMethod,
+    private readonly questaoDao: QuestaoDao,
+    private readonly categoriaStore: CategoriaStore,
   ) {}
 
   async cadastrar(estudo: EstudoCadastrarReq, email: string) {
@@ -57,6 +67,71 @@ export class EstudoService {
       }
       throw e;
     }
+  }
+
+  async resolverQuestao(
+    estudoId: number,
+    questaoId: number,
+    alternativaId: number,
+    username: any,
+  ) {
+    const [usuario, estudo, questao, alternativas] = await Promise.all([
+      this.usuarioDao.recuperarPorEmail({ data: username }),
+      this.estudoDao.recuperarPorId({ data: estudoId }),
+      this.questaoDao.recuperarPorId({ data: questaoId }),
+      this.questaoDao.recuperarAlternativasPorQuestaoId({ data: questaoId }),
+    ]);
+
+    if (!estudo) {
+      throw new EntidadeNaoExisteException(
+        EstudoImpl.name,
+        estudoId.toString(),
+      );
+    }
+
+    if (estudo.estudante.id !== usuario.id) {
+      throw new BadRequestException('Você não é dono deste estudo');
+    }
+
+    if (!questao) {
+      throw new EntidadeNaoExisteException(
+        QuestaoImpl.name,
+        questaoId.toString(),
+      );
+    }
+
+    if (!alternativas.map((a) => a.id).includes(alternativaId)) {
+      throw new AlternativaNaoFazParteDeQuestaoException(
+        alternativaId.toString(),
+      );
+    }
+
+    // verificando se a questao ja foi respondida
+    // dentro de um estudo
+    const questaoEstudadaFoiEncontrada =
+      await this.estudoDao.recuperarQuestaoEstudadaPorQuestaoId({
+        data: {
+          estudoId,
+          questaoId,
+        },
+      });
+
+    if (questaoEstudadaFoiEncontrada)
+      throw new QuestaoJaFoiAvaliadaException(questaoId.toString());
+
+    // verificando se a resposta esta correta
+    const alternativaCorreta = alternativas.find((a) => a.resposta);
+
+    const questaoEstudada = QuestaoEstudadaBuilder.create()
+      .estudanteId(usuario.id)
+      .estudoId(estudo.id)
+      .alternativaId(alternativaId)
+      .acertou(alternativaCorreta.id === alternativaId)
+      .build();
+
+    return await this.estudoDao.criarQuestaoEstudadaEmEstudo({
+      data: questaoEstudada,
+    });
   }
 
   async listar(email: string) {

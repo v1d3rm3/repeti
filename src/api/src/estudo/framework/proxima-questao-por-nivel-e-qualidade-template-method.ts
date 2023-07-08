@@ -8,20 +8,34 @@ import { EstudoDao } from '../../dal/estudo-dao';
 import { QuestaoDao } from '../../dal/questao-dao';
 import { QuestaoEstudadaDao } from '../../dal/questao-estudada-dao';
 import { ProximaQuestaoTemplateMethod } from './proxima-questao-template-method';
+import { Qualidade } from '../../core/models/interface/qualidade';
+import { ConfigService } from '@nestjs/config';
 
 /**
  * Seleciona as próximas questões de maneira aleatória
  * dentro de um nível específico.
  */
 @Injectable()
-export class ProximaQuestaoPorNivelTemplateMethod extends ProximaQuestaoTemplateMethod {
+export class ProximaQuestaoPorNivelEQualidadeTemplateMethod extends ProximaQuestaoTemplateMethod {
+  // DEFINE QUALIDADE MÍNIMA
+  // PODE VIR DO .ENV
+  private _qualidade: Qualidade = Qualidade.Boa;
+
   constructor(
     private readonly questaoDao: QuestaoDao,
     private readonly estudoDao: EstudoDao,
     private readonly questaoEstudadaDao: QuestaoEstudadaDao,
     private readonly categoriaStore: CategoriaStore,
+    private readonly configService: ConfigService,
   ) {
     super();
+    this._definindoQualidadeMinima();
+  }
+
+  private _definindoQualidadeMinima() {
+    this._qualidade =
+      this.configService.get<Qualidade>('FEAT_PROXIMA_QUESTAO_QUALIDADE') ??
+      Qualidade.Boa;
   }
 
   /**
@@ -59,6 +73,7 @@ export class ProximaQuestaoPorNivelTemplateMethod extends ProximaQuestaoTemplate
   ) {
     // 2. selecionar todos os ids das possiveis questoes
     // filtrando por nivel
+    // TODO: alterar essa procedure!!!! CONTINUA...
     const q = await this.questaoDao.recuperarPorCategoriaENivelSomenteId({
       data: {
         nivel: estudo.nivelAtual,

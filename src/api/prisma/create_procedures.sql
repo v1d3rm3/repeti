@@ -314,6 +314,82 @@ BEGIN
   where id = estudoId;
 END; 
 
+CREATE PROCEDURE Estudo_criarQuestaoEstudadaEmEstudo(
+  IN estudanteId INT, 
+  IN estudoId INT, 
+  IN alternativaId INT, 
+  IN acertou TINYINT
+)
+BEGIN
+  DECLARE EXIT HANDLER FOR SQLEXCEPTION
+  BEGIN
+      ROLLBACK;
+      RESIGNAL;
+  END;
+
+  DECLARE EXIT HANDLER FOR SQLWARNING
+  BEGIN
+      ROLLBACK;
+      RESIGNAL;
+  END;
+
+  START TRANSACTION;
+
+    insert into questao_estudada (estudante_id, estudo_id, alternativa_id, acertou)
+    values (
+      estudanteId,
+      estudoId,
+      alternativaId,
+      acertou
+    );
+
+    select 
+      qe.id as id,
+      qe.estudante_id as estudanteId,
+      qe.estudo_id as estudoId,
+      qe.alternativa_id as alternativaId,
+      qe.acertou as acertou
+    from questao_estudada qe
+    where qe.id = last_insert_id()
+    collate utf8mb4_0900_ai_ci;
+
+  COMMIT;
+END; 
+
+CREATE PROCEDURE Estudo_recuperarQuestaoEstudadaPorQuestaoId(
+  IN estudoId INT, 
+  IN questaoId INT
+)
+BEGIN
+  DECLARE EXIT HANDLER FOR SQLEXCEPTION
+  BEGIN
+      ROLLBACK;
+      RESIGNAL;
+  END;
+
+  DECLARE EXIT HANDLER FOR SQLWARNING
+  BEGIN
+      ROLLBACK;
+      RESIGNAL;
+  END;
+
+  select 
+    qe.id as id,
+    qe.estudante_id as estudanteId,
+    qe.estudo_id as estudoId,
+    qe.alternativa_id as alternativaId,
+    qe.acertou as acertou
+  from questao_estudada qe
+  left join alternativa a 
+  on a.id = qe.alternativa_id
+  left join questao q
+  on q.id = a.questao_id
+  where qe.estudo_id = estudoId
+  and q.id = questaoId
+  collate utf8mb4_0900_ai_ci;
+
+END; 
+
 -- ###########################
 -- QUESTAO
 -- ###########################
@@ -407,11 +483,35 @@ BEGIN
     collate utf8mb4_0900_ai_ci;
 END; 
 
+CREATE PROCEDURE Questao_recuperarPorId(IN questaoId INT)
+BEGIN
+  DECLARE EXIT HANDLER FOR SQLEXCEPTION
+  BEGIN
+      RESIGNAL;
+  END;
+
+  DECLARE EXIT HANDLER FOR SQLWARNING
+  BEGIN
+      RESIGNAL;
+  END;
+
+  select 
+    q.id as id,
+    q.enunciado as enunciado,
+    q.nivel as nivel,
+    q.qualidade as qualidade,
+    q.elaborador_id as elaboradorId,
+    q.categoria_id as categoriaId
+  from questao q 
+  where q.id = questaoId
+  collate utf8mb4_0900_ai_ci;
+END; 
+
 -- ###########################
 -- QUESTOES ESTUDADAS
 -- ###########################
 
-CREATE PROCEDURE QuestaoEstudada_recuperarSomenteIdPorEstudo(IN estudoId INT)
+CREATE PROCEDURE QuestaoEstudada_recuperarQuestoesPorEstudoSomenteId(IN estudoId INT)
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
@@ -423,8 +523,12 @@ BEGIN
         RESIGNAL;
     END;
 
-    select qe.id 'id'
+    select q.id 'id'
     from questao_estudada qe
+    left join alternativa a
+    on a.id = qe.alternativa_id
+    left join questao q
+    on q.id = a.questao_id
     where qe.estudo_id = estudoId
     collate utf8mb4_0900_ai_ci;
 END; 

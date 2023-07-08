@@ -49,7 +49,7 @@ export class ProximaQuestaoAleatoriaTemplateMethod extends ProximaQuestaoTemplat
     });
 
     // 3. fazer a diferenca entre esses dois conjuntos
-    return q.filter((q1) => !qe.includes(q1));
+    return this._extrairQuestoesNaoEstudadas(qe, q);
   }
 
   async selecionarQuestao(
