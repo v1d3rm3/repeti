@@ -517,8 +517,18 @@ BEGIN
     q.nivel as nivel,
     q.qualidade as qualidade,
     q.elaborador_id as elaboradorId,
-    q.categoria_id as categoriaId
+    u.id as 'elaborador.id',
+    u.nome as 'elaborador.nome',
+    u.sobrenome as 'elaborador.sobrenome',
+    u.email as 'elaborador.email',
+    q.categoria_id as categoriaId,
+    c.id as 'categoria.id',
+    c.nome as 'categoria.nome'
   from questao q 
+  left join categoria c 
+  on c.id = q.categoria_id
+  left join usuario u 
+  on u.id = q.elaborador_id
   where q.id = questaoId
   collate utf8mb4_0900_ai_ci;
 END; 
