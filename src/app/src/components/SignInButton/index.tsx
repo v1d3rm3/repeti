@@ -9,7 +9,7 @@ export function SignInButton() {
   const router = useRouter()
 
   if (status === 'loading') {
-    return <Loading size={20} />
+    return <Loading size={20} style="text-white" />
   }
 
   return session ? (
