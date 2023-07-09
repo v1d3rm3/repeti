@@ -5,6 +5,56 @@ POST {{baseUrl}} HTTP/1.1
 Authorization: {{token}}
 Content-Type: application/json
 
-{}
+{
+    "enunciado": "Qual o nome do presidente do Brasil?",
+    "alternativas": [
+        {
+            "descricao": "Lula",
+            "resposta": true
+        },
+        {
+            "descricao": "Ladrãosonaro",
+            "resposta": false
+        },
+        {
+            "descricao": "Dilma",
+            "resposta": false
+        },
+        {
+            "descricao": "Temer",
+            "resposta": false
+        }
+    ],
+    "categoriaId": 1
+}
 
 ###
+
+# recupera uma questao para uma determinada categoria
+GET {{baseUrl}}/proxima-questao?categoriaId=547 HTTP/1.1
+Authorization: {{token}}
+
+###
+
+POST {{baseUrl}}/resolver-questao HTTP/1.1
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "questaoId": 12763,
+  "alternativaId": 51051
+}
+
+###
+
+POST {{baseUrl}}/avaliar-questao HTTP/1.1
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "questaoId": 1,
+  "nivel": "Facil",
+  "qualidade": "MuitoDificil"
+}
+
+
