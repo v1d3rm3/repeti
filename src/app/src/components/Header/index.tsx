@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { SignInButton } from "../SignInButton";
-import Logo from "../Logo/index";
+import Link from 'next/link'
+import { SignInButton } from '../SignInButton'
+import Logo from '../Logo/index'
 
 export function Header() {
   return (
@@ -27,5 +27,5 @@ export function Header() {
         <SignInButton />
       </div>
     </header>
-  );
+  )
 }

@@ -5,12 +5,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { signIn } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
+import { setCookie } from 'typescript-cookie'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const router = useRouter()
+  const { data: session } = useSession()
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
@@ -22,6 +24,7 @@ export default function Login() {
     })
 
     if (!response?.error) {
+      setCookie('token', session?.user?.name)
       toast.success('Login realizado com sucesso!')
       router.push('/dashboard')
     } else {
