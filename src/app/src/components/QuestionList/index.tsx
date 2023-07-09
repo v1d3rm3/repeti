@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { User, AlarmClock, MessagesSquare } from 'lucide-react'
+import { BrainCircuit, Shapes, Play } from 'lucide-react'
 import Image from 'next/image'
+import { toast } from 'react-toastify'
+import { useRouter } from 'next/navigation'
 
 export interface Study {
-  _id: string
-  title: string
-  content: string
-  userName: string
-  categoryName: string
-  dataFormated: string
+  id: number
+  nivelAtual: string
+  categoria: {
+    nome: string
+  }
 }
 
 export interface StudyProps {
@@ -17,6 +18,7 @@ export interface StudyProps {
 
 export default function StudyList({ token }: StudyProps) {
   const [studies, setStudies] = useState<Study[]>([])
+  const router = useRouter()
 
   useEffect(() => {
     const fetchStudies = async () => {
@@ -36,6 +38,11 @@ export default function StudyList({ token }: StudyProps) {
 
     fetchStudies()
   }, [])
+
+  async function handleSubmit(studyId: number) {
+    toast.success('Iniciando estudo...')
+    router.push('/homework/' + studyId)
+  }
 
   if (!studies || studies.length === 0) {
     return (
@@ -62,25 +69,26 @@ export default function StudyList({ token }: StudyProps) {
     return (
       <>
         {studies?.map(study => (
-          <div key={study._id} className="bg-blue-950 text-white px-6 py-4 rounded overflow-hidden shadow-lg mb-4">
-            <div className="font-bold text-xl mb-2">{study.title}</div>
-            <div className="text-slate-100 text-base font-serif text-justify">
-              {study.content}
-              <hr className="mt-4 mb-4" />
+          <div key={study.id} className="bg-blue-950 text-white px-6 py-4 rounded overflow-hidden shadow-lg mb-4">
+            <div className="flex flex-row max-w-screen-2xl m-auto justify-between text-slate-100">
               <div className="inline-table font-sans font-bold md:flex flex-row">
-                <div className="flex col mr-4 md:mr-6">
-                  <User className="text-white mr-2" size="20" />
-                  {study.userName}
+                <div className="flex col mr-4 pt-2 md:mr-6">
+                  <BrainCircuit className="text-white mr-2" size="20" />
+                  {study.nivelAtual}
                 </div>
-                <div className="flex col mr-4">
-                  <MessagesSquare className="text-white mr-2" size="20" />
-                  {study.categoryName}
-                </div>
-                <div className="flex col">
-                  <AlarmClock className="text-white mr-2" size="20" />
-                  {study.dataFormated}
+                <div className="flex col mr-4 pt-2">
+                  <Shapes className="text-white mr-2" size="20" />
+                  {study.categoria.nome}
                 </div>
               </div>
+              <button
+                className="flex flex-row mt-auto mb-auto items-center rounded-md bg-white hover:bg-slate-400 hover:text-white border-0 p-2 box-border sm:h-1/4 md:h-8"
+                type="button"
+                onClick={() => handleSubmit(study.id)}
+              >
+                <Play className="text-blue-950 pr-3 font-bold" size={30} />
+                <span className="text-blue-950 font-bold">Iniciar</span>
+              </button>
             </div>
           </div>
         ))}

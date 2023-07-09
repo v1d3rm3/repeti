@@ -12,9 +12,6 @@ export function Header() {
             <Link href="/" className="pr-10">
               Página Inicial
             </Link>
-            <Link href="/category" className="pr-10">
-              Iniciar Estudo
-            </Link>
             <Link href="/privacy" className="pr-10">
               Política de Privacidade
             </Link>

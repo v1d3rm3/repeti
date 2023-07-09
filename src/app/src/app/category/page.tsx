@@ -1,23 +1,59 @@
-"use client";
-import Link from "next/link";
-import Image from "next/image";
-import { toast } from "react-toastify";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+'use client'
+import Link from 'next/link'
+import Image from 'next/image'
+import { toast } from 'react-toastify'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 
 export default function Category() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [categories, setCategory] = useState([]);
-  const [categorySelected, setCategorySelected] = useState<string>();
-  const router = useRouter();
+  const [categories, setCategory] = useState([])
+  const [categorySelected, setCategorySelected] = useState<string>()
+  const router = useRouter()
+  const { data: session } = useSession()
 
   const handleSubmit = async (e: any) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    toast.info("Iniciando lista de exercício...");
-    router.push("/homework");
-  };
+    try {
+      const response = await fetch('/api/study', {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + session?.user?.name,
+        },
+        method: 'POST',
+        body: JSON.stringify({ categoriaId: categorySelected }),
+      })
+
+      if (response?.status === 200) {
+        toast.info('Estudo criado com sucesso!')
+        router.push('/dashboard')
+      } else {
+        toast.error('Não foi possível criar o estudo')
+      }
+    } catch (error) {
+      toast.error('Não foi possível criar o estudo')
+    }
+  }
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const res = await fetch(`/api/category`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + session?.user?.name,
+        },
+        cache: 'force-cache',
+      })
+
+      const data = await res.json()
+
+      setCategory(data.body)
+    }
+
+    fetchCategories()
+  }, [])
 
   return (
     <main>
@@ -42,29 +78,21 @@ export default function Category() {
           </div>
           <div className="flex flex-col items-center justify-center w-full">
             <div className="w-full mb-6 md:w-2/3 lg:w-5/6">
-              <h2 className="flex items-start mb-2 font-medium">
-                Antes de Começar Revise o Seguinte:
-              </h2>
+              <h2 className="flex items-start mb-2 font-medium">Antes de Começar Revise o Seguinte:</h2>
               <ol className="ml-8 list-decimal">
                 <li>
-                  Defina objetivos claros: Antes de começar a lista de
-                  exercícios, identifique claramente quais são seus objetivos de
-                  aprendizado. Isso ajudará você a se concentrar nos tópicos
-                  relevantes e a aproveitar ao máximo cada exercício.
+                  Defina objetivos claros: Antes de começar o estudo, identifique claramente quais são seus objetivos de
+                  aprendizado. Isso ajudará você a se concentrar nos tópicos relevantes e a aproveitar ao máximo cada
+                  exercício.
                 </li>
                 <li>
-                  Estabeleça um ambiente adequado: Certifique-se de estar em um
-                  ambiente tranquilo e livre de distrações antes de começar.
-                  Desligue notificações de dispositivos móveis e outras fontes
-                  de interrupção para manter o foco total nos exercícios.
+                  Estabeleça um ambiente adequado: Certifique-se de estar em um ambiente tranquilo e livre de distrações
+                  antes de começar. Desligue notificações de dispositivos móveis e outras fontes de interrupção para
+                  manter o foco total nos exercícios.
                 </li>
               </ol>
             </div>
-            <form
-              id="form-login"
-              onSubmit={handleSubmit}
-              className="w-full md:w-2/3 lg:w-5/6"
-            >
+            <form id="form-login" onSubmit={handleSubmit} className="w-full md:w-2/3 lg:w-5/6">
               <div className="mb-4">
                 <label htmlFor="category" className="block mb-2 font-medium">
                   Categoria
@@ -73,21 +101,21 @@ export default function Category() {
                   id="category"
                   value={categorySelected}
                   className="w-full px-3 py-2 bg-white text-black border rounded-md focus:outline-none ring-2 ring-black"
-                  onChange={(e) => setCategorySelected(e.target.value)}
+                  onChange={e => setCategorySelected(e.target.value)}
                 >
                   <option value="">Selecione uma categoria</option>
-                  <option value="Banco de Dados">Banco de Dados</option>
-                  <option value="Testes de Software">Testes de Software</option>
-                  <option value="Segurança da Informação">
-                    Segurança da Informação
-                  </option>
+                  {categories?.map((category: any) => (
+                    <option key={category.id} value={category.id}>
+                      {category.nome}
+                    </option>
+                  ))}
                 </select>
               </div>
               <button
                 type="submit"
                 className="w-full px-4 py-2 bg-blue-950 hover:bg-sky-800 text-white hover:bg-orange text-withe font-bold rounded"
               >
-                Iniciar
+                Criar estudo
               </button>
             </form>
             <div className="flex flex-col items-center">
@@ -96,7 +124,7 @@ export default function Category() {
               </div>
               <div className="text-xl underline pt-4 ">
                 <Link href="/dashboard" className="hover:text-sky-800">
-                  Retorna aos meus exercícios
+                  Retorna aos meus estudos
                 </Link>
               </div>
             </div>
@@ -104,5 +132,5 @@ export default function Category() {
         </div>
       </main>
     </main>
-  );
+  )
 }
