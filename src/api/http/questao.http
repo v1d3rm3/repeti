@@ -42,7 +42,7 @@ Authorization: {{token}}
 
 {
   "questaoId": 12763,
-  "alternativaId": 51051
+  "alternativaId": 51040
 }
 
 ###
@@ -52,9 +52,9 @@ Content-Type: application/json
 Authorization: {{token}}
 
 {
-  "questaoId": 1,
-  "nivel": "Facil",
-  "qualidade": "MuitoDificil"
+  "questaoEstudadaId": 12,
+  "nivel": "MuitoFacil",
+  "qualidade": "Ruim"
 }
 
 

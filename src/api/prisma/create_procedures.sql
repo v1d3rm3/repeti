@@ -695,3 +695,43 @@ BEGIN
   SET nivel = nivel, qualidade = qualidade
   where id = questaoEstudadaId;
 END;
+
+CREATE PROCEDURE QuestaoEstudada_criar(
+  IN estudanteId INT, 
+  IN alternativaId INT, 
+  IN acertou TINYINT
+)
+BEGIN
+  DECLARE EXIT HANDLER FOR SQLEXCEPTION
+  BEGIN
+      ROLLBACK;
+      RESIGNAL;
+  END;
+
+  DECLARE EXIT HANDLER FOR SQLWARNING
+  BEGIN
+      ROLLBACK;
+      RESIGNAL;
+  END;
+
+  START TRANSACTION;
+
+    insert into questao_estudada (estudante_id, alternativa_id, acertou)
+    values (
+      estudanteId,
+      alternativaId,
+      acertou
+    );
+
+    select 
+      qe.id as id,
+      qe.estudante_id as estudanteId,
+      qe.estudo_id as estudoId,
+      qe.alternativa_id as alternativaId,
+      qe.acertou as acertou
+    from questao_estudada qe
+    where qe.id = last_insert_id()
+    collate utf8mb4_0900_ai_ci;
+
+  COMMIT;
+END; 

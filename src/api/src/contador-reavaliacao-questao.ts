@@ -58,6 +58,13 @@ export class ContadorReavaliacaoQuestao {
       (qe) => qe.nivel && qe.qualidade,
     );
 
+    if (questoesEstudadas.length === 0) {
+      this.logger.debug(
+        `Questão ${questao.id} não possui questões estudadas com nivel e qualidade. Não será reavaliada.`,
+      );
+      return [questao.nivel, questao.qualidade];
+    }
+
     const novoNivel = this.reavaliacaoStrategy.reavaliarNivel(
       questoesEstudadas,
       questao.nivel,

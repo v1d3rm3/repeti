@@ -57,4 +57,19 @@ export class QuestaoEstudadaDao {
     ResultQuery.create(res).normalizeResult();
     return plainToInstance(QuestaoEstudadaImpl, res);
   }
+
+  /**
+   * Aqui entende-se que a questão estudada será fora
+   * de um estudo.
+   */
+  async criar(params: DaoParamsWrapper<IQuestaoEstudada>) {
+    const [res] = await this.mysqlService.query<IQuestaoEstudada>(
+      'call QuestaoEstudada_criar(?,?,?);',
+      [params.data.estudanteId, params.data.alternativaId, params.data.acertou],
+      params?.tx as PoolConnection,
+    );
+
+    ResultQuery.create(res).normalizeResult();
+    return plainToInstance(QuestaoEstudadaImpl, res);
+  }
 }

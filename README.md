@@ -1,9 +1,10 @@
 ## Pendências
 - [ ] recarregar categorias em caso de mudanças na versão
 - [x] reavaliar questoes... toda vez que tiver feito ela, ou uma vez depois de algum periodo de tempo?
-- [ ] funcionalidades relacionadas a questao
+- [x] funcionalidades relacionadas a questao
 - [x] disponibilizar rotas para recuperar e filtrar categorias
-- [ ] está pendente a reavaliacao de questoes para questoes resolvidas fora do estudo
+- [x] está pendente a reavaliacao de questoes para questoes resolvidas fora do estudo
+- [ ] criacao de questao pendente
 
 ## Utilizando o projeto
 
