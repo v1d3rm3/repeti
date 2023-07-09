@@ -41,7 +41,7 @@ export default function StudyList({ token }: StudyProps) {
 
   async function handleSubmit(studyId: number) {
     toast.success('Iniciando estudo...')
-    router.push('/homework/' + studyId)
+    router.push('/homework/' + studyId + '/' + token)
   }
 
   if (!studies || studies.length === 0) {
@@ -73,12 +73,12 @@ export default function StudyList({ token }: StudyProps) {
             <div className="flex flex-row max-w-screen-2xl m-auto justify-between text-slate-100">
               <div className="inline-table font-sans font-bold md:flex flex-row">
                 <div className="flex col mr-4 pt-2 md:mr-6">
-                  <BrainCircuit className="text-white mr-2" size="20" />
-                  {study.nivelAtual}
-                </div>
-                <div className="flex col mr-4 pt-2">
                   <Shapes className="text-white mr-2" size="20" />
                   {study.categoria.nome}
+                </div>
+                <div className="flex col mr-4 pt-2">
+                  <BrainCircuit className="text-white mr-2" size="20" />
+                  {study.nivelAtual}
                 </div>
               </div>
               <button

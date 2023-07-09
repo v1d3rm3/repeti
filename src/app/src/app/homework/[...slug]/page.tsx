@@ -6,16 +6,44 @@ import { toast } from 'react-toastify'
 
 export interface Props {
   params: {
-    slug: number
+    slug: [studyId: number, token: string]
   }
 }
 
+export interface Question {
+  enunciado: string
+  alternativas: Alternative[]
+}
+
+export interface Alternative {
+  id: number
+  descricao: string
+  resposta: number
+  questaoId: number
+}
+
 export default function Homework({ params }: Props) {
+  const [question, setQuestion] = useState<Question>()
   const [answer, setAnswer] = useState('')
   const router = useRouter()
 
   useEffect(() => {
-    alert('Estudo selecionado é com o id: ' + params.slug)
+    const fetchQuestion = async () => {
+      const res = await fetch(`/api/study/question`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + params.slug[1],
+        },
+        body: JSON.stringify({ studyId: params.slug[0] }),
+      })
+
+      const data = await res.json()
+
+      setQuestion(data.body)
+    }
+
+    fetchQuestion()
   }, [])
 
   const handleSubmit = async (e: any) => {
@@ -25,69 +53,35 @@ export default function Homework({ params }: Props) {
     router.push('/dashboard')
   }
 
+  const handleSelect = (event: any) => {
+    setAnswer(event.target.value)
+  }
+
   return (
     <main className="mt-2 max-w-screen-xl m-auto h-full p-4 md:p-6 lg:p-8">
       <div className="container mx-auto">
-        <h1 className="text-2xl font-bold mb-4">Lista de Exercícios Sobre Grafos</h1>
-
+        <h1 className="text-2xl font-bold mb-4">Lista de Exercícios</h1>
         <div className="bg-white shadow-md rounded-lg mb-4">
-          <h2 className="text-lg font-semibold mb-2">
-            O que é um caminho mais curto em um grafo e como pode ser encontrado?
-          </h2>
-          <p className="mb-4 text-justify">
-            Defina o conceito de caminho mais curto em um grafo e explique a importância dessa métrica em problemas de
-            otimização. Discuta algoritmos clássicos, como o algoritmo de Dijkstra e o algoritmo de Bellman-Ford, que
-            são usados para encontrar caminhos mais curtos em grafos ponderados.
-          </p>
-          <div className="mb-4">
-            <label htmlFor="description" className="block mb-2 font-medium">
-              Resposta
-            </label>
-            <textarea
-              id="description"
-              rows={2}
-              className="flex items-start w-full px-3 py-4 text-black border rounded-md focus:outline-none ring-2 ring-black"
-              value={answer}
-              placeholder="Escreva aqui a sua resposta..."
-              onChange={e => setAnswer(e.target.value)}
-            />
+          <h2 className="text-lg font-semibold mb-2">{question?.enunciado}</h2>
+          <div className="flex flex-col">
+            {question?.alternativas?.map(alternativa => (
+              <label key={alternativa.id} className="flex items-center mb-2">
+                <input type="radio" name="option" value={alternativa.id} className="mr-2" onChange={handleSelect} />
+                alternativa.descricao
+              </label>
+            ))}
           </div>
-        </div>
 
-        <div className="bg-white shadow-md rounded-lg mb-4">
-          <h2 className="text-lg font-semibold mb-2">Quais são as aplicações práticas dos grafos na vida real?</h2>
-          <p className="mb-4 text-justify">
-            Explique algumas áreas onde os grafos são amplamente utilizados e fornecem soluções eficientes. Discuta
-            exemplos de aplicação de grafos em problemas do mundo real, como redes sociais, roteamento de transporte,
-            planejamento de cronograma e otimização de rotas.
-          </p>
-          <div className="mb-4">
-            <label htmlFor="description" className="block mb-2 font-medium">
-              Resposta
-            </label>
-            <textarea
-              id="description"
-              rows={2}
-              className="flex items-start w-full px-3 py-4 text-black border rounded-md focus:outline-none ring-2 ring-black"
-              value={answer}
-              placeholder="Escreva aqui a sua resposta..."
-              onChange={e => setAnswer(e.target.value)}
-            />
+          <div className="flex w-full justify-end">
+            <button
+              className="w-full bg-blue-950 hover:bg-sky-800 text-white font-semibold py-2 px-4 rounded lg:w-fit"
+              onClick={handleSubmit}
+            >
+              Próxima questão
+            </button>
           </div>
-        </div>
-
-        <div className="flex w-full justify-end">
-          <button
-            className="w-full bg-blue-950 hover:bg-sky-800 text-white font-semibold py-2 px-4 rounded lg:w-fit"
-            onClick={handleSubmit}
-          >
-            Clique aqui para encerrar a sua lista
-          </button>
         </div>
       </div>
     </main>
   )
-}
-function useClient(): [any, any] {
-  throw new Error('Function not implemented.')
 }
