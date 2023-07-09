@@ -67,3 +67,35 @@ export async function create(token: string, categoriaId: number): Promise<Respon
     }
   }
 }
+
+export async function nextQuestion(token: string, studyId: number): Promise<Response> {
+  console.log(`STUDY: ${routes.nextQuestion + studyId}`)
+  try {
+    const response = await fetch(routes.nextQuestion + studyId, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
+      method: 'GET',
+    })
+
+    const data = await response.json()
+
+    if (response?.status === 200) {
+      return {
+        status: response.status,
+        body: data,
+      }
+    } else {
+      return {
+        status: response.status,
+        body: data,
+      }
+    }
+  } catch (error) {
+    return {
+      status: 500,
+      body: [],
+    }
+  }
+}

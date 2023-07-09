@@ -4,4 +4,5 @@ export default {
   listStudy: process.env.API_URL + '/estudo',
   listCategory: process.env.API_URL + '/categoria',
   createStudy: process.env.API_URL + '/estudo',
+  nextQuestion: process.env.API_URL + '/estudo/proxima-questao?estudoId=',
 }

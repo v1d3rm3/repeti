@@ -1,11 +1,12 @@
 /* eslint-disable @next/next/no-async-client-component */
 'use client'
 import { GraduationCap } from 'lucide-react'
-import QuestionList from '@/components/QuestionList'
+import QuestionList from '@/components/StudyList'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { Loading } from '@/components/Loading'
+import StudyList from '@/components/StudyList'
 
 export default function Dashboard() {
   const { data: session, status } = useSession()
@@ -46,7 +47,7 @@ export default function Dashboard() {
         </div>
       </div>
       <div className="pt-12 pb-12">
-        <QuestionList token={token} />
+        <StudyList token={token} />
       </div>
     </main>
   )
