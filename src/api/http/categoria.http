@@ -6,3 +6,6 @@ Authorization: {{token}}
 
 ###
 
+GET {{baseUrl}}/nome/labo
+Authorization: {{token}}
+

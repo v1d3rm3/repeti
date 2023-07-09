@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { CategoriaVersaoCache } from '@prisma/client';
 import { plainToInstance } from 'class-transformer';
 import { CategoriaImpl } from '../core/models/impl/categoria/categoria';
 import { MysqlService } from '../core/mysql/mysql.service';
 import { ResultQuery } from '../core/result-query';
-import { CategoriaVersaoCache } from '@prisma/client';
 
 @Injectable()
 export class CategoriaDao {
@@ -33,6 +33,16 @@ export class CategoriaDao {
     const res = await this.mysqlService.query(
       'call Categoria_recuperarTodas();',
       [],
+    );
+
+    ResultQuery.create(res).normalizeResult();
+    return res.map((e) => plainToInstance(CategoriaImpl, e));
+  }
+
+  async recuperarPorNomeFiltroDezPrimeiros(filtro: string) {
+    const res = await this.mysqlService.query(
+      'call Categoria_recuperarPorNomeFiltroDezPrimeiros(?);',
+      [filtro],
     );
 
     ResultQuery.create(res).normalizeResult();

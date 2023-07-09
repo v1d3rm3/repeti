@@ -87,6 +87,27 @@ BEGIN
     COLLATE utf8mb4_0900_ai_ci;
 END; 
 
+CREATE PROCEDURE Categoria_recuperarPorNomeFiltroDezPrimeiros(IN filtro VARCHAR(255))
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        RESIGNAL;
+    END;
+
+    DECLARE EXIT HANDLER FOR SQLWARNING
+    BEGIN
+        RESIGNAL;
+    END;
+
+    select 
+      c1.id 'id',  
+      c1.nome 'nome'
+    from categoria c1
+    where isnull(filtro) or c1.nome like concat('%', concat(filtro, '%'))
+    COLLATE utf8mb4_0900_ai_ci
+    LIMIT 10;
+END; 
+
 CREATE PROCEDURE categoria_recuperarTodas()
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION

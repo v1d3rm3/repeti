@@ -8,4 +8,8 @@ export class CategoriaService {
   async recuperar(nome: string) {
     return await this.categoriaDao.recuperarPorNome(nome);
   }
+
+  async recuperarPorNomeFiltroDezPrimeiros(filtro: string) {
+    return await this.categoriaDao.recuperarPorNomeFiltroDezPrimeiros(filtro);
+  }
 }
