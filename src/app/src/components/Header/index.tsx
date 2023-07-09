@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { SignInButton } from "../SignInButton";
-import Logo from "../Logo/index";
+import Link from 'next/link'
+import { SignInButton } from '../SignInButton'
+import Logo from '../Logo/index'
 
 export function Header() {
   return (
@@ -11,9 +11,6 @@ export function Header() {
           <nav className="hidden w-3/4 font-sans text-md select-none md:block lg:block">
             <Link href="/" className="pr-10">
               Página Inicial
-            </Link>
-            <Link href="/category" className="pr-10">
-              Iniciar Estudo
             </Link>
             <Link href="/privacy" className="pr-10">
               Política de Privacidade
@@ -27,5 +24,5 @@ export function Header() {
         <SignInButton />
       </div>
     </header>
-  );
+  )
 }

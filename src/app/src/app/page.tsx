@@ -1,30 +1,30 @@
-"use client";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import Footer from "./footer/page";
+'use client'
+import Footer from '@/components/Footer'
+import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 
 export default function Home() {
-  const [user, setUser] = useState("estudante");
+  const [user, setUser] = useState('estudante')
   const users = [
-    "professor",
-    "aluno",
-    "concurseiro",
-    "vestibulando",
-    "universitário",
-    "coordenador",
-    "acadêmico",
-    "bibliotecário",
-  ];
+    'professor',
+    'aluno',
+    'concurseiro',
+    'vestibulando',
+    'universitário',
+    'coordenador',
+    'acadêmico',
+    'bibliotecário',
+  ]
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setUser(users[(Math.random() * users.length) | 0]);
-    }, 3000);
+      setUser(users[(Math.random() * users.length) | 0])
+    }, 3000)
 
     return () => {
-      clearInterval(interval);
-    };
-  });
+      clearInterval(interval)
+    }
+  })
 
   return (
     <main className="flex h-screen flex-col justify-start">
@@ -32,10 +32,7 @@ export default function Home() {
         <div className="font-sans font-bold text-3xl mt-36 sm:text-4xl">
           <div className="flex flex-row justify-center">
             <div className="mr-3">Todo</div>
-            <motion.div
-              animate={{ y: [-5, 5] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-            >
+            <motion.div animate={{ y: [-5, 5] }} transition={{ repeat: Infinity, duration: 2 }}>
               <div className="text-sky-700">{user}</div>
             </motion.div>
           </div>
@@ -48,14 +45,12 @@ export default function Home() {
               placeholder="Pesquisar"
               className="w-full px-4 py-3 text-md rounded-l items-start bg-slate-200 focus:outline-none"
             />
-            <button className="px-1 py-2 bg-sky-700 text-white rounded-r sm:px-6">
-              Buscar
-            </button>
+            <button className="px-1 py-2 bg-sky-700 text-white rounded-r sm:px-6">Buscar</button>
           </div>
         </div>
       </section>
 
       <Footer />
     </main>
-  );
+  )
 }
