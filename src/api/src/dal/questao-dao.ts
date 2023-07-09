@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { Prisma, PrismaClient } from '@prisma/client';
 import { plainToClass, plainToInstance } from 'class-transformer';
 import { DaoParamsWrapper } from '../core/dao-params';
@@ -14,6 +18,8 @@ import { ResultQuery } from '../core/result-query';
 
 @Injectable()
 export class QuestaoDao {
+  private logger = new Logger(QuestaoDao.name);
+
   constructor(
     private readonly prismaService: PrismaService,
     private readonly mysqlService: MysqlService,
