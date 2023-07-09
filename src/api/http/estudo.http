@@ -33,9 +33,9 @@ Content-Type: application/json
 Authorization: {{token}}
 
 {
-  "estudoId": 1,
-  "questaoId": 12763,
-  "alternativaId": 51051
+  "estudoId": 9,
+  "questaoId": 91063,
+  "alternativaId": 364249
 }
 
 ###
@@ -45,13 +45,13 @@ Content-Type: application/json
 Authorization: {{token}}
 
 {
-  "questaoEstudadaId": 1,
+  "questaoEstudadaId": 9,
   "nivel": "Facil",
-  "qualidade": "MuitoDificil"
+  "qualidade": "MuitoBoa"
 }
 
 ###
 
-DELETE {{baseUrl}}?estudoId=1 HTTP/1.1
+DELETE {{baseUrl}}?estudoId=9 HTTP/1.1
 Authorization: {{token}}
 

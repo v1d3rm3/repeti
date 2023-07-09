@@ -523,6 +523,35 @@ BEGIN
   collate utf8mb4_0900_ai_ci;
 END; 
 
+CREATE PROCEDURE Questao_atualizarNivelEQualidade(IN questaoId INT, IN nivel VARCHAR(100), IN qualidade VARCHAR(100))
+BEGIN
+  DECLARE EXIT HANDLER FOR SQLEXCEPTION
+  BEGIN
+      RESIGNAL;
+  END;
+
+  DECLARE EXIT HANDLER FOR SQLWARNING
+  BEGIN
+      RESIGNAL;
+  END;
+
+  update questao 
+  SET nivel = nivel,
+  qualidade = qualidade
+  where id = questaoId;
+
+  select 
+    q.id as id,
+    q.enunciado as enunciado,
+    q.nivel as nivel,
+    q.qualidade as qualidade,
+    q.elaborador_id as elaboradorId,
+    q.categoria_id as categoriaId
+  from questao q 
+  where q.id = questaoId
+  collate utf8mb4_0900_ai_ci;
+END;
+
 -- ###########################
 -- QUESTAO ESTUDADA
 -- ###########################
@@ -546,6 +575,31 @@ BEGIN
     left join questao q
     on q.id = a.questao_id
     where qe.estudo_id = estudoId
+    collate utf8mb4_0900_ai_ci;
+END; 
+
+CREATE PROCEDURE QuestaoEstudada_recuperarPorQuestaoIdSomenteIdNivelEQualidade(IN questaoId INT)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        RESIGNAL;
+    END;
+
+    DECLARE EXIT HANDLER FOR SQLWARNING
+    BEGIN
+        RESIGNAL;
+    END;
+
+    select 
+      qe.id as id,
+      qe.nivel as nivel,
+      qe.qualidade as qualidade
+    from questao_estudada qe
+    left join alternativa a 
+    on a.id = qe.alternativa_id 
+    left join questao q 
+    on q.id = a.questao_id
+    where q.id = questaoId
     collate utf8mb4_0900_ai_ci;
 END; 
 

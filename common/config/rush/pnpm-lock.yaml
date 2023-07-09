@@ -26,6 +26,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ^5.59.11
       '@typescript-eslint/parser': ^5.59.11
       bcrypt: 5.1.0
+      chalk: 4.1.2
       class-transformer: 0.5.1
       dot-object: 2.1.4
       dotenv: 16.3.1
@@ -54,6 +55,7 @@ importers:
       '@nestjs/platform-express': 10.0.4_debc32c6dd1857c2dc5d0dd01b658b68
       '@prisma/client': 4.16.2_prisma@4.16.2
       bcrypt: 5.1.0
+      chalk: 4.1.2
       class-transformer: 0.5.1
       dot-object: 2.1.4
       dotenv: 16.3.1

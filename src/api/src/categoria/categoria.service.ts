@@ -5,7 +5,7 @@ import { CategoriaDao } from '../dal/categoria-dao';
 export class CategoriaService {
   constructor(private categoriaDao: CategoriaDao) {}
 
-  async recuperar() {
-    return await this.categoriaDao.recuperarPorNome('');
+  async recuperar(nome: string) {
+    return await this.categoriaDao.recuperarPorNome(nome);
   }
 }

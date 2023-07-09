@@ -1,5 +1,6 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { CategoriaStore } from '../categoria-store';
+import { ContadorReavaliacaoQuestao } from '../contador-reavaliacao-questao';
 import { AlternativaNaoFazParteDeQuestaoException } from '../core/exceptions/alternativa-nao-faz-parte-de-questao.exception';
 import { EntidadeNaoExisteException } from '../core/exceptions/entidade-nao-existe.exception';
 import { QuestaoJaFoiAvaliadaException } from '../core/exceptions/questao-ja-foi-avaliada.exception';
@@ -22,6 +23,8 @@ import { ProximaQuestaoTemplateMethod } from './framework/proxima-questao-templa
 
 @Injectable()
 export class EstudoService {
+  private logger = new Logger(EstudoService.name);
+
   constructor(
     private readonly estudoDao: EstudoDao,
     private readonly usuarioDao: UsuarioDao,
@@ -30,6 +33,7 @@ export class EstudoService {
     private readonly questaoEstudadaDao: QuestaoEstudadaDao,
     private readonly categoriaStore: CategoriaStore,
     private readonly mysqlService: MysqlService,
+    private readonly contadorReavaliacaoQuestao: ContadorReavaliacaoQuestao,
   ) {}
 
   async recuperarPorId(estudoId: number, email: string) {
@@ -168,11 +172,14 @@ export class EstudoService {
     questaoEstudadaId: number,
     nivel: Nivel,
     qualidade: Qualidade,
-    username: any,
+    email: string,
   ) {
-    const usuario = await this.usuarioDao.recuperarPorEmail({ data: username });
+    const usuario = await this.usuarioDao.recuperarPorEmail({ data: email });
     const questaoEstudada = await this.questaoEstudadaDao.recuperarPorId({
       data: questaoEstudadaId,
+    });
+    const questao = await this.questaoDao.recuperarPorId({
+      data: questaoEstudada.alternativa?.questaoId,
     });
 
     if (!questaoEstudada) {
@@ -195,6 +202,17 @@ export class EstudoService {
     questaoEstudada.nivel = nivel;
     questaoEstudada.qualidade = qualidade;
 
+    const precisaReavaliar = this.contadorReavaliacaoQuestao.precisaReavaliar(
+      questaoEstudada.alternativa?.questaoId,
+    );
+    // reavaliar questao??
+    if (precisaReavaliar) {
+      const [nivel, qualidade] =
+        await this.contadorReavaliacaoQuestao.reavaliarQuestao(questao);
+      questao.nivel = nivel as Nivel;
+      questao.qualidade = qualidade as Qualidade;
+    }
+
     const pool = await this.mysqlService.getConnection();
 
     try {
@@ -203,6 +221,13 @@ export class EstudoService {
         data: questaoEstudada,
         tx: pool,
       });
+
+      if (precisaReavaliar)
+        await this.questaoDao.atualizarNivelEQualidade({
+          data: questao,
+          tx: pool,
+        });
+
       pool.query('COMMIT;');
       return res;
     } catch (e) {

@@ -5,9 +5,12 @@ import { AuthModule } from './auth/auth.module';
 import { CategoriaStore, CategoriaStoreProvider } from './categoria-store';
 import { CategoriaController } from './categoria/categoria.controller';
 import { CategoriaService } from './categoria/categoria.service';
+import { ContadorReavaliacaoQuestao } from './contador-reavaliacao-questao';
+import { ReavaliacaoStrategy } from './core/framework/reavaliacao/reavaliacao-strategy';
 import { MysqlModule } from './core/mysql/mysql.module';
 import { PrismaModule } from './core/prisma/prisma.module';
 import { ProvedorDinamicoProximaQuestao } from './core/providers/provedor-dinamico-proxima-questao';
+import { ProvedorDinamicoReavaliacaoQuestao } from './core/providers/provedor-dinamico-reavaliacao-questao';
 import { DalModule } from './dal/dal.module';
 import { EstudoModule } from './estudo/estudo.module';
 import { ProximaQuestaoTemplateMethod } from './estudo/framework/proxima-questao-template-method';
@@ -35,8 +38,15 @@ dotEnvConfig();
   providers: [
     CategoriaService,
     ...ProvedorDinamicoProximaQuestao(ProximaQuestaoTemplateMethod),
+    ...ProvedorDinamicoReavaliacaoQuestao(ReavaliacaoStrategy),
     CategoriaStoreProvider(),
+    ContadorReavaliacaoQuestao,
   ],
-  exports: [ProximaQuestaoTemplateMethod, CategoriaStore],
+  exports: [
+    ProximaQuestaoTemplateMethod,
+    ReavaliacaoStrategy,
+    CategoriaStore,
+    ContadorReavaliacaoQuestao,
+  ],
 })
 export class AppModule {}

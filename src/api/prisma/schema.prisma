@@ -22,6 +22,25 @@ model Categoria {
   @@map("categoria")
 }
 
+model Grupo {
+  id   Int    @id @default(autoincrement())
+  nome String
+}
+
+model GrupoCategoria {
+  grupo_id     Int
+  categoria_id Int
+
+  @@id([grupo_id, categoria_id])
+}
+
+model GrupoUsuario {
+  grupo_id   Int
+  usuario_id Int
+
+  @@id([grupo_id, usuario_id])
+}
+
 model Usuario {
   id                 Int               @id @default(autoincrement())
   nome               String

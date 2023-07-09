@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
+import { PoolConnection } from 'mysql2/promise';
 import { DaoParamsWrapper } from '../core/dao-params';
 import { QuestaoImpl } from '../core/models/impl/questao/questao';
+import { QuestaoEstudadaImpl } from '../core/models/impl/questao/questao-estudada';
 import { IQuestao } from '../core/models/interface/questao';
+import { IQuestaoEstudada } from '../core/models/interface/questao-estudada';
 import { MysqlService } from '../core/mysql/mysql.service';
 import { ResultQuery } from '../core/result-query';
-import { IQuestaoEstudada } from '../core/models/interface/questao-estudada';
-import { QuestaoEstudadaImpl } from '../core/models/impl/questao/questao-estudada';
-import { PoolConnection } from 'mysql2/promise';
 
 @Injectable()
 export class QuestaoEstudadaDao {
@@ -33,6 +33,18 @@ export class QuestaoEstudadaDao {
 
     ResultQuery.create(res).normalizeResult();
     return plainToInstance(QuestaoEstudadaImpl, res);
+  }
+
+  async recuperarPorQuestaoIdSomenteIdNivelEQualidade(
+    params: DaoParamsWrapper<number>,
+  ) {
+    const res = await this.mysqlService.query<IQuestaoEstudada>(
+      'call QuestaoEstudada_recuperarPorQuestaoIdSomenteIdNivelEQualidade(?);',
+      [params.data],
+    );
+
+    ResultQuery.create(res).normalizeResult();
+    return res.map((e) => plainToInstance(QuestaoEstudadaImpl, e));
   }
 
   async atualizarNivelEQualidade(params: DaoParamsWrapper<IQuestaoEstudada>) {

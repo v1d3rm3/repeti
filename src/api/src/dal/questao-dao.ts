@@ -11,6 +11,7 @@ import { IQuestao } from '../core/models/interface/questao';
 import { MysqlService } from '../core/mysql/mysql.service';
 import { PrismaService } from '../core/prisma/prisma.service';
 import { ResultQuery } from '../core/result-query';
+import { PoolConnection } from 'mysql2/promise';
 
 @Injectable()
 export class QuestaoDao {
@@ -124,6 +125,19 @@ export class QuestaoDao {
     const [res] = await this.mysqlService.query<IQuestao>(
       'call Questao_recuperarPorId(?);',
       [params.data],
+    );
+
+    ResultQuery.create(res).normalizeResult();
+    return plainToInstance(QuestaoImpl, res);
+  }
+
+  async atualizarNivelEQualidade(
+    params: DaoParamsWrapper<IQuestao>,
+  ): Promise<IQuestao> {
+    const [res] = await this.mysqlService.query<IQuestao>(
+      'call Questao_atualizarNivelEQualidade(?, ?, ?);',
+      [params.data.id, params.data.nivel, params.data.qualidade],
+      params?.tx as PoolConnection,
     );
 
     ResultQuery.create(res).normalizeResult();
