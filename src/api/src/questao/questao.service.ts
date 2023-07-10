@@ -61,9 +61,16 @@ export class QuestaoService {
     const questaoSelecionada =
       questoes[Math.floor(Math.random() * questoes.length)];
 
-    return await this.questaoDao.recuperarPorId({
+    const questao = await this.questaoDao.recuperarPorId({
       data: questaoSelecionada.id,
     });
+
+    const alternativas =
+      await this.questaoDao.recuperarAlternativasPorQuestaoId({
+        data: questao.id,
+      });
+    questao.alternativas = alternativas;
+    return questao;
   }
 
   async resolverQuestao(
