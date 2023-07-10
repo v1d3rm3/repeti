@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react'
 import { Loading } from '@/components/Loading'
 import StudyList from '@/components/StudyList'
 import Estudos from './estudos'
+import { Button } from '@mui/material'
 
 export default function Dashboard() {
   const { data: session, status } = useSession()
@@ -35,9 +36,17 @@ export default function Dashboard() {
 
   return (
     <main className="mt-2 max-w-screen-xl m-auto h-screen p-4 md:p-6 lg:p-8">
-      <h1 className='font-bolid font-sans text-xl  mb-3'>Meus Estudos</h1>
-      <Estudos token={token} className="" />
-      <div className="flex flex-row justify-between">
+      <h1 className="font-bold font-sans text-2xl mb-3">Seja bem vindo!</h1>
+      <div className="flex gap-3 items-center">
+        <h1 className="font-sans text-xl">Meus Estudos</h1>
+        <Button variant="outlined" size="small">
+          Novo Estudo
+        </Button>
+      </div>
+      <Estudos token={token} className="mt-3 block" />
+
+      <h1 className="font-bolid font-sans text-xl mt-6 mb-3">Pratique sem Compromisso</h1>
+      {/* <div className="flex flex-row justify-between">
         <div className="flex flex-col font-sans font-bold text-xl md:flex lg:text-2xl">
           <p>Seja bem vindo!</p>
         </div>
@@ -54,7 +63,7 @@ export default function Dashboard() {
       </div>
       <div className="pt-2 pb-12">
         <StudyList token={token} />
-      </div>
+      </div> */}
     </main>
   )
 }

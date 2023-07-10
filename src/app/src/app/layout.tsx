@@ -26,7 +26,7 @@ async function getSession(cookie: string): Promise<Session> {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const session = await getSession(headers().get('cookie') ?? '')
   return (
-    <html>
+    <html suppressHydrationWarning>
       <body>
         <Auth session={session}>
           <Header />
