@@ -38,7 +38,8 @@ export default function Home() {
 
   return (
     <main className="min-h-full flex h-screen flex-col justify-between">
-      <section className="p-2 flex justify-center flex-col" style={{ height: '60vh' }}>
+      <section className="p-2 flex justify-center items-center flex-col" style={{ height: '80vh' }}>
+        <Image alt="People driking coffee" src="/home.svg" width={300} height={150} className="p-4" />
         <div className="font-sans font-bold text-3xl sm:text-4xl">
           <div className="flex flex-row justify-center">
             <div className="mr-3">Todo</div>
@@ -55,7 +56,6 @@ export default function Home() {
             Entrar agora
           </Link>
         </div>
-        <Image alt="People driking coffee" src="/home.svg" width={600} height={600} className="p-4" />
       </section>
       <Footer />
     </main>
