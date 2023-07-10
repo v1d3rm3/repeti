@@ -3,6 +3,7 @@ import { BrainCircuit, Shapes, Play } from 'lucide-react'
 import Image from 'next/image'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
+import { Loading } from '../Loading'
 
 export interface Study {
   id: number
@@ -18,9 +19,11 @@ export interface StudyProps {
 
 export default function StudyList({ token }: StudyProps) {
   const [studies, setStudies] = useState<Study[]>([])
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
+    setLoading(true)
     const fetchStudies = async () => {
       const res = await fetch(`/api/study`, {
         method: 'GET',
@@ -34,6 +37,7 @@ export default function StudyList({ token }: StudyProps) {
       const data = await res.json()
 
       setStudies(data.body)
+      setLoading(false)
     }
 
     fetchStudies()
@@ -42,6 +46,16 @@ export default function StudyList({ token }: StudyProps) {
   async function handleSubmit(studyId: number) {
     toast.success('Iniciando estudo...')
     router.push('/homework/' + studyId + '/' + token)
+  }
+
+  if (loading) {
+    return (
+      <main className="flex justify-center items-center h-screen">
+        <div className="text-center">
+          <Loading size={100} style="text-black" />
+        </div>
+      </main>
+    )
   }
 
   if (!studies || studies.length === 0) {
