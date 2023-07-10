@@ -45,6 +45,8 @@ export default function StudyList({ token }: StudyProps) {
 
   async function handleSubmit(studyId: number) {
     toast.success('Iniciando estudo...')
+    localStorage.removeItem('total-questions')
+    localStorage.removeItem('rigth-answers')
     router.push('/homework/' + studyId + '/' + token)
   }
 

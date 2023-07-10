@@ -1,8 +1,9 @@
 'use client'
 
 import { Loading } from '@/components/Loading'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 
 export interface Props {
   params: {
@@ -25,8 +26,38 @@ export interface Alternative {
 
 export default function Homework({ params }: Props) {
   const [question, setQuestion] = useState<Question>()
-  const [answer, setAnswer] = useState('')
+  const [selectedAnswer, setSelectedAnswer] = useState('')
   const [loading, setLoading] = useState(false)
+  const router = useRouter()
+
+  async function handleUpdateCounters() {
+    let totalQuestions: number
+    let rigthAnswers: number
+
+    if (localStorage.getItem('total-questions')) {
+      totalQuestions = parseInt(localStorage.getItem('total-questions')!)
+    } else {
+      totalQuestions = 0
+    }
+
+    if (localStorage.getItem('rigth-answers')) {
+      rigthAnswers = parseInt(localStorage.getItem('rigth-answers')!)
+    } else {
+      rigthAnswers = 0
+    }
+
+    if (selectedAnswer) {
+      let updateTotal = totalQuestions + 1
+      let answer = await JSON.parse(selectedAnswer).resposta
+      let updateAnswer = rigthAnswers + answer
+
+      localStorage.setItem('total-questions', updateTotal.toString())
+      localStorage.setItem('rigth-answers', updateAnswer.toString())
+
+      console.log('Total questions: ' + localStorage.getItem('total-questions'))
+      console.log('Respotas certas: ' + localStorage.getItem('rigth-answers'))
+    }
+  }
 
   useEffect(() => {
     setLoading(true)
@@ -54,21 +85,24 @@ export default function Homework({ params }: Props) {
 
     setLoading(true)
 
-    if (!answer) {
-      toast.error('Por favor, selecione uma alternativa!')
-    } else {
+    if (selectedAnswer) {
       const res = await fetch(`/api/study/answer`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'Bearer ' + params.slug[1],
         },
-        body: JSON.stringify({ studyId: params.slug[0], questionId: question?.id, answerId: answer }),
+        body: JSON.stringify({
+          studyId: params.slug[0],
+          questionId: question?.id,
+          answerId: JSON.parse(selectedAnswer).id,
+        }),
       })
 
       const data = await res.json()
 
       setLoading(false)
+      await handleUpdateCounters()
 
       if (data.status === 200 || data.status === 201) {
         toast.success('Resposta submetida com sucesso!', {
@@ -93,7 +127,16 @@ export default function Homework({ params }: Props) {
   }
 
   const handleSelect = (event: any) => {
-    setAnswer(event.target.value)
+    setSelectedAnswer(event.target.value)
+  }
+
+  const handleFinish = (event: any) => {
+    toast.success('Estudo finalizado!', {
+      autoClose: 800,
+      hideProgressBar: false,
+      closeOnClick: true,
+    })
+    router.push('/homework/result')
   }
 
   if (loading) {
@@ -112,19 +155,31 @@ export default function Homework({ params }: Props) {
         <h1 className="text-2xl font-bold mb-4">Lista de Exercícios</h1>
         <form onSubmit={handleSubmit}>
           <div className="bg-white shadow-md rounded-lg mb-4">
-            <h2 className="text-lg font-semibold mb-2">{question?.enunciado}</h2>
+            <h2 className="text-2xl font-semibold mb-2">{question?.enunciado}</h2>
             <div className="flex flex-col">
               {question?.alternativas?.map(alternativa => (
-                <label key={alternativa.id} className="flex items-center mb-2">
-                  <input type="radio" name="option" value={alternativa.id} className="mr-2" onChange={handleSelect} />
+                <label key={alternativa.id} className="flex items-center mb-2 text-xl">
+                  <input
+                    type="radio"
+                    name="option"
+                    value={JSON.stringify(alternativa)}
+                    className="mr-2"
+                    onChange={handleSelect}
+                  />
                   {alternativa.descricao}
                 </label>
               ))}
             </div>
 
-            <div className="flex w-full justify-end">
-              <button className="w-full bg-blue-950 hover:bg-sky-800 text-white font-semibold py-2 px-4 rounded lg:w-fit">
+            <div className="fixed bottom-0 right-0 w-full p-4 lg:max-w-screen-2xl lg:m-auto lg:bottom-auto lg:top-auto lg:right-auto lg:flex justify-end">
+              <button className="w-full bg-blue-950 mb-2 hover:bg-blue-500 text-white font-semibold lg:m-0 lg:mr-2 py-2 px-4 rounded lg:w-fit">
                 Próxima questão
+              </button>
+              <button
+                className="w-full bg-blue-950 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded lg:w-fit lg:mr-8"
+                onClick={handleFinish}
+              >
+                Finalizar
               </button>
             </div>
           </div>
