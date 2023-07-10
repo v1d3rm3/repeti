@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { Loading } from '@/components/Loading'
 import StudyList from '@/components/StudyList'
+import Estudos from './estudos'
 
 export default function Dashboard() {
   const { data: session, status } = useSession()
@@ -34,6 +35,8 @@ export default function Dashboard() {
 
   return (
     <main className="mt-2 max-w-screen-xl m-auto h-screen p-4 md:p-6 lg:p-8">
+      <h1 className='font-bolid font-sans text-xl  mb-3'>Meus Estudos</h1>
+      <Estudos token={token} className="" />
       <div className="flex flex-row justify-between">
         <div className="flex flex-col font-sans font-bold text-xl md:flex lg:text-2xl">
           <p>Seja bem vindo!</p>
