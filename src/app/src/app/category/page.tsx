@@ -27,9 +27,17 @@ export default function Category() {
 
       if (response?.status === 200) {
         toast.info('Estudo criado com sucesso!')
-        router.push('/dashboard')
+        router.push('/dashboard', {
+          autoClose: 800,
+          hideProgressBar: false,
+          closeOnClick: true,
+        })
       } else {
-        toast.error('Não foi possível criar o estudo')
+        toast.error('Não foi possível criar o estudo', {
+          autoClose: 800,
+          hideProgressBar: false,
+          closeOnClick: true,
+        })
       }
     } catch (error) {
       toast.error('Não foi possível criar o estudo')

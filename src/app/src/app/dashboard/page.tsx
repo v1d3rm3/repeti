@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-async-client-component */
 'use client'
 import { GraduationCap } from 'lucide-react'
-import QuestionList from '@/components/StudyList'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
@@ -14,7 +13,11 @@ export default function Dashboard() {
 
   const handleStartStudy = async (e: any) => {
     toast.info('Selecione uma categoria')
-    router.push('/category')
+    router.push('/category', {
+      autoClose: 800,
+      hideProgressBar: false,
+      closeOnClick: true,
+    })
   }
 
   if (status === 'loading') {
@@ -46,7 +49,7 @@ export default function Dashboard() {
           </button>
         </div>
       </div>
-      <div className="pt-12 pb-12">
+      <div className="pt-2 pb-12">
         <StudyList token={token} />
       </div>
     </main>

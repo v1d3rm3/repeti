@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { api } from '@/services/api'
+import { Loading } from '@/components/Loading'
+import { useState } from 'react'
 
 interface Inputs {
   nome: String
@@ -15,6 +17,8 @@ interface Inputs {
 }
 
 export default function Account() {
+  const [loading, setLoading] = useState(false)
+
   const {
     register,
     handleSubmit,
@@ -24,21 +28,47 @@ export default function Account() {
   const router = useRouter()
 
   const onSubmit: SubmitHandler<Inputs> = async (data: any) => {
+    setLoading(true)
+
     try {
       const response = await fetch('/api/user', {
         method: 'POST',
         body: JSON.stringify(data),
       })
 
+      setLoading(false)
+
       if (response?.status === 200) {
-        toast.success('Conta criada com sucesso!')
+        toast.success('Conta criada com sucesso!', {
+          autoClose: 800,
+          hideProgressBar: false,
+          closeOnClick: true,
+        })
         router.push('/login')
       } else {
-        toast.error('Não foi possível criar a conta')
+        toast.error('Não foi possível criar a conta', {
+          autoClose: 800,
+          hideProgressBar: false,
+          closeOnClick: true,
+        })
       }
     } catch (error) {
-      toast.error('Não foi possível criar a conta')
+      toast.error('Não foi possível criar a conta', {
+        autoClose: 800,
+        hideProgressBar: false,
+        closeOnClick: true,
+      })
     }
+  }
+
+  if (loading) {
+    return (
+      <main className="flex justify-center items-center h-screen">
+        <div className="text-center">
+          <Loading size={100} style="text-black" />
+        </div>
+      </main>
+    )
   }
 
   return (

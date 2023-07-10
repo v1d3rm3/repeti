@@ -4,6 +4,7 @@ import './globals.css'
 import Auth from './auth'
 import { Session } from 'next-auth'
 import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export const metadata = {
   title: 'Repetir',

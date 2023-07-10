@@ -3,6 +3,7 @@ import { BrainCircuit, Shapes, Play } from 'lucide-react'
 import Image from 'next/image'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
+import { Loading } from '../Loading'
 
 export interface Study {
   id: number
@@ -18,9 +19,11 @@ export interface StudyProps {
 
 export default function StudyList({ token }: StudyProps) {
   const [studies, setStudies] = useState<Study[]>([])
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
+    setLoading(true)
     const fetchStudies = async () => {
       const res = await fetch(`/api/study`, {
         method: 'GET',
@@ -34,14 +37,31 @@ export default function StudyList({ token }: StudyProps) {
       const data = await res.json()
 
       setStudies(data.body)
+      setLoading(false)
     }
 
     fetchStudies()
   }, [])
 
   async function handleSubmit(studyId: number) {
-    toast.success('Iniciando estudo...')
+    toast.success('Iniciando estudo...', {
+      autoClose: 800,
+      hideProgressBar: false,
+      closeOnClick: true,
+    })
+    localStorage.removeItem('total-questions')
+    localStorage.removeItem('rigth-answers')
     router.push('/homework/' + studyId + '/' + token)
+  }
+
+  if (loading) {
+    return (
+      <main className="flex justify-center items-center h-screen">
+        <div className="text-center">
+          <Loading size={100} style="text-black" />
+        </div>
+      </main>
+    )
   }
 
   if (!studies || studies.length === 0) {
@@ -68,6 +88,10 @@ export default function StudyList({ token }: StudyProps) {
   } else {
     return (
       <>
+        <div className="mb-8 text-lg">
+          Você possui <span className="font-bold">{studies.length}</span>{' '}
+          {studies.length > 1 ? <span>estudos cadastrados</span> : <span>estudo cadastrado</span>}
+        </div>
         {studies?.map(study => (
           <div key={study.id} className="bg-blue-950 text-white px-6 py-4 rounded overflow-hidden shadow-lg mb-4">
             <div className="flex flex-row max-w-screen-2xl m-auto justify-between text-slate-100">
@@ -82,7 +106,7 @@ export default function StudyList({ token }: StudyProps) {
                 </div>
               </div>
               <button
-                className="flex flex-row mt-auto mb-auto items-center rounded-md bg-white hover:bg-slate-400 hover:text-white border-0 p-2 box-border sm:h-1/4 md:h-8"
+                className="flex flex-row mt-auto mb-auto items-center rounded-md bg-white hover:bg-slate-200 border-0 p-2 box-border sm:h-1/4 md:h-8"
                 type="button"
                 onClick={() => handleSubmit(study.id)}
               >

@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Home() {
   const { data: session, status } = useSession()
@@ -54,6 +55,7 @@ export default function Home() {
             Entrar agora
           </Link>
         </div>
+        <Image alt="People driking coffee" src="/home.svg" width={600} height={600} className="p-4" />
       </section>
       <Footer />
     </main>
