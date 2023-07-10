@@ -49,7 +49,7 @@ export default function Dashboard() {
           </button>
         </div>
       </div>
-      <div className="pt-12 pb-12">
+      <div className="pt-2 pb-12">
         <StudyList token={token} />
       </div>
     </main>

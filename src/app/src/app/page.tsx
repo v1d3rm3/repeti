@@ -2,6 +2,7 @@
 import Footer from '@/components/Footer'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 
 export default function Home() {
   const [user, setUser] = useState('estudante')
@@ -28,8 +29,8 @@ export default function Home() {
 
   return (
     <main className="flex h-screen flex-col justify-start">
-      <section className="min-h-full p-2">
-        <div className="font-sans font-bold text-3xl mt-36 sm:text-4xl">
+      <section className="flex flex-col justify-center items-center min-h-full p-2 ">
+        <div className="font-sans font-bold text-3xl mb-16 sm:text-4xl">
           <div className="flex flex-row justify-center">
             <div className="mr-3">Todo</div>
             <motion.div animate={{ y: [-5, 5] }} transition={{ repeat: Infinity, duration: 2 }}>
@@ -38,16 +39,7 @@ export default function Home() {
           </div>
           <div className="text-center">tem uma aba do repetir aberta</div>
         </div>
-        <div className="flex items-start justify-center mt-16 w-full">
-          <div className="flex w-full bg-white p-1 rounded shadow-lg md:p-4 lg:w-2/4">
-            <input
-              type="text"
-              placeholder="Pesquisar"
-              className="w-full px-4 py-3 text-md rounded-l items-start bg-slate-200 focus:outline-none"
-            />
-            <button className="px-1 py-2 bg-sky-700 text-white rounded-r sm:px-6">Buscar</button>
-          </div>
-        </div>
+        <Image alt="People driking coffee" src="/home.svg" width={600} height={600} className="p-4" />
       </section>
 
       <Footer />

@@ -106,13 +106,13 @@ export default function Homework({ params }: Props) {
 
       if (data.status === 200 || data.status === 201) {
         toast.success('Resposta submetida com sucesso!', {
-          autoClose: 800,
+          autoClose: 400,
           hideProgressBar: false,
           closeOnClick: true,
         })
       } else {
         toast.error('Houve um problema ao submter a resposta', {
-          autoClose: 800,
+          autoClose: 400,
           hideProgressBar: false,
           closeOnClick: true,
         })
@@ -120,7 +120,7 @@ export default function Homework({ params }: Props) {
 
       setTimeout(() => {
         window.location.reload()
-      }, 1000)
+      }, 500)
     }
 
     setLoading(false)
@@ -172,11 +172,11 @@ export default function Homework({ params }: Props) {
             </div>
 
             <div className="fixed bottom-0 right-0 w-full p-4 lg:max-w-screen-2xl lg:m-auto lg:bottom-auto lg:top-auto lg:right-auto lg:flex justify-end">
-              <button className="w-full bg-blue-950 mb-2 hover:bg-blue-500 text-white font-semibold lg:m-0 lg:mr-2 py-2 px-4 rounded lg:w-fit">
+              <button className="w-full bg-blue-950 mb-2 hover:bg-sky-800 text-white font-semibold lg:m-0 lg:mr-2 py-2 px-4 rounded lg:w-fit">
                 Próxima questão
               </button>
               <button
-                className="w-full bg-blue-950 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded lg:w-fit lg:mr-8"
+                className="w-full bg-blue-950 hover:bg-sky-800 text-white font-semibold py-2 px-4 rounded lg:w-fit lg:mr-8"
                 onClick={handleFinish}
               >
                 Finalizar

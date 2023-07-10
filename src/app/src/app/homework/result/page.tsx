@@ -22,13 +22,18 @@ export default function Result() {
         <Image src="/result.svg" alt="Person with password" width={418} height={355} className="pb-12" />
         <div className="flex flex-col">
           <span className="text-2xl font-serif text-center">Seu resultado foi o seguinte</span>
-          <span className="text-3xl font-sans font-bold text-center">
-            Você acertou <span className="text-green-800">{(rigthAnswers / totalQuestions) * 100} %</span> das questões!
-          </span>
+          {totalQuestions > 0 ? (
+            <span className="text-3xl font-sans font-bold text-center">
+              Você acertou <span className="text-green-800">{Math.round((rigthAnswers / totalQuestions) * 100)} %</span>{' '}
+              das questões!
+            </span>
+          ) : (
+            <span className="text-3xl font-sans font-bold text-center">Você não fez nenhuma questão!</span>
+          )}
         </div>
         <div className="fixed bottom-0 right-0 w-full p-4 lg:text-center lg:bottom-1/4">
           <button
-            className="w-full bg-blue-950 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded lg:w-fit lg:mr-8"
+            className="w-full bg-blue-950 hover:bg-sky-800 text-white font-semibold py-2 px-4 rounded lg:w-fit lg:mr-8"
             onClick={() => router.push('/dashboard')}
           >
             Voltar aos meus estudos

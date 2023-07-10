@@ -7,15 +7,18 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { signIn, useSession } from 'next-auth/react'
 import { setCookie } from 'typescript-cookie'
+import { Loading } from '@/components/Loading'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
   const { data: session } = useSession()
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
+    setLoading(true)
 
     const response = await signIn('credentials', {
       redirect: false,
@@ -23,13 +26,33 @@ export default function Login() {
       password,
     })
 
+    setLoading(false)
+
     if (!response?.error) {
       setCookie('token', session?.user?.name)
-      toast.success('Login realizado com sucesso!')
+      toast.success('Login realizado com sucesso!', {
+        autoClose: 800,
+        hideProgressBar: false,
+        closeOnClick: true,
+      })
       router.push('/dashboard')
     } else {
-      toast.error('Não foi possível realizar o login')
+      toast.error('Não foi possível realizar o login', {
+        autoClose: 800,
+        hideProgressBar: false,
+        closeOnClick: true,
+      })
     }
+  }
+
+  if (loading) {
+    return (
+      <main className="flex justify-center items-center h-screen">
+        <div className="text-center">
+          <Loading size={100} style="text-black" />
+        </div>
+      </main>
+    )
   }
 
   return (
