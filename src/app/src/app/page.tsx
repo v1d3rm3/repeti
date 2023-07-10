@@ -3,7 +3,8 @@ import Footer from '@/components/Footer'
 import { useSession } from 'next-auth/react'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { redirect } from 'next/navigation';
+import { redirect } from 'next/navigation'
+import Link from 'next/link'
 
 export default function Home() {
   const { data: session, status } = useSession()
@@ -23,7 +24,6 @@ export default function Home() {
   if (session) {
     redirect('/dashboard')
   }
-  
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -36,30 +36,25 @@ export default function Home() {
   })
 
   return (
-    <main className="flex h-screen flex-col justify-start">
-      <section className="min-h-full p-2">
-        <div className="font-sans font-bold text-3xl mt-36 sm:text-4xl">
+    <main className="min-h-full flex h-screen flex-col justify-between">
+      <section className="p-2 flex justify-center flex-col" style={{ height: '60vh' }}>
+        <div className="font-sans font-bold text-3xl sm:text-4xl">
           <div className="flex flex-row justify-center">
             <div className="mr-3">Todo</div>
             <motion.div animate={{ y: [-5, 5] }} transition={{ repeat: Infinity, duration: 2 }}>
               <div className="text-sky-700 text-4xl font-bold">{user}</div>
             </motion.div>
           </div>
-          <div className="text-center">tem uma aba do <b>repeti</b> aberta</div>
-        </div>
-        {/* colocar o botao para entrar..., caso esteja logado, redirecionar para o dashboard */}
-        {/* <div className="flex items-start justify-center mt-16 w-full">
-          <div className="flex w-full bg-white p-1 rounded shadow-lg md:p-4 lg:w-2/4">
-            <input
-              type="text"
-              placeholder="Pesquisar"
-              className="w-full px-4 py-3 text-md rounded-l items-start bg-slate-200 focus:outline-none"
-            />
-            <button className="px-1 py-2 bg-sky-700 text-white rounded-r sm:px-6">Buscar</button>
+          <div className="text-center">
+            tem uma aba do <b>repeti</b> aberta
           </div>
-        </div> */}
+        </div>
+        <div className="mt-4 text-center">
+          <Link href="/login" className="text-2xl underline pt-4 hover:text-sky-800">
+            Entrar agora
+          </Link>
+        </div>
       </section>
-
       <Footer />
     </main>
   )
