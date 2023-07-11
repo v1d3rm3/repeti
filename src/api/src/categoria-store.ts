@@ -47,6 +47,10 @@ export class CategoriaStore {
     return this._versao === versao;
   }
 
+  recuperarTodasAsCategorias() {
+    return Array.from(this._todasAsCategorias.values());
+  }
+
   private _transformarArrayEmMapa<
     T extends { id: number; categoriaPaiId: number },
   >(array: T[]): Map<number, T[]> {
