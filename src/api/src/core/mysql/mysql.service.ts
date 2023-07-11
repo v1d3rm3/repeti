@@ -8,7 +8,7 @@ export class MysqlService {
 
   constructor(private config: ConfigService) {
     this.pool = createPool({
-      host: 'localhost',
+      host: this.config.get('DB_HOST'),
       user: this.config.get('DB_USER'),
       password: this.config.get('DB_PASSWORD'),
       database: this.config.get('DB_NAME'),
