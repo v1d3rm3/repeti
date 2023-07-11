@@ -5,10 +5,17 @@ import { toast } from 'react-toastify'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
+import BuscaCategoria from '../../components/BuscaCategoria'
+
+function MostraComboCategoria({ token, setCategoriaOpcao }: any) {
+  if (token)  
+    return <BuscaCategoria token={token} setCategoriaOpcao={setCategoriaOpcao} />
+  return <>Carregando categorias...</>
+}
 
 export default function Category() {
   const [categories, setCategory] = useState([])
-  const [categorySelected, setCategorySelected] = useState<string>()
+  const [categorySelected, setCategorySelected] = useState<any>()
   const router = useRouter()
   const { data: session } = useSession()
 
@@ -22,7 +29,7 @@ export default function Category() {
           Authorization: 'Bearer ' + session?.user?.name,
         },
         method: 'POST',
-        body: JSON.stringify({ categoriaId: categorySelected }),
+        body: JSON.stringify({ categoriaId: categorySelected?.id }),
       })
 
       if (response?.status === 200) {
@@ -102,10 +109,11 @@ export default function Category() {
             </div>
             <form id="form-login" onSubmit={handleSubmit} className="w-full md:w-2/3 lg:w-5/6">
               <div className="mb-4">
-                <label htmlFor="category" className="block mb-2 font-medium">
+                <label htmlFor="category" className="block mb-3 font-medium text-xl">
                   Categoria
                 </label>
-                <select
+                <MostraComboCategoria token={session?.user?.name} setCategoriaOpcao={setCategorySelected} />
+                {/* <select
                   id="category"
                   value={categorySelected}
                   className="w-full px-3 py-2 bg-white text-black border rounded-md focus:outline-none ring-2 ring-black"
@@ -117,7 +125,7 @@ export default function Category() {
                       {category.nome}
                     </option>
                   ))}
-                </select>
+                </select> */}
               </div>
               <button
                 type="submit"

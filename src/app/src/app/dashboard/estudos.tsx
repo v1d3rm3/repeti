@@ -1,3 +1,4 @@
+'use client'
 import ButtonUi from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
@@ -11,9 +12,11 @@ import './hide-scrollbar.css'
 import { Typography } from '@mui/material'
 import Link from 'next/link'
 import useDrag from './useDrag'
+import { toast } from 'react-toastify'
+import { useRouter } from 'next/navigation'
 
 interface Estudo {
-  id: string
+  id: number
   itemId: string
   categoria: string
   nivel: string
@@ -84,9 +87,9 @@ export default function Estudos({ className, token }: { className: string; token
         itemClassName="p-3 cursor-grab"
       >
         {estudos?.map((v, i) => (
-          <EstudoDetalhesCard categoria={v.categoria?.nome} key={i} />
+          <EstudoDetalhesCard categoria={v.categoria?.nome} key={i} estudoId={v.id} token={token} />
         ))}
-        <BotaoMaisEstudos />
+        {/* <BotaoMaisEstudos /> */}
       </ScrollMenu>
     </div>
   )
@@ -100,7 +103,21 @@ function BotaoMaisEstudos() {
   )
 }
 
-function EstudoDetalhesCard({ categoria }: { categoria: string }) {
+function EstudoDetalhesCard({ categoria, estudoId, token }: { categoria: string, estudoId: number, token: string }) {
+
+  const router = useRouter()
+
+  async function handleSubmit(studyId: number) {
+    toast.success('Iniciando estudo...', {
+      autoClose: 800,
+      hideProgressBar: false,
+      closeOnClick: true,
+    })
+    localStorage.removeItem('total-questions')
+    localStorage.removeItem('rigth-answers')
+    router.push('/homework/' + studyId + '/' + token)
+  }
+
   return (
     <Card sx={{ minWidth: 275 }} variant="outlined">
       <CardContent className="p-0">
@@ -112,7 +129,7 @@ function EstudoDetalhesCard({ categoria }: { categoria: string }) {
         </Typography>
       </CardContent>
       <CardActions>
-        <ButtonUi size="small">Estudar agora!</ButtonUi>
+        <ButtonUi size="small" onClick={() => handleSubmit(estudoId)}>Estudar agora!</ButtonUi>
       </CardActions>
     </Card>
   )

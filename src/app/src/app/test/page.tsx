@@ -1,11 +1,48 @@
+'use client'
+import BuscaCategoria from '../../components/BuscaCategoria'
 import Questao from '../../components/Questao'
+import { useSession } from 'next-auth/react'
+import { useState } from 'react'
+
+export default function Test() {
+  const [resposta, setResposta] = useState('')
+  const { data: session, status } = useSession()
+
+  const myHandlerClick = (e: any) => {
+    console.log(resposta)
+  }
+
+  if (session?.user?.name)
+    return (
+      <div className="mt-2 max-w-screen-xl m-auto h-screen p-4 md:p-6 lg:p-8">
+        <BuscaCategoria token={session?.user?.name} />
+
+        <Questao
+          questao={questaoExemplo}
+          responderHandler={myHandlerClick}
+          resposta={resposta}
+          setResposta={setResposta}
+        />
+      </div>
+    )
+        
+  return (
+    <div className="mt-2 max-w-screen-xl m-auto h-screen p-4 md:p-6 lg:p-8">
+      <Questao
+        questao={questaoExemplo}
+        responderHandler={myHandlerClick}
+        resposta={resposta}
+        setResposta={setResposta}
+      />
+    </div>
+  )
+}
 
 const questaoExemplo = {
-  id: 48920,
-  enunciado:
-    'O trabalho educativo com imagens de obras de arte permite ampliar o repertório visual dos estudantes e pode ser realizado com a metodologia Image Watching, (olhando imagens), elaborada por Robert William Ott na década de 1980 para desenvolver a relação do apreciador com a obra de arte, em museus, escolas ou em espaços comuns da vida cotidiana. Esse sistema de análise se desdobra em cinco etapas consecutivas: Descrevendo, Analisando, Interpretando, Fundamentando e Revelando. A respeito dessa metodologia para educar a percepção estética, assinale a afirmativa que caracteriza a etapa de culminância Revelando.',
-  nivel: 'Medio',
-  qualidade: 'Boa',
+  id: 115779,
+  enunciado: 'Blanditiis ullam ullam.',
+  nivel: 'MuitoFacil',
+  qualidade: 'Ruim',
   elaboradorId: 1,
   categoriaId: 547,
   elaborador: {
@@ -18,12 +55,30 @@ const questaoExemplo = {
     id: 547,
     nome: 'Saepe.',
   },
-}
-
-export default function Test() {
-  return (
-    <div>
-      <Questao questao={questaoExemplo} />
-    </div>
-  )
+  alternativas: [
+    {
+      id: 463113,
+      descricao: 'Porro minus.',
+      resposta: 1,
+      questaoId: 115779,
+    },
+    {
+      id: 463114,
+      descricao: 'Maxime.',
+      resposta: 0,
+      questaoId: 115779,
+    },
+    {
+      id: 463115,
+      descricao: 'Ipsam maxime fuga.',
+      resposta: 0,
+      questaoId: 115779,
+    },
+    {
+      id: 463116,
+      descricao: 'Nam fuga.',
+      resposta: 0,
+      questaoId: 115779,
+    },
+  ],
 }
