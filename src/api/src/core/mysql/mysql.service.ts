@@ -12,6 +12,7 @@ export class MysqlService {
       user: this.config.get('DB_USER'),
       password: this.config.get('DB_PASSWORD'),
       database: this.config.get('DB_NAME'),
+      port: this.config.get('DB_PORT') ?? 3306,
       waitForConnections: true,
       connectionLimit: 10,
       maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`
