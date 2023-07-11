@@ -58,7 +58,7 @@ export default function Estudos({ className, token }: { className: string; token
 
   useEffect(() => {
     from(
-      fetch('http://localhost:3000/estudo', {
+      fetch('http://164.92.126.51:3000/estudo', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

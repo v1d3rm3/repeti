@@ -12,7 +12,7 @@ export default function BuscaCategoria({ token }: any) {
 
   // useEffect(() => {
   //   from(
-  //     fetch('http://localhost:3000/categoria', {
+  //     fetch('http://164.92.126.51:3000/categoria', {
   //       method: 'GET',
   //       headers: {
   //         'Content-Type': 'application/json',
