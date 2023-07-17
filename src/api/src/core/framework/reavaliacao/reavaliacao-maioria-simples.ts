@@ -5,8 +5,8 @@ import { IQuestaoEstudada } from '../../models/interface/questao-estudada';
 import { ReavaliacaoStrategy } from './reavaliacao-strategy';
 
 /**
- * Seleciona um novo nível para aquele nível que obteve
- * a maior quantidade de avaliações.
+ * Seleciona um novo nível para aquele nível que **obteve
+ * a maior quantidade de avaliações**.
  *
  * Os parâmetros `questoesEstudadas` referem-se a questão que
  * se deseja reavaliar.
