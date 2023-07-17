@@ -1,7 +1,7 @@
 import { Provider } from '@nestjs/common';
-import { ProximaQuestaoAleatoriaTemplateMethod } from 'src/estudo/framework/proxima-questao-aleatoria-template-method';
-import { ProximaQuestaoPorNivelEQualidadeTemplateMethod } from '../../estudo/framework/proxima-questao-por-nivel-e-qualidade-template-method';
-import { ProximaQuestaoPorNivelTemplateMethod } from '../../estudo/framework/proxima-questao-por-nivel-template-method';
+import { ProximaQuestaoAleatoriaTemplateMethod } from 'src/core/framework/proxima-questao/proxima-questao-aleatoria-template-method';
+import { ProximaQuestaoPorNivelEQualidadeTemplateMethod } from '../framework/proxima-questao/proxima-questao-por-nivel-e-qualidade-template-method';
+import { ProximaQuestaoPorNivelTemplateMethod } from '../framework/proxima-questao/proxima-questao-por-nivel-template-method';
 
 function recuperarInstancia() {
   const featProximaQuestao = process.env.FEAT_PROXIMA_QUESTAO;

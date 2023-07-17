@@ -19,7 +19,7 @@ import { EstudoDao } from '../dal/estudo-dao';
 import { QuestaoDao } from '../dal/questao-dao';
 import { QuestaoEstudadaDao } from '../dal/questao-estudada-dao';
 import { UsuarioDao } from '../dal/usuario-dao';
-import { ProximaQuestaoTemplateMethod } from './framework/proxima-questao-template-method';
+import { ProximaQuestaoTemplateMethod } from '../core/framework/proxima-questao/proxima-questao-template-method';
 
 @Injectable()
 export class EstudoService {

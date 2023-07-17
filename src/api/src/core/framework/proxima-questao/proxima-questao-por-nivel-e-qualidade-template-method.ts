@@ -1,15 +1,15 @@
-import { Injectable } from '@nestjs/common';
-import { CategoriaStore } from '../../categoria-store';
-import { TodasAsQuestoesForamEstudadasException } from '../../core/exceptions/todas-as-questoes-foram-estudadas.exception';
-import { IEstudo } from '../../core/models/interface/estudo';
-import { NivelOrdem, OrdemNivel } from '../../core/models/interface/nivel';
-import { IQuestao } from '../../core/models/interface/questao';
-import { EstudoDao } from '../../dal/estudo-dao';
-import { QuestaoDao } from '../../dal/questao-dao';
-import { QuestaoEstudadaDao } from '../../dal/questao-estudada-dao';
-import { ProximaQuestaoTemplateMethod } from './proxima-questao-template-method';
-import { Qualidade } from '../../core/models/interface/qualidade';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { CategoriaStore } from '../../../categoria-store';
+import { EstudoDao } from '../../../dal/estudo-dao';
+import { QuestaoDao } from '../../../dal/questao-dao';
+import { QuestaoEstudadaDao } from '../../../dal/questao-estudada-dao';
+import { TodasAsQuestoesForamEstudadasException } from '../../exceptions/todas-as-questoes-foram-estudadas.exception';
+import { IEstudo } from '../../models/interface/estudo';
+import { NivelOrdem, OrdemNivel } from '../../models/interface/nivel';
+import { Qualidade } from '../../models/interface/qualidade';
+import { IQuestao } from '../../models/interface/questao';
+import { ProximaQuestaoTemplateMethod } from './proxima-questao-template-method';
 
 /**
  * Seleciona as próximas questões de maneira aleatória
@@ -20,6 +20,7 @@ export class ProximaQuestaoPorNivelEQualidadeTemplateMethod extends ProximaQuest
   // DEFINE QUALIDADE MÍNIMA
   // PODE VIR DO .ENV
   private _qualidade: Qualidade = Qualidade.Boa;
+  private logger = new Logger(ProximaQuestaoTemplateMethod.name);
 
   constructor(
     private readonly questaoDao: QuestaoDao,
@@ -29,6 +30,10 @@ export class ProximaQuestaoPorNivelEQualidadeTemplateMethod extends ProximaQuest
     private readonly configService: ConfigService,
   ) {
     super();
+    this.logger.verbose(
+      'ProximaQuestaoPorNivelEQualidadeTemplateMethod foi escolhida ' +
+        'como implementação de ProximaQuestaoTemplateMethod',
+    );
     this._definindoQualidadeMinima();
   }
 

@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { CategoriaStore } from '../../categoria-store';
-import { TodasAsQuestoesForamEstudadasException } from '../../core/exceptions/todas-as-questoes-foram-estudadas.exception';
-import { IEstudo } from '../../core/models/interface/estudo';
-import { IQuestao } from '../../core/models/interface/questao';
-import { QuestaoDao } from '../../dal/questao-dao';
-import { QuestaoEstudadaDao } from '../../dal/questao-estudada-dao';
+import { Injectable, Logger } from '@nestjs/common';
+import { CategoriaStore } from '../../../categoria-store';
+import { QuestaoDao } from '../../../dal/questao-dao';
+import { QuestaoEstudadaDao } from '../../../dal/questao-estudada-dao';
+import { TodasAsQuestoesForamEstudadasException } from '../../exceptions/todas-as-questoes-foram-estudadas.exception';
+import { IEstudo } from '../../models/interface/estudo';
+import { IQuestao } from '../../models/interface/questao';
 import { ProximaQuestaoTemplateMethod } from './proxima-questao-template-method';
 
 /**
@@ -13,12 +13,18 @@ import { ProximaQuestaoTemplateMethod } from './proxima-questao-template-method'
  */
 @Injectable()
 export class ProximaQuestaoAleatoriaTemplateMethod extends ProximaQuestaoTemplateMethod {
+  private logger = new Logger(ProximaQuestaoTemplateMethod.name);
+
   constructor(
     private readonly questaoDao: QuestaoDao,
     private readonly questaoEstudadaDao: QuestaoEstudadaDao,
     private readonly categoriaStore: CategoriaStore,
   ) {
     super();
+    this.logger.verbose(
+      'ProximaQuestaoAleatoriaTemplateMethod foi escolhida ' +
+        'como implementação de ProximaQuestaoTemplateMethod',
+    );
   }
 
   /**

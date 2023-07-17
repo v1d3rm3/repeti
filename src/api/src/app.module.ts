@@ -13,9 +13,9 @@ import { ProvedorDinamicoProximaQuestao } from './core/providers/provedor-dinami
 import { ProvedorDinamicoReavaliacaoQuestao } from './core/providers/provedor-dinamico-reavaliacao-questao';
 import { DalModule } from './dal/dal.module';
 import { EstudoModule } from './estudo/estudo.module';
-import { ProximaQuestaoTemplateMethod } from './estudo/framework/proxima-questao-template-method';
 import { QuestaoModule } from './questao/questao.module';
 import { UsuarioModule } from './usuario/usuario.module';
+import { ProximaQuestaoTemplateMethod } from './core/framework/proxima-questao/proxima-questao-template-method';
 
 // configurando dotenv para os provedores dinâmicos do framework
 dotEnvConfig();

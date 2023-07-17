@@ -1,12 +1,12 @@
-import { Injectable } from '@nestjs/common';
-import { CategoriaStore } from '../../categoria-store';
-import { TodasAsQuestoesForamEstudadasException } from '../../core/exceptions/todas-as-questoes-foram-estudadas.exception';
-import { IEstudo } from '../../core/models/interface/estudo';
-import { NivelOrdem, OrdemNivel } from '../../core/models/interface/nivel';
-import { IQuestao } from '../../core/models/interface/questao';
-import { EstudoDao } from '../../dal/estudo-dao';
-import { QuestaoDao } from '../../dal/questao-dao';
-import { QuestaoEstudadaDao } from '../../dal/questao-estudada-dao';
+import { Injectable, Logger } from '@nestjs/common';
+import { CategoriaStore } from '../../../categoria-store';
+import { EstudoDao } from '../../../dal/estudo-dao';
+import { QuestaoDao } from '../../../dal/questao-dao';
+import { QuestaoEstudadaDao } from '../../../dal/questao-estudada-dao';
+import { TodasAsQuestoesForamEstudadasException } from '../../exceptions/todas-as-questoes-foram-estudadas.exception';
+import { IEstudo } from '../../models/interface/estudo';
+import { NivelOrdem, OrdemNivel } from '../../models/interface/nivel';
+import { IQuestao } from '../../models/interface/questao';
 import { ProximaQuestaoTemplateMethod } from './proxima-questao-template-method';
 
 /**
@@ -15,6 +15,8 @@ import { ProximaQuestaoTemplateMethod } from './proxima-questao-template-method'
  */
 @Injectable()
 export class ProximaQuestaoPorNivelTemplateMethod extends ProximaQuestaoTemplateMethod {
+  private logger = new Logger(ProximaQuestaoTemplateMethod.name);
+
   constructor(
     private readonly questaoDao: QuestaoDao,
     private readonly estudoDao: EstudoDao,
@@ -22,6 +24,10 @@ export class ProximaQuestaoPorNivelTemplateMethod extends ProximaQuestaoTemplate
     private readonly categoriaStore: CategoriaStore,
   ) {
     super();
+    this.logger.verbose(
+      'ProximaQuestaoPorNivelTemplateMethod foi escolhida ' +
+        'como implementação de ProximaQuestaoTemplateMethod',
+    );
   }
 
   /**

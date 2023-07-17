@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { IEstudo } from '../../core/models/interface/estudo';
-import { IQuestao } from '../../core/models/interface/questao';
+import { IEstudo } from '../../models/interface/estudo';
+import { IQuestao } from '../../models/interface/questao';
 
 type IQuestaoSomenteId = Pick<IQuestao, 'id'>;
 

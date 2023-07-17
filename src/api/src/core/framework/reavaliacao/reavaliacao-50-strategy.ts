@@ -13,7 +13,7 @@ import { ReavaliacaoStrategy } from './reavaliacao-strategy';
  * se deseja reavaliar.
  */
 export class Reavaliacao50Strategy extends ReavaliacaoStrategy {
-  private logger = new Logger(Reavaliacao50Strategy.name);
+  private logger = new Logger(ReavaliacaoStrategy.name);
 
   constructor() {
     super();
