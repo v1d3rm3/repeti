@@ -50,6 +50,7 @@ dotEnvConfig();
   exports: [
     ProximaQuestaoTemplateMethod,
     ReavaliacaoStrategy,
+    PermissoesGrupoStrategy,
     CategoriaStore,
     ContadorReavaliacaoQuestao,
     UsuarioCategoriaStore,

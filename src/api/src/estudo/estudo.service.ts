@@ -1,11 +1,12 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
-import { CategoriaStore } from '../categoria-store';
 import { ContadorReavaliacaoQuestao } from '../contador-reavaliacao-questao';
 import { AlternativaNaoFazParteDeQuestaoException } from '../core/exceptions/alternativa-nao-faz-parte-de-questao.exception';
 import { EntidadeNaoExisteException } from '../core/exceptions/entidade-nao-existe.exception';
 import { QuestaoJaFoiAvaliadaException } from '../core/exceptions/questao-ja-foi-avaliada.exception';
 import { QuestaoJaFoiRespondidaException } from '../core/exceptions/questao-ja-foi-respondida.exception';
 import { TodasAsQuestoesForamEstudadasException } from '../core/exceptions/todas-as-questoes-foram-estudadas.exception';
+import { PermissoesGrupoStrategy } from '../core/framework/permissoes-grupo/permissoes-grupo-strategy';
+import { ProximaQuestaoTemplateMethod } from '../core/framework/proxima-questao/proxima-questao-template-method';
 import { EstudoImpl } from '../core/models/impl/estudo/estudo';
 import { EstudoBuilder } from '../core/models/impl/estudo/estudo-builder';
 import { QuestaoImpl } from '../core/models/impl/questao/questao';
@@ -19,7 +20,6 @@ import { EstudoDao } from '../dal/estudo-dao';
 import { QuestaoDao } from '../dal/questao-dao';
 import { QuestaoEstudadaDao } from '../dal/questao-estudada-dao';
 import { UsuarioDao } from '../dal/usuario-dao';
-import { ProximaQuestaoTemplateMethod } from '../core/framework/proxima-questao/proxima-questao-template-method';
 
 @Injectable()
 export class EstudoService {
@@ -31,7 +31,7 @@ export class EstudoService {
     private readonly proximaQuestaoTemplateMethod: ProximaQuestaoTemplateMethod,
     private readonly questaoDao: QuestaoDao,
     private readonly questaoEstudadaDao: QuestaoEstudadaDao,
-    private readonly categoriaStore: CategoriaStore,
+    private readonly permissoesGrupoStrategy: PermissoesGrupoStrategy,
     private readonly mysqlService: MysqlService,
     private readonly contadorReavaliacaoQuestao: ContadorReavaliacaoQuestao,
   ) {}
@@ -66,6 +66,16 @@ export class EstudoService {
         'Já existe um estudo cadastrado para essa categoria',
       );
     }
+
+    // bloqueio
+    if (
+      !this.permissoesGrupoStrategy.temPermissao(estudo.categoriaId, usuario.id)
+    ) {
+      throw new BadRequestException(
+        'Você não tem permissão para estudar essa categoria',
+      );
+    }
+
     const estudoItem = EstudoBuilder.create()
       .categoriaId(estudo.categoriaId)
       .estudanteId(usuario.id)
