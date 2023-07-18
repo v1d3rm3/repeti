@@ -1,6 +1,7 @@
-import { Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PermissoesGrupoStrategy } from './permissoes-grupo-strategy';
 
+@Injectable()
 export class SemBloqueioStrategy extends PermissoesGrupoStrategy {
   private logger = new Logger(PermissoesGrupoStrategy.name);
 

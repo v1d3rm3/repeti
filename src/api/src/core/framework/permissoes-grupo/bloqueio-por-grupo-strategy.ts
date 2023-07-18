@@ -1,8 +1,9 @@
-import { Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { CategoriaStore } from '../../../categoria-store';
 import { UsuarioCategoriaStore } from '../../../usuario-categoria-store';
 import { PermissoesGrupoStrategy } from './permissoes-grupo-strategy';
 
+@Injectable()
 export class BloqueioPorGrupoStrategy extends PermissoesGrupoStrategy {
   private logger = new Logger(PermissoesGrupoStrategy.name);
 

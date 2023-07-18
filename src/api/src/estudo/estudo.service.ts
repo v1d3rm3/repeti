@@ -69,7 +69,10 @@ export class EstudoService {
 
     // bloqueio
     if (
-      !this.permissoesGrupoStrategy.temPermissao(estudo.categoriaId, usuario.id)
+      !(await this.permissoesGrupoStrategy.temPermissao(
+        estudo.categoriaId,
+        usuario.id,
+      ))
     ) {
       throw new BadRequestException(
         'Você não tem permissão para estudar essa categoria',
