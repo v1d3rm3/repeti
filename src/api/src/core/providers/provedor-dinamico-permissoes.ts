@@ -1,19 +1,19 @@
 import { Provider } from '@nestjs/common';
-import { ProximaQuestaoAleatoriaTemplateMethod } from 'src/core/framework/proxima-questao/proxima-questao-aleatoria-template-method';
-import { ProximaQuestaoPorNivelTemplateMethod } from '../framework/proxima-questao/proxima-questao-por-nivel-template-method';
+import { BloqueioPorGrupoStrategy } from '../framework/permissoes-grupo/bloqueio-por-grupo-strategy';
+import { SemBloqueioStrategy } from '../framework/permissoes-grupo/sem-bloqueio-strategy';
 
 function recuperarInstancia() {
   const featPermissoesGrupo = process.env.FEAT_PERMISSOES_GRUPO;
-  if (featPermissoesGrupo === 'aleatorio') {
-    return ProximaQuestaoAleatoriaTemplateMethod;
-  } else if (featPermissoesGrupo === 'por-nivel') {
-    return ProximaQuestaoPorNivelTemplateMethod;
+  if (featPermissoesGrupo === 'nenhum') {
+    return SemBloqueioStrategy;
+  } else if (featPermissoesGrupo === 'categoria-grupo') {
+    return BloqueioPorGrupoStrategy;
   } else {
     throw new Error(`Modalidade '${featPermissoesGrupo}' não implementada`);
   }
 }
 
-export function ProvedorDinamicoProximaQuestao(token): Provider[] {
+export function ProvedorDinamicoPermissoesGrupo(token): Provider[] {
   const instancia = recuperarInstancia();
   return [
     instancia,

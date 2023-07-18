@@ -1,10 +1,7 @@
 ## Pendências
 - [ ] recarregar categorias em caso de mudanças na versão
-- [x] reavaliar questoes... toda vez que tiver feito ela, ou uma vez depois de algum periodo de tempo?
-- [x] funcionalidades relacionadas a questao
-- [x] disponibilizar rotas para recuperar e filtrar categorias
-- [x] está pendente a reavaliacao de questoes para questoes resolvidas fora do estudo
-- [ ] criacao de questao pendente
+- [ ] nao permitir cadastros de estudos com categorias em que o usuario nao tem permissao
+- [ ] nao permitir cadastros fazer questao com categorias em que o usuario nao tem permissao
 
 ## Utilizando o projeto
 

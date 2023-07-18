@@ -3,7 +3,7 @@ import {
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { plainToClass } from 'class-transformer';
+import { plainToClass, plainToInstance } from 'class-transformer';
 import { DaoParamsWrapper } from '../core/dao-params';
 import { UsuarioImpl } from '../core/models/impl/usuario';
 import { IUsuario } from '../core/models/interface/usuario';
@@ -48,5 +48,21 @@ export class UsuarioDao {
       UsuarioImpl,
       ResultQuery.create(res).normalizeResult(),
     ) as IUsuario;
+  }
+
+  /**
+   * Recupera todas as categorias associadas aos grupos os
+   * quais o usuário faz parte.
+   * @param params
+   * @returns
+   */
+  async recuperarCategoriasPermissao(params: DaoParamsWrapper<number>) {
+    const res = await this.mysqlService.query(
+      'call Usuario_recuperarCategoriasPermissao(?);',
+      [params.data],
+    );
+
+    ResultQuery.create(res).normalizeResult();
+    return res as { categoria_id: number }[];
   }
 }

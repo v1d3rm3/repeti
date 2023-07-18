@@ -21,6 +21,31 @@ BEGIN
     COLLATE utf8mb4_0900_ai_ci;
 END; 
 
+-- recupera todas as categorias que o usuário tem permissao
+-- partindo dos grupos os quais ele faz parte
+CREATE PROCEDURE Usuario_recuperarCategoriasPermissao(IN usuarioId INT)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        RESIGNAL;
+    END;
+
+    DECLARE EXIT HANDLER FOR SQLWARNING
+    BEGIN
+        RESIGNAL;
+    END;
+
+    select 
+      gc.categoria_id 'categoria_id'
+    from usuario u
+    left join grupo_usuario gu
+    on gu.usuario_id = u.id
+    left join grupo_categoria gc
+    on gc.grupo_id = gu.grupo_id
+    where u.id = usuarioId
+    COLLATE utf8mb4_0900_ai_ci;
+END; 
+
 CREATE PROCEDURE usuario_cadastrar(
   IN email VARCHAR(255), 
   IN nome VARCHAR(255),
